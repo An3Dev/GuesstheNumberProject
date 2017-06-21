@@ -32,13 +32,12 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
         onCreate(guessTheNumber);
     }
 
-    public boolean insertData(String name, int tries, String difficulty, boolean success) {
+    public boolean insertData(String name, int tries, String difficulty) {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1, name);
         contentValues.put(COL_2, tries);
         contentValues.put(COL_3, difficulty);
-        contentValues.put(COL_5, success);
         long result = guessTheNumber.insert(TABLE_NAME, null, contentValues);
         return result != -1;
 
@@ -48,7 +47,7 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
 //        SQLiteDatabase guessTheNumber = this.getWritableDatabase();
 //        Cursor res = guessTheNumber.rawQuery("Select * from " + TABLE_NAME, null);
 //        return res;
-        String[] columns = {COL_1, COL_2, COL_3, COL_5};
+        String[] columns = {COL_1, COL_2, COL_3};
         return guessTheNumber.query(TABLE_NAME, columns, null, null, null, null, null);
     }
 

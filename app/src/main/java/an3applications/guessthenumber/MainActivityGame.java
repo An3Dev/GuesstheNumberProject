@@ -162,7 +162,7 @@ public class MainActivityGame extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Submit default name, go home
-                        boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText,success);
+                        boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText);
                         if (isInserted) {
                             Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
                         } else {
@@ -309,7 +309,7 @@ public class MainActivityGame extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     //Submit default name, go home
-                                    boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText, success);
+                                    boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText);
                                     if (isInserted) {
                                         Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
                                     } else {
@@ -363,7 +363,7 @@ public class MainActivityGame extends AppCompatActivity {
     public void next(View view){
         submitName = (Button) findViewById(R.id.submitName);
         userName = (EditText) findViewById(R.id.user_name);
-        boolean isInserted = myDb.insertData(userName.getText().toString(), triesTaken, difficultyText, success);
+        boolean isInserted = myDb.insertData(userName.getText().toString(), triesTaken, difficultyText);
         if(isInserted){
             Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
         }else{

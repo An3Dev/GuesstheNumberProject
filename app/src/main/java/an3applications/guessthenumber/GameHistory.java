@@ -67,24 +67,23 @@ public class GameHistory extends AppCompatActivity {
                 String name = c.getString(0);
                 String tries = c.getString(1);
                 String difficulty = c.getString(2);
-                String successString = c.getString(3);
                 if (name.toString().matches("") || name.toString().matches(" ") || name.toString().matches("  ") || name.toString().matches("   ") || name.toString().matches("")) {
-                    if (successString.matches("false")) {
+                    if (Integer.parseInt(tries.toString()) == 10) {
                         players.add("No name");
                         players.add(tries + " :(");
                         players.add(difficulty);
-                    } if (successString.matches("true")){
+                    } else {
                         players.add("No name");
                         players.add(tries);
                         players.add(difficulty);
                     }
                 } else {
-                    if (successString.matches("false")) {
+                    if (Integer.parseInt(tries.toString()) == 10) {
                         players.add(name);
                         players.add(tries + " :(");
                         players.add(difficulty);
 
-                    } if(successString.matches("true")) {
+                    } else {
                         players.add(name);
                         players.add(tries);
                         players.add(difficulty);
