@@ -15,7 +15,6 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import static an3applications.guessthenumber.MainActivityGame.success;
 
 public class GameHistory extends AppCompatActivity {
     SQLDatabaseHelper myDb;
@@ -68,23 +67,24 @@ public class GameHistory extends AppCompatActivity {
                 String name = c.getString(0);
                 String tries = c.getString(1);
                 String difficulty = c.getString(2);
+                String successString = c.getString(3);
                 if (name.toString().matches("") || name.toString().matches(" ") || name.toString().matches("  ") || name.toString().matches("   ") || name.toString().matches("")) {
-                    if (!success) {
+                    if (successString.matches("false")) {
                         players.add("No name");
                         players.add(tries + " :(");
                         players.add(difficulty);
-                    } else {
+                    } if (successString.matches("true")){
                         players.add("No name");
                         players.add(tries);
                         players.add(difficulty);
                     }
                 } else {
-                    if (Integer.parseInt(tries.toString()) == 10) {
+                    if (successString.matches("false")) {
                         players.add(name);
                         players.add(tries + " :(");
                         players.add(difficulty);
 
-                    } else {
+                    } if(successString.matches("true")) {
                         players.add(name);
                         players.add(tries);
                         players.add(difficulty);

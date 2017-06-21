@@ -27,8 +27,8 @@ import static an3applications.guessthenumber.PopupActivity.difficultyText;
 public class MainActivityGame extends AppCompatActivity {
 
     static int maxNum;
-    static int triesTaken = 0;
-    static boolean success;
+    int triesTaken = 0;
+    boolean success;
     SQLDatabaseHelper myDb;
     Random rand = new Random();
     String defaultName;
@@ -162,7 +162,7 @@ public class MainActivityGame extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Submit default name, go home
-                        boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText);
+                        boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText,success);
                         if (isInserted) {
                             Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
                         } else {
@@ -202,8 +202,8 @@ public class MainActivityGame extends AppCompatActivity {
         View decorView = getWindow().getDecorView();
         userInputNumber.setText("");
         String userInputNumberString = userInputNumber.getText().toString();
-        cheat = (TextView) findViewById(R.id.cheat);
-        cheat.setText("" + randNum);
+        //cheat = (TextView) findViewById(R.id.cheat);
+        //cheat.setText("" + randNum);
         // Hide both the navigation bar and the status bar.
         // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
         // a general rule, you should design your app to hide the status bar whenever you
@@ -309,7 +309,7 @@ public class MainActivityGame extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     //Submit default name, go home
-                                    boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText);
+                                    boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText, success);
                                     if (isInserted) {
                                         Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
                                     } else {
@@ -339,7 +339,7 @@ public class MainActivityGame extends AppCompatActivity {
         }
         // Tries run out, user doesn't guess the number
 
-        if (triesTaken == maxTries && !success) {
+        if (triesTaken == maxTries & !success) {
             guessButton.setAllCaps(false);
             submitName = (Button) findViewById(R.id.submitName);
             userName = (EditText) findViewById(R.id.user_name);
@@ -363,7 +363,7 @@ public class MainActivityGame extends AppCompatActivity {
     public void next(View view){
         submitName = (Button) findViewById(R.id.submitName);
         userName = (EditText) findViewById(R.id.user_name);
-        boolean isInserted = myDb.insertData(userName.getText().toString(), triesTaken, difficultyText);
+        boolean isInserted = myDb.insertData(userName.getText().toString(), triesTaken, difficultyText, success);
         if(isInserted){
             Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
         }else{
