@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PopupActivity extends AppCompatActivity {
     static String difficultyText;
@@ -35,7 +36,7 @@ public class PopupActivity extends AppCompatActivity {
     }
 
     public void launchMainActivityGame(View view) {
-        Intent intent = new Intent(this, MainActivityGame.class);
+
         easy = (RadioButton) findViewById(R.id.easy);
         medium = (RadioButton) findViewById(R.id.medium);
         hard = (RadioButton) findViewById(R.id.hard);
@@ -45,25 +46,46 @@ public class PopupActivity extends AppCompatActivity {
         if(easy.isChecked()) {
             MainActivityGame.maxNum = 100;
             difficultyText = "Easy";
+            Intent intent = new Intent(this, MainActivityGame.class);
+            Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
+            difficulty.setAllCaps(true);
+            startActivity(intent);
         }
         if(medium.isChecked()) {
             MainActivityGame.maxNum = 200;
             difficultyText = "Medium";
+            Intent intent = new Intent(this, MainActivityGame.class);
+            Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
+            difficulty.setAllCaps(true);
+            startActivity(intent);
         }
         if(hard.isChecked()) {
             MainActivityGame.maxNum = 500;
             difficultyText = "Hard";
+            Intent intent = new Intent(this, MainActivityGame.class);
+            Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
+            difficulty.setAllCaps(true);
+            startActivity(intent);
         }
         if(veryHard.isChecked()) {
             MainActivityGame.maxNum = 1000;
             difficultyText = "Very Hard";
+            Intent intent = new Intent(this, MainActivityGame.class);
+            Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
+            difficulty.setAllCaps(true);
+            startActivity(intent);
         }
         if(impossible.isChecked()) {
             MainActivityGame.maxNum = 1000000;
             difficultyText = "Impossible";
+            Intent intent = new Intent(this, MainActivityGame.class);
+            Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
+            difficulty.setAllCaps(true);
+            startActivity(intent);
         }
-        Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
-        difficulty.setAllCaps(true);
-        startActivity(intent);
+        if (!easy.isChecked() & !medium.isChecked() & !hard.isChecked() & !veryHard.isChecked() & !impossible.isChecked()) {
+            Toast.makeText(PopupActivity.this, "You have to choose a difficulty", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

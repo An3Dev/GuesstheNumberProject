@@ -27,8 +27,8 @@ import static an3applications.guessthenumber.PopupActivity.difficultyText;
 public class MainActivityGame extends AppCompatActivity {
 
     static int maxNum;
+    static int success;
     int triesTaken = 0;
-    boolean success;
     SQLDatabaseHelper myDb;
     Random rand = new Random();
     String defaultName;
@@ -39,7 +39,7 @@ public class MainActivityGame extends AppCompatActivity {
     Button guessButton;
     EditText userName;
     Button submitName;
-    TextView cheat;
+
 
 
     @Override
@@ -89,7 +89,7 @@ public class MainActivityGame extends AppCompatActivity {
         guessResponder.setText("Choose a number between\n1 and " + maxNum);
 
         myDb = new SQLDatabaseHelper(this);
-        success = false;
+        success = 0;
     }
 
     @Override
@@ -162,7 +162,7 @@ public class MainActivityGame extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Submit default name, go home
-                        boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText);
+                        boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText, success);
                         if (isInserted) {
                             Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
                         } else {
@@ -270,7 +270,7 @@ public class MainActivityGame extends AppCompatActivity {
 
                 //User guesses the number
                 if (userInputInt == randNum) {
-                    success = true;
+                    success = 1;
                     triesTaken += 1;
                     remainingTries -= 1;
                     // Check if no view has focus:
@@ -309,7 +309,7 @@ public class MainActivityGame extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     //Submit default name, go home
-                                    boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText);
+                                    boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText, success);
                                     if (isInserted) {
                                         Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
                                     } else {
@@ -339,7 +339,7 @@ public class MainActivityGame extends AppCompatActivity {
         }
         // Tries run out, user doesn't guess the number
 
-        if (triesTaken == maxTries & !success) {
+        if (triesTaken == maxTries & success == 0) {
             guessButton.setAllCaps(false);
             submitName = (Button) findViewById(R.id.submitName);
             userName = (EditText) findViewById(R.id.user_name);
@@ -363,7 +363,7 @@ public class MainActivityGame extends AppCompatActivity {
     public void next(View view){
         submitName = (Button) findViewById(R.id.submitName);
         userName = (EditText) findViewById(R.id.user_name);
-        boolean isInserted = myDb.insertData(userName.getText().toString(), triesTaken, difficultyText);
+        boolean isInserted = myDb.insertData(userName.getText().toString(), triesTaken, difficultyText, success);
         if(isInserted){
             Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
         }else{
