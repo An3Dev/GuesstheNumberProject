@@ -21,9 +21,11 @@
         <activity android:name=".PopupActivity"
             android:theme="@style/PopupTheme"/>
         <activity android:name=".SettingsActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme"
+            android:label="Settings"/>
         <activity android:name=".GameHistory"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme"
+            android:label="Game History"/>
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".MainActivity" />

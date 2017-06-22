@@ -156,10 +156,10 @@ public class MainActivityGame extends AppCompatActivity {
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
                 builder.setTitle("Name");
-                if (!defaultName.matches("null")) {
+                if (defaultName == null) {
                     builder.setMessage("You haven't set up your default name\nAfter submitting your name go to Settings/Default name.");
                     builder.setCancelable(false);
-                    builder.setNeutralButton("Type in name", new DialogInterface.OnClickListener() {
+                    builder.setNeutralButton("Type name", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             userName.setVisibility(View.VISIBLE);
@@ -171,7 +171,7 @@ public class MainActivityGame extends AppCompatActivity {
                     builder.create();
                     builder.show();
                 }
-                if (defaultName.matches("null")) {
+                if (defaultName != null) {
                     builder.setMessage("Are you " + defaultName + "?");
                     builder.setCancelable(false);
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -262,7 +262,7 @@ public class MainActivityGame extends AppCompatActivity {
             if (!userInputNumberString.matches("") || !userInputNumberString.matches("0")) {
                 if (userInputInt < randNum) {
                     guessResponder.setText("");
-                    guessResponder.setText("Your guess is too low.");
+                    guessResponder.setText(userInputInt + " is too low");
                     AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
                     guessResponder.startAnimation(fadeIn);
                     fadeIn.setFillAfter(true);
@@ -274,7 +274,7 @@ public class MainActivityGame extends AppCompatActivity {
                 }
                 if (userInputInt > randNum) {
                     guessResponder.setText("");
-                    guessResponder.setText("Your guess is too high.");
+                    guessResponder.setText(userInputInt + " is too high");
                     AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
                     guessResponder.startAnimation(fadeIn);
                     fadeIn.setFillAfter(true);
@@ -397,15 +397,22 @@ public class MainActivityGame extends AppCompatActivity {
     public void next(View view){
         submitName = (Button) findViewById(R.id.submitName);
         userName = (EditText) findViewById(R.id.user_name);
-        boolean isInserted = myDb.insertData(userName.getText().toString(), triesTaken, difficultyText, success);
-        if(isInserted){
-            Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted", Toast.LENGTH_SHORT).show();
+        if (userName.getText().toString().isEmpty()) {
+            Toast.makeText(MainActivityGame.this, "You have to enter something as a name. Try again.", Toast.LENGTH_SHORT).show();
         }
-        submitName.setAllCaps(true);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        if (userName.getText().toString().length() <= 6 & userName.getText().toString().length() > 0) {
+            boolean isInserted = myDb.insertData(userName.getText().toString(), triesTaken, difficultyText, success);
+            if (isInserted) {
+                Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted", Toast.LENGTH_SHORT).show();
+            }
+            submitName.setAllCaps(true);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } if (userName.getText().toString().length() > 6) {
+            Toast.makeText(MainActivityGame.this, "Your name is too long, try a name with 6 or less characters.", Toast.LENGTH_LONG).show();
+        }
     }
 
 

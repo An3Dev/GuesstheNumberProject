@@ -77,20 +77,20 @@ public class GameHistory extends AppCompatActivity {
                     }
                     if (success == 1) {
                         players.add("No name");
-                        players.add(tries);
+                        players.add(tries + "\uD83D\uDE03");
                         players.add(difficulty);
                     }
                 } else {
                     if (success == 0) {
                         //if (Integer.parseInt(tries.toString()) == 10) {
                         players.add(name);
-                        players.add(tries + " \uD83D\uDE1E");
+                        players.add(tries + "\uD83D\uDE1E");
                         players.add(difficulty);
 
                     }
                     if (success == 1) {
                         players.add(name);
-                        players.add(tries);
+                        players.add(tries + "\uD83D\uDE03");
                         players.add(difficulty);
                     }
                 }

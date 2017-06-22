@@ -58,8 +58,6 @@ public class SettingsActivity extends AppCompatActivity {
         builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                myDb.updateDefaultNameData(input.getText().toString());
-                Toast.makeText(SettingsActivity.this, "Your default name was changed to " + input.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         });
         builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
@@ -68,9 +66,30 @@ public class SettingsActivity extends AppCompatActivity {
                 dialogInterface.dismiss();
             }
         });
-        builder.create();
-        builder.show();
+        final AlertDialog dialog = builder.create();
+
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Boolean wantToCloseDialog = false;
+                if (input.getText().toString().isEmpty()) {
+                    Toast.makeText(SettingsActivity.this, "You have to enter something as a name. Try again.", Toast.LENGTH_SHORT).show();
+                }
+                if (input.getText().toString().length() <= 6 & input.getText().toString().length() > 0) {
+                    myDb.updateDefaultNameData(input.getText().toString());
+                    Toast.makeText(SettingsActivity.this, "Your default name was changed to " + input.getText().toString(), Toast.LENGTH_SHORT).show();
+                    wantToCloseDialog = true;
+                } if (input.getText().toString().length() > 6) {
+                Toast.makeText(SettingsActivity.this, "Your name is too long, try a name with 6 or less characters.", Toast.LENGTH_LONG).show();
+            }
+                //Do stuff, possibly set wantToCloseDialog to true then...
+                if(wantToCloseDialog)
+                    dialog.dismiss();
+                //else dialog stays open. Make sure you have an obvious way to close the dialog especially if you set cancellable to false.
+            }
+        });
     }
-
-
 }

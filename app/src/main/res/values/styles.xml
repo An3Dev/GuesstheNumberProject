@@ -46,7 +46,7 @@
 
     <style name="AndresGameMode.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="AlertDialogCustom" parent="@android:style/Theme.Material.Dialog.NoActionBar">
+    <style name="AlertDialogCustom" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:textColorPrimary">#000</item>
