@@ -156,33 +156,50 @@ public class MainActivityGame extends AppCompatActivity {
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
                 builder.setTitle("Name");
-                builder.setMessage("Are you " + defaultName + "?");
-                builder.setCancelable(false);
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //Submit default name, go home
-                        boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText, success);
-                        if (isInserted) {
-                            Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted", Toast.LENGTH_SHORT).show();
+                if (!defaultName.matches("null")) {
+                    builder.setMessage("You haven't set up your default name\nAfter submitting your name go to Settings/Default name.");
+                    builder.setCancelable(false);
+                    builder.setNeutralButton("Type in name", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            userName.setVisibility(View.VISIBLE);
+                            submitName.setVisibility(View.VISIBLE);
+                            submitName.setEnabled(true);
+                            dialogInterface.dismiss();
                         }
-                        Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        userName.setVisibility(View.VISIBLE);
-                        submitName.setVisibility(View.VISIBLE);
-                        submitName.setEnabled(true);
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.create();
-                builder.show();
+                    });
+                    builder.create();
+                    builder.show();
+                }
+                if (defaultName.matches("null")) {
+                    builder.setMessage("Are you " + defaultName + "?");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //Submit default name, go home
+                            boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText, success);
+                            if (isInserted) {
+                                Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted", Toast.LENGTH_SHORT).show();
+                            }
+                            Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            userName.setVisibility(View.VISIBLE);
+                            submitName.setVisibility(View.VISIBLE);
+                            submitName.setEnabled(true);
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.create();
+                    builder.show();
+                }
             }
         }, 5850);
 
@@ -303,33 +320,50 @@ public class MainActivityGame extends AppCompatActivity {
                             AlertDialog.Builder builder;
                             builder = new AlertDialog.Builder(MainActivityGame.this, R.style.AlertDialogCustom);
                             builder.setTitle("Name");
-                            builder.setMessage("Are you " + defaultName + "?");
-                            builder.setCancelable(false);
-                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //Submit default name, go home
-                                    boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText, success);
-                                    if (isInserted) {
-                                        Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted\n Have you entered a default name?\n Go to Settings/Default Name to set it up", Toast.LENGTH_SHORT).show();
+                            if (defaultName == null) {
+                                builder.setMessage("You haven't set up your default name. After submitting your name go to Settings/Default name.");
+                                builder.setCancelable(false);
+                                builder.setNeutralButton("Type in name", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        userName.setVisibility(View.VISIBLE);
+                                        submitName.setVisibility(View.VISIBLE);
+                                        submitName.setEnabled(true);
+                                        dialogInterface.dismiss();
                                     }
-                                    Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
-                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    userName.setVisibility(View.VISIBLE);
-                                    submitName.setVisibility(View.VISIBLE);
-                                    submitName.setEnabled(true);
-                                    dialogInterface.dismiss();
-                                }
-                            });
-                            builder.create();
-                            builder.show();
+                                });
+                                builder.create();
+                                builder.show();
+                            }
+                            if (defaultName != null) {
+                                builder.setMessage("Are you " + defaultName + "?");
+                                builder.setCancelable(false);
+                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //Submit default name, go home
+                                        boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText, success);
+                                        if (isInserted) {
+                                            Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted", Toast.LENGTH_SHORT).show();
+                                        }
+                                        Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        userName.setVisibility(View.VISIBLE);
+                                        submitName.setVisibility(View.VISIBLE);
+                                        submitName.setEnabled(true);
+                                        dialogInterface.dismiss();
+                                    }
+                                });
+                                builder.create();
+                                builder.show();
+                            }
                         }
                     }, 3500);
 
