@@ -24,7 +24,7 @@
             android:theme="@style/AppTheme"
             android:label="Settings"/>
         <activity android:name=".GameHistory"
-            android:theme="@style/AppTheme"
+            android:theme="@style/GridViewStyle"
             android:label="Game History"/>
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"

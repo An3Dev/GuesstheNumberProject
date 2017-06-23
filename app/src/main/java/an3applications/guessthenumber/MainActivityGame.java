@@ -398,9 +398,9 @@ public class MainActivityGame extends AppCompatActivity {
         submitName = (Button) findViewById(R.id.submitName);
         userName = (EditText) findViewById(R.id.user_name);
         if (userName.getText().toString().isEmpty()) {
-            Toast.makeText(MainActivityGame.this, "You have to enter something as a name. Try again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivityGame.this, "There's never been a name \" \", lets keep it that way. Try again. ", Toast.LENGTH_LONG).show();
         }
-        if (userName.getText().toString().length() <= 6 & userName.getText().toString().length() > 0) {
+        if (userName.getText().toString().length() <= 8 & userName.getText().toString().length() > 0) {
             boolean isInserted = myDb.insertData(userName.getText().toString(), triesTaken, difficultyText, success);
             if (isInserted) {
                 Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
@@ -410,8 +410,8 @@ public class MainActivityGame extends AppCompatActivity {
             submitName.setAllCaps(true);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-        } if (userName.getText().toString().length() > 6) {
-            Toast.makeText(MainActivityGame.this, "Your name is too long, try a name with 6 or less characters.", Toast.LENGTH_LONG).show();
+        } if (userName.getText().toString().length() > 8) {
+            Toast.makeText(MainActivityGame.this, "Your name is too long. It has to be under 8 characters.", Toast.LENGTH_LONG).show();
         }
     }
 

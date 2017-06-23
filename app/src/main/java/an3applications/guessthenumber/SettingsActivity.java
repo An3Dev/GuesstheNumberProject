@@ -27,7 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
         lv = (ListView) findViewById(R.id.settings_list_view);
 
         final ArrayAdapter<String> settingsAdapter;
-        String[] name = {"Default name"};
+        String[] name = {"Default name\n"};
         final ArrayList<String> settings = new ArrayList<String>(Arrays.asList(name));
         settingsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settings);
         myDb = new SQLDatabaseHelper(this);
@@ -38,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // If Default name item in list view is clicked
-                if (settings.get(i).matches("Default name")) {
+                if (settings.get(i).matches("Default name\n")) {
                     showMessage();
                 }
             }
@@ -46,7 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void showMessage() {
-        AlertDialog.Builder builder;
+        final AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(SettingsActivity.this);
         builder.setTitle("New Default Name");
         builder.setMessage("Type a new name");
@@ -76,14 +76,16 @@ public class SettingsActivity extends AppCompatActivity {
             {
                 Boolean wantToCloseDialog = false;
                 if (input.getText().toString().isEmpty()) {
-                    Toast.makeText(SettingsActivity.this, "You have to enter something as a name. Try again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivity.this, "There's never been a name \" \", lets keep it that way.", Toast.LENGTH_LONG).show();
                 }
-                if (input.getText().toString().length() <= 6 & input.getText().toString().length() > 0) {
+                if (input.getText().toString().length() <= 8 & input.getText().toString().length() > 0) {
                     myDb.updateDefaultNameData(input.getText().toString());
                     Toast.makeText(SettingsActivity.this, "Your default name was changed to " + input.getText().toString(), Toast.LENGTH_SHORT).show();
                     wantToCloseDialog = true;
-                } if (input.getText().toString().length() > 6) {
-                Toast.makeText(SettingsActivity.this, "Your name is too long, try a name with 6 or less characters.", Toast.LENGTH_LONG).show();
+                } if (input.getText().toString().length() > 8) {
+                    Toast.makeText(SettingsActivity.this, "Your name is too long. It has to be under 8 characters.", Toast.LENGTH_LONG).show();
+                    myDb.insertData("Natalia", 1, "Impossible", 1);
+
             }
                 //Do stuff, possibly set wantToCloseDialog to true then...
                 if(wantToCloseDialog)

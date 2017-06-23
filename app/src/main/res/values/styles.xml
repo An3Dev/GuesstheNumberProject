@@ -55,4 +55,7 @@
         <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
         <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
     </style>
+    <style name="GridViewStyle" parent="AppTheme">
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

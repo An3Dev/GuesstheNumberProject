@@ -19,10 +19,14 @@ import java.util.ArrayList;
 public class GameHistory extends AppCompatActivity {
     SQLDatabaseHelper myDb;
     GridView gv;
+    GridView cn;
 
 
     ArrayList<String> players = new ArrayList<String>();
     ArrayAdapter<String> adapter;
+
+    ArrayList<String> columnNamesList = new ArrayList<String>();
+    ArrayAdapter<String> columnNamesAdapter;
 
 
     @Override
@@ -32,6 +36,7 @@ public class GameHistory extends AppCompatActivity {
         myDb = new SQLDatabaseHelper(this);
 //        Cursor res = myDb.getAllData();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, players);
+        columnNamesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, columnNamesList);
         //adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, players2);
 //        if (res.getCount() == 0) {
 //            //show message
@@ -51,13 +56,19 @@ public class GameHistory extends AppCompatActivity {
 //        //showMessage("Data", "Come");
 
         gv = (GridView) findViewById(R.id.gridView);
-
+        cn = (GridView) findViewById(R.id.column_names);
+        columnNamesList.clear();
         players.clear();
 
+        columnNamesList.add("Name");
+        columnNamesList.add("Tries");
+        columnNamesList.add("Difficulty");
+        
+
         Cursor c = myDb.getAllData();
-        players.add("Name");
-        players.add("Tries");
-        players.add("Difficulty");
+//        players.add("Name");
+//        players.add("Tries");
+//        players.add("Difficulty");
         if (c.getCount() == 0) {
             players.add("Oops, no games");
             players.add("were found.");
@@ -68,15 +79,18 @@ public class GameHistory extends AppCompatActivity {
                 String tries = c.getString(1);
                 String difficulty = c.getString(2);
                 int success = c.getInt(3);
+                //If there is no name
                 if (name.toString().isEmpty()) {
                     if (success == 0) {
                         //if (Integer.parseInt(tries.toString()) == 10) {
                         players.add("No name");
+                        //adds frown emoji if success is false
                         players.add(tries + "\uD83D\uDE1E");
                         players.add(difficulty);
                     }
                     if (success == 1) {
                         players.add("No name");
+                        //adds happy smile emoji if success is true
                         players.add(tries + "\uD83D\uDE03");
                         players.add(difficulty);
                     }
@@ -99,11 +113,12 @@ public class GameHistory extends AppCompatActivity {
             }
 
             gv.setAdapter(adapter);
+            cn.setAdapter(columnNamesAdapter);
 
             gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Toast.makeText(getApplicationContext(), players.get(i), Toast.LENGTH_SHORT).show();
+
                 }
             });
         }

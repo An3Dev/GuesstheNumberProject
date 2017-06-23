@@ -70,12 +70,4 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:contentDescription="Easter Egg"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/small_easter"
-        android:layout_gravity="bottom"
-        android:onClick="easterEgg"/>
 </LinearLayout>
