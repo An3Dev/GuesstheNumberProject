@@ -27,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#f01c00"
-            android:onClick="gameActivity"
             android:padding="16dp"
             android:text="Play"
+            android:onClick="game"
             android:textColor="#FFFFFF" />
 
         <LinearLayout

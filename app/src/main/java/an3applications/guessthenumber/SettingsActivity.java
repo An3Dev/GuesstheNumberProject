@@ -78,19 +78,16 @@ public class SettingsActivity extends AppCompatActivity {
                 if (input.getText().toString().isEmpty()) {
                     Toast.makeText(SettingsActivity.this, "There's never been a name \" \", lets keep it that way.", Toast.LENGTH_LONG).show();
                 }
-                if (input.getText().toString().length() <= 8 & input.getText().toString().length() > 0) {
+                if (input.getText().toString().length() <= 10 & input.getText().toString().length() > 0) {
                     myDb.updateDefaultNameData(input.getText().toString());
                     Toast.makeText(SettingsActivity.this, "Your default name was changed to " + input.getText().toString(), Toast.LENGTH_SHORT).show();
                     wantToCloseDialog = true;
-                } if (input.getText().toString().length() > 8) {
-                    Toast.makeText(SettingsActivity.this, "Your name is too long. It has to be under 8 characters.", Toast.LENGTH_LONG).show();
-                    myDb.insertData("Natalia", 1, "Impossible", 1);
+                } if (input.getText().toString().length() > 10) {
+                    Toast.makeText(SettingsActivity.this, "Your name is too long. It has to be under 10 characters.", Toast.LENGTH_LONG).show();
 
             }
-                //Do stuff, possibly set wantToCloseDialog to true then...
                 if(wantToCloseDialog)
                     dialog.dismiss();
-                //else dialog stays open. Make sure you have an obvious way to close the dialog especially if you set cancellable to false.
             }
         });
     }
