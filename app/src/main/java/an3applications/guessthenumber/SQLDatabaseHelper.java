@@ -14,6 +14,7 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_3 = "DIFFICULTY";
     public static final String COL_4 = "DEFAULT_NAME";
     public static final String COL_5 = "SUCCESS";
+    public static final String COL_6 = "EASTER_EGG";
     SQLiteDatabase guessTheNumber = this.getWritableDatabase();
 
 
@@ -23,7 +24,7 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase guessTheNumber) {
-        guessTheNumber.execSQL("create table " + TABLE_NAME + " (NAME TEXT, TRIES INTEGER, DIFFICULTY TEXT, DEFAULT_NAME TEXT, SUCCESS INTEGER)");
+        guessTheNumber.execSQL("create table " + TABLE_NAME + " (NAME TEXT, TRIES INTEGER, DIFFICULTY TEXT, DEFAULT_NAME TEXT, SUCCESS INTEGER, EASTER_EGG INTEGER)");
     }
 
     @Override
@@ -52,14 +53,14 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
         return guessTheNumber.query(TABLE_NAME, columns, null, null, null, null, null);
     }
 
-    public Cursor getNames() {
-//        SQLiteDatabase guessTheNumber = this.getWritableDatabase();
-//        Cursor res = guessTheNumber.rawQuery("Select * from " + TABLE_NAME, null);
-//        return res;
-        String[] namesColumn = {COL_1};
-        return guessTheNumber.query(TABLE_NAME, namesColumn, null, null, null, null, null);
-    }
-
+//    public Cursor getNames() {
+////        SQLiteDatabase guessTheNumber = this.getWritableDatabase();
+////        Cursor res = guessTheNumber.rawQuery("Select * from " + TABLE_NAME, null);
+////        return res;
+//        String[] namesColumn = {COL_1};
+//        return guessTheNumber.query(TABLE_NAME, namesColumn, null, null, null, null, null);
+//    }
+     // TODO: 6/27/17 Make this remove name, tries, and difficulty of all games. It deletes everything right now.
     public void removeAll() {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.execSQL("delete from " + TABLE_NAME);
@@ -82,4 +83,15 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
         return guessTheNumber.query(TABLE_NAME, columns, null, null, null, null, null);
     }
 
+    public boolean easterEggWasFound() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_6, "1");
+        guessTheNumber.update(TABLE_NAME, contentValues, null, null);
+        return true;
+    }
+
+    public Cursor getIsEasterEggFound() {
+        String[] easterColumns = {COL_6};
+        return guessTheNumber.query(TABLE_NAME, easterColumns, null, null, null, null, null);
+    }
 }

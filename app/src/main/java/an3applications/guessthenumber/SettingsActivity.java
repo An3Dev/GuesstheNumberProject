@@ -3,6 +3,7 @@ package an3applications.guessthenumber;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -44,12 +45,19 @@ public class SettingsActivity extends AppCompatActivity {
                     showMessage();
                 }
                 if (settings.get(i).matches("\nAbout\n")) {
+                    Cursor c = myDb.getIsEasterEggFound();
+                    c.moveToFirst();
                     numOfTapsEE += 1;
                     if (numOfTapsEE != 6) {
                         showAboutMessage();
                     }
                     if(numOfTapsEE == 6) {
-                        // // TODO: 6/26/17 Make another column in SQLite and when this is unlocked another listview item will be added called Easter Egg so the user accesses it there. 
+                        // // TODO: 6/26/17 Make another column in SQLite and when this is unlocked another listview item will be added called Easter Egg so the user accesses it there.
+
+//                        if (c.getInt(0) == 0){
+//
+//                        }
+                        myDb.easterEggWasFound();
                         Toast.makeText(SettingsActivity.this, "Easter Egg unlocked!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(SettingsActivity.this, EE.class);
                         startActivity(intent);
@@ -90,7 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
             {
                 Boolean wantToCloseDialog = false;
                 if (input.getText().toString().isEmpty()) {
-                    Toast.makeText(SettingsActivity.this, "There's never been a name \" \", lets keep it that way.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SettingsActivity.this, "There's never been a name \"\", lets keep it that way. If your name is \"\" then email me.", Toast.LENGTH_LONG).show();
                 }
                 if (input.getText().toString().length() <= 10 & input.getText().toString().length() > 0) {
                     myDb.updateDefaultNameData(input.getText().toString());
