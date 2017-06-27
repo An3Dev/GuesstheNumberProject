@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -81,43 +78,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void gameActivity(){
-        play.setOnTouchListener(new View.OnTouchListener() {
+        play.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch(event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Do something
-                        withinSeconds.start();
-                        if (isFinished > 2000) {
-                            Animation zoomIn = AnimationUtils.loadAnimation(getApplicationContext(),
-                                    R.animator.zoom_in);
-                            play.startAnimation(zoomIn);
-                            animationTriggered = true;
-                        }
-
-                        if (isFinished < 2000) {
-                            animationTriggered = false;
-                        }
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        // No longer down
-                        if (!animationTriggered) {
-                            Intent pop = new Intent(MainActivity.this, PopupActivity.class);
-                            play = (Button) findViewById(R.id.play_button);
-                            play.setAllCaps(true);
-                            startActivity(pop);
-                            withinSeconds.cancel();
-                        }
-                        if (animationTriggered) {
-                            Animation zoomOut = AnimationUtils.loadAnimation(getApplicationContext(), R.animator.zoom_out);
-                            play.startAnimation(zoomOut);
-                            animationTriggered = false;
-                            return true;
-                        }
-                }
-                return false;
+            public void onClick(View view) {
+                Intent pop = new Intent(MainActivity.this, PopupActivity.class);
+                play = (Button) findViewById(R.id.play_button);
+                play.setAllCaps(true);
+                startActivity(pop);
             }
         });
+
 //        play.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -135,10 +105,7 @@ public class MainActivity extends AppCompatActivity {
 //                        }
 //
 //                        if(isFinished > 750){
-//                            Intent pop = new Intent(MainActivity.this, PopupActivity.class);
-//                            play = (Button) findViewById(R.id.play_button);
-//                            play.setAllCaps(true);
-//                            startActivity(pop);
+//
 //                            return true;
 //                        }
 //

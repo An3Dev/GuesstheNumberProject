@@ -33,7 +33,7 @@ public class MainActivityGame extends AppCompatActivity {
     Random rand = new Random();
     String defaultName;
     int randNum;
-    int maxTries = 10;
+    int maxTries = 1;
     int remainingTries = maxTries;
     EditText userInputNumber;
     Button guessButton;
@@ -374,6 +374,10 @@ public class MainActivityGame extends AppCompatActivity {
         // Tries run out, user doesn't guess the number
 
         if (triesTaken == maxTries & success == 0) {
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
             guessButton.setAllCaps(false);
             submitName = (Button) findViewById(R.id.submitName);
             userName = (EditText) findViewById(R.id.user_name);
@@ -408,7 +412,7 @@ public class MainActivityGame extends AppCompatActivity {
                 Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted", Toast.LENGTH_SHORT).show();
             }
             submitName.setAllCaps(true);
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
             startActivity(intent);
         } if (userName.getText().toString().length() > 10) {
             Toast.makeText(MainActivityGame.this, "Your name is too long. It has to be under 10 characters.", Toast.LENGTH_LONG).show();

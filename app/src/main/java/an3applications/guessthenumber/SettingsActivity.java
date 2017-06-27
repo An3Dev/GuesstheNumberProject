@@ -2,6 +2,7 @@ package an3applications.guessthenumber;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,6 +19,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     SQLDatabaseHelper myDb;
     ListView lv;
+    int numOfTapsEE;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +28,8 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         lv = (ListView) findViewById(R.id.settings_list_view);
-
+        String[] name = {"Default name\n", "\nAbout\n"};
         final ArrayAdapter<String> settingsAdapter;
-        String[] name = {"Default name\n"};
         final ArrayList<String> settings = new ArrayList<String>(Arrays.asList(name));
         settingsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settings);
         myDb = new SQLDatabaseHelper(this);
@@ -40,6 +42,18 @@ public class SettingsActivity extends AppCompatActivity {
                 // If Default name item in list view is clicked
                 if (settings.get(i).matches("Default name\n")) {
                     showMessage();
+                }
+                if (settings.get(i).matches("\nAbout\n")) {
+                    numOfTapsEE += 1;
+                    if (numOfTapsEE != 6) {
+                        showAboutMessage();
+                    }
+                    if(numOfTapsEE == 6) {
+                        // // TODO: 6/26/17 Make another column in SQLite and when this is unlocked another listview item will be added called Easter Egg so the user accesses it there. 
+                        Toast.makeText(SettingsActivity.this, "Easter Egg unlocked!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SettingsActivity.this, EE.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -90,5 +104,18 @@ public class SettingsActivity extends AppCompatActivity {
                     dialog.dismiss();
             }
         });
+    }
+
+    public void showAboutMessage() {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(SettingsActivity.this);
+        builder.setTitle("About");
+        builder.setMessage("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec magna dui" +
+                ", congue eu eleifend sed, rutrum blandit tortor. Maecenas egestas mauris a congue " +
+                "eleifend. Vivamus id est pretium, lobortis orci vitae, mollis nulla. Nullam " +
+                "pharetra magna at eros porta, id finibus velit ultricies. Etiam ac maximus nunc, " +
+                "at facilisis ex. Fusce feugiat sed diam vel vulputate. Morbi ac tempor sapien. ");
+
+        builder.create().show();
     }
 }

@@ -58,4 +58,8 @@
     <style name="GridViewStyle" parent="AppTheme">
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="EEStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:gravity">center_horizontal</item>
+    </style>
 </resources>
