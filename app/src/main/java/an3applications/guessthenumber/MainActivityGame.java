@@ -33,7 +33,7 @@ public class MainActivityGame extends AppCompatActivity {
     Random rand = new Random();
     String defaultName;
     int randNum;
-    int maxTries = 1;
+    int maxTries = 10;
     int remainingTries = maxTries;
     EditText userInputNumber;
     Button guessButton;

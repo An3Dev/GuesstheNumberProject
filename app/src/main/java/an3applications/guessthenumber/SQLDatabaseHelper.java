@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class SQLDatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "guessthenumber.db";
-    public static final String TABLE_NAME = "guess_the_number_table";
+    public static final String DATABASE_NAME = "Guessthenumber.db";
+    public static final String TABLE_NAME = "Guess_the_number_table";
     public static final String COL_1 = "NAME";
     public static final String COL_2 = "TRIES";
     public static final String COL_3 = "DIFFICULTY";
@@ -85,7 +85,7 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
 
     public boolean easterEggWasFound() {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_6, "1");
+        contentValues.put(COL_6, 1);
         guessTheNumber.update(TABLE_NAME, contentValues, null, null);
         return true;
     }

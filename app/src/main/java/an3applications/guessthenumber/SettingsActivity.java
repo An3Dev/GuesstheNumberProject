@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -29,12 +29,25 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         lv = (ListView) findViewById(R.id.settings_list_view);
-        String[] name = {"Default name\n", "\nAbout\n"};
-        final ArrayAdapter<String> settingsAdapter;
-        final ArrayList<String> settings = new ArrayList<String>(Arrays.asList(name));
-        settingsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settings);
-        myDb = new SQLDatabaseHelper(this);
 
+        List<String> name = new ArrayList<>();
+        myDb = new SQLDatabaseHelper(this);
+        final Cursor c = myDb.getIsEasterEggFound();
+        //The code below causes crash.
+//        if (c.getInt(0) == 0) {
+//
+//            name.add("Default name\n");
+//            name.add("\nAbout\n");
+//        }
+//        if (c.getInt(0) == 1){
+//            name.add("Default name\n");
+//            name.add("\nAbout\n");
+//            name.add("\nEaster egg\n");
+//        }
+        //Code above causes crash
+        final ArrayAdapter<String> settingsAdapter;
+        final ArrayList<String> settings = new ArrayList<String>(name);
+        settingsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settings);
         lv.setAdapter(settingsAdapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -45,7 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
                     showMessage();
                 }
                 if (settings.get(i).matches("\nAbout\n")) {
-                    Cursor c = myDb.getIsEasterEggFound();
+
                     c.moveToFirst();
                     numOfTapsEE += 1;
                     if (numOfTapsEE != 6) {
@@ -105,7 +118,7 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(SettingsActivity.this, "Your default name was changed to " + input.getText().toString(), Toast.LENGTH_SHORT).show();
                     wantToCloseDialog = true;
                 } if (input.getText().toString().length() > 10) {
-                    Toast.makeText(SettingsActivity.this, "Your name is too long. It has to be under 10 characters.", Toast.LENGTH_LONG).show();
+                Toast.makeText(SettingsActivity.this, "Your name is too long. It has to be under 10 characters.", Toast.LENGTH_LONG).show();
 
             }
                 if(wantToCloseDialog)
