@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     long isFinished;
     static CountDownTimer withinSeconds;
     static List<String> name = new ArrayList<String>();
+    static boolean isMoveToFirstTriggered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,14 +129,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToSettings(View view) {
         Cursor easterEggCursor = myDb.getIsEasterEggFound();
+        isMoveToFirstTriggered = false;
         if (easterEggCursor.moveToFirst()) {
+            isMoveToFirstTriggered = true;
             Toast.makeText(MainActivity.this, "easter egg cursor moved", Toast.LENGTH_SHORT).show();
             final boolean isEasterEggFound = easterEggCursor.getInt(0) == 1;
             if (easterEggCursor.getInt(0) != 1) {
                 Toast.makeText(MainActivity.this, "Easter egg isn't found", Toast.LENGTH_SHORT).show();
                 name.clear();
-                name.add("\nDefault name\n");
-                name.add("\nDonate\n");
+
             } else if (isEasterEggFound) {
                 Toast.makeText(MainActivity.this, "Easter egg was found", Toast.LENGTH_SHORT).show();
                 name.clear();

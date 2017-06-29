@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static an3applications.guessthenumber.MainActivity.isMoveToFirstTriggered;
+import static an3applications.guessthenumber.MainActivity.name;
+
 public class SettingsActivity extends AppCompatActivity {
 
     SQLDatabaseHelper myDb;
@@ -28,7 +31,10 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         myDb = new SQLDatabaseHelper(this);
-
+        if(!isMoveToFirstTriggered) {
+            name.add("\nDefault name\n");
+            name.add("\nDonate\n");
+        }
         final ArrayAdapter<String> settingsAdapter;
         final ArrayList<String> settings = new ArrayList<String>(MainActivity.name);
         settingsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settings);
