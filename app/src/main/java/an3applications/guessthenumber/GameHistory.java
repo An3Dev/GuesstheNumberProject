@@ -63,12 +63,9 @@ public class GameHistory extends AppCompatActivity {
         columnNamesList.add("Name");
         columnNamesList.add("Tries");
         columnNamesList.add("Difficulty");
-        
+
 
         Cursor c = myDb.getAllData();
-//        players.add("Name");
-//        players.add("Tries");
-//        players.add("Difficulty");
         if (c.getCount() == 0) {
             players.add("Oops, no games");
             players.add("were found.");

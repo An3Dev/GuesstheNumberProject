@@ -128,17 +128,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToSettings(View view) {
-        Cursor easterEggCursor = myDb.getIsEasterEggFound();
+        Cursor easterEggCursor = myDb.getEasterEggFoundData();
         isMoveToFirstTriggered = false;
         if (easterEggCursor.moveToFirst()) {
             isMoveToFirstTriggered = true;
             Toast.makeText(MainActivity.this, "easter egg cursor moved", Toast.LENGTH_SHORT).show();
-            final boolean isEasterEggFound = easterEggCursor.getInt(0) == 1;
-            if (easterEggCursor.getInt(0) != 1) {
-                Toast.makeText(MainActivity.this, "Easter egg isn't found", Toast.LENGTH_SHORT).show();
+            if (easterEggCursor.getString(0) == null) {
+                Toast.makeText(MainActivity.this, "Easter egg wasn't found", Toast.LENGTH_SHORT).show();
                 name.clear();
 
-            } else if (isEasterEggFound) {
+            } else if (easterEggCursor.getString(0).matches("true")) {
                 Toast.makeText(MainActivity.this, "Easter egg was found", Toast.LENGTH_SHORT).show();
                 name.clear();
                 name.add("\nDefault name\n");
@@ -162,4 +161,3 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
-

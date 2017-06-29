@@ -33,7 +33,7 @@ public class MainActivityGame extends AppCompatActivity {
     Random rand = new Random();
     String defaultName;
     int randNum;
-    int maxTries = 10;
+    int maxTries = 1;
     int remainingTries = maxTries;
     EditText userInputNumber;
     Button guessButton;
@@ -64,7 +64,6 @@ public class MainActivityGame extends AppCompatActivity {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!userInputNumber.getText().toString().matches("0") & !userInputNumber.getText().toString().matches("")) {
@@ -151,8 +150,13 @@ public class MainActivityGame extends AppCompatActivity {
                 Cursor c = myDb.getDefaultNameData();
                 c.moveToFirst();
                 if (c.getCount() != 0) {
+                    Toast.makeText(MainActivityGame.this, "Cursor is not null", Toast.LENGTH_SHORT).show();
                     defaultName = c.getString(0);
                 }
+//                if (defaultName == null){
+//                    Toast.makeText(MainActivityGame.this, "null", Toast.LENGTH_SHORT).show();
+//                }
+
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
                 builder.setTitle("Name");

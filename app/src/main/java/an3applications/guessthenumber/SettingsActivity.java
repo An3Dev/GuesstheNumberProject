@@ -32,6 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         myDb = new SQLDatabaseHelper(this);
         if(!isMoveToFirstTriggered) {
+            name.clear();
             name.add("\nDefault name\n");
             name.add("\nDonate\n");
         }
@@ -48,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
                     showMessage();
                 }
                 if (settings.get(i).matches("\nEaster Egg\n")) {
-                    Intent intent = new Intent(SettingsActivity.this, EEActivity.class);
+                    Intent intent = new Intent(SettingsActivity.this, EasterEggActivity.class);
                     startActivity(intent);
                     //Do something
                 }
@@ -63,9 +64,9 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (settings.get(i).matches("\nDonate\n")){
-                    myDb.easterEggWasFound(1);
+                    myDb.insertEasterEggFoundData("true");
                     Toast.makeText(SettingsActivity.this, "Easter Egg unlocked!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SettingsActivity.this, EEActivity.class);
+                    Intent intent = new Intent(SettingsActivity.this, EasterEggActivity.class);
                     startActivity(intent);
 
                 }
@@ -78,7 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
         final AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(SettingsActivity.this);
         builder.setTitle("New Default Name");
-        builder.setMessage("Type a new name .");
+        builder.setMessage("Type a new name.");
         builder.setCancelable(false);
         final EditText input = new EditText(SettingsActivity.this);
         ListView.LayoutParams lp = new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT);
@@ -108,8 +109,15 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(SettingsActivity.this, "There's never been a name \"\", lets keep it that way. If your name is \"\" then email me.", Toast.LENGTH_LONG).show();
                 }
                 if (input.getText().toString().length() <= 10 & input.getText().toString().length() > 0) {
-                    myDb.updateDefaultNameData(input.getText().toString());
-                    Toast.makeText(SettingsActivity.this, "Your default name was changed to " + input.getText().toString(), Toast.LENGTH_SHORT).show();
+                    boolean isUpdate = myDb.updateDefaultNameData(input.getText().toString());
+                    if(isUpdate == true) {
+                        Toast.makeText(SettingsActivity.this, "Your default name was changed to " + input.getText().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(SettingsActivity.this, "Sorry, something went wrong. Try again.", Toast.LENGTH_LONG).show();
+                    }
+
+
                     wantToCloseDialog = true;
                 } if (input.getText().toString().length() > 10) {
 
