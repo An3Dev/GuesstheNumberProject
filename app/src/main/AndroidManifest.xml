@@ -41,7 +41,7 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
 
-        <activity android:name=".EE"
+        <activity android:name=".EEActivity"
             android:theme="@style/EEStyle"></activity>
     </application>
 

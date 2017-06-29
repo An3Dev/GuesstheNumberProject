@@ -29,7 +29,7 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase guessTheNumber, int i, int i1) {
-        guessTheNumber.execSQL("DROP TABLE IF EXISTS" + TABLE_NAME);
+        guessTheNumber.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(guessTheNumber);
     }
 
@@ -83,11 +83,11 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
         return guessTheNumber.query(TABLE_NAME, columns, null, null, null, null, null);
     }
 
-    public boolean easterEggWasFound() {
+    public boolean easterEggWasFound(int wasFound) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_6, 1);
-        guessTheNumber.update(TABLE_NAME, contentValues, null, null);
-        return true;
+        contentValues.put(COL_6, wasFound);
+        long result = guessTheNumber.insert(TABLE_NAME, null, contentValues);
+        return result != -1;
     }
 
     public Cursor getIsEasterEggFound() {

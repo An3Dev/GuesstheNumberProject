@@ -1,6 +1,7 @@
 package an3applications.guessthenumber;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Button settingsBtn;
     long isFinished;
     static CountDownTimer withinSeconds;
-    boolean animationTriggered;
+    static List<String> name = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 //                        withinSeconds.cancel();
 //                        if(isFinished < 750){
 //                            Toast.makeText(MainActivity.this, "Easter Egg unlocked!", Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(MainActivity.this, EE.class);
+//                            Intent intent = new Intent(MainActivity.this, EEActivity.class);
 //                            startActivity(intent);
 //                        }
 //
@@ -122,8 +127,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToSettings(View view) {
+        Cursor easterEggCursor = myDb.getIsEasterEggFound();
+        if (easterEggCursor.moveToFirst()) {
+            Toast.makeText(MainActivity.this, "easter egg cursor moved", Toast.LENGTH_SHORT).show();
+            final boolean isEasterEggFound = easterEggCursor.getInt(0) == 1;
+            if (easterEggCursor.getInt(0) != 1) {
+                Toast.makeText(MainActivity.this, "Easter egg isn't found", Toast.LENGTH_SHORT).show();
+                name.clear();
+                name.add("\nDefault name\n");
+                name.add("\nDonate\n");
+            } else if (isEasterEggFound) {
+                Toast.makeText(MainActivity.this, "Easter egg was found", Toast.LENGTH_SHORT).show();
+                name.clear();
+                name.add("\nDefault name\n");
+                name.add("\nDonate\n");
+                name.add("\nEaster Egg\n");
+            }
+            //Toast.makeText(MainActivity.this, "" + isEasterEggFound, Toast.LENGTH_SHORT).show();
+//        }else if(!easterEggCursor.moveToFirst()){
+//            Toast.makeText(MainActivity.this, "else if run", Toast.LENGTH_SHORT).show();
+//            if (easterEggCursor.getInt(0) != 1) {
+//                Toast.makeText(MainActivity.this, "Easter egg cursor isn't found", Toast.LENGTH_SHORT).show();
+//                name.clear();
+//                name.add("\nDefault name\n");
+//                name.add("\nDonate\n");
+//            }
+//        }
+
+        }
         settingsBtn.setAllCaps(true);
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
     }
 }
+
