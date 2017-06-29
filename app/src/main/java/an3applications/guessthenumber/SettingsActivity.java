@@ -21,6 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     SQLDatabaseHelper myDb;
     ListView lv;
+    ArrayList<String> settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +32,19 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         myDb = new SQLDatabaseHelper(this);
+
+
+
         if(!isMoveToFirstTriggered) {
             name.clear();
             name.add("\nDefault name\n");
             name.add("\nDonate\n");
+            Toast.makeText(SettingsActivity.this, "Ok", Toast.LENGTH_SHORT).show();
+            ok();
         }
+
         final ArrayAdapter<String> settingsAdapter;
-        final ArrayList<String> settings = new ArrayList<String>(MainActivity.name);
+        settings = new ArrayList<String>(MainActivity.name);
         settingsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settings);
         lv.setAdapter(settingsAdapter);
 
@@ -60,19 +67,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (settings.get(i).matches("\nDonate\n")){
-                    myDb.insertEasterEggFoundData("true");
-                    Toast.makeText(SettingsActivity.this, "Easter Egg unlocked!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SettingsActivity.this, EasterEggActivity.class);
-                    startActivity(intent);
 
-                }
-                return false;
-            }
-        });
     }
 
     public void showMessage() {
@@ -142,4 +137,21 @@ public class SettingsActivity extends AppCompatActivity {
 //
 //        builder.create().show();
 //    }
+
+    public void ok() {
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (settings.get(i).matches("\nDonate\n")){
+                    myDb.insertEasterEggFoundData("true");
+                    Toast.makeText(SettingsActivity.this, "Easter Egg unlocked!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SettingsActivity.this, EasterEggActivity.class);
+                    startActivity(intent);
+
+                }
+                return false;
+            }
+        });
+    }
+
 }
