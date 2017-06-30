@@ -62,4 +62,28 @@
     <style name="EEStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:gravity">center_horizontal</item>
     </style>
+
+    <style name="ListViewModeXL" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#8c8b8a</item>
+        <item name="colorPrimaryDark">#757371</item>
+        <item name="colorAccent">#f01c00</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="GridViewStyleXL" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#8c8b8a</item>
+        <item name="colorPrimaryDark">#757371</item>
+        <item name="colorAccent">#f01c00</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30sp</item>
+    </style>
 </resources>

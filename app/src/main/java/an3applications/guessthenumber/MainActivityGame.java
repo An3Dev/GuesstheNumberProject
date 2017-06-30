@@ -33,7 +33,7 @@ public class MainActivityGame extends AppCompatActivity {
     Random rand = new Random();
     String defaultName;
     int randNum;
-    int maxTries = 1;
+    int maxTries = 10;
     int remainingTries = maxTries;
     EditText userInputNumber;
     Button guessButton;
@@ -150,32 +150,17 @@ public class MainActivityGame extends AppCompatActivity {
                 Cursor c = myDb.getDefaultNameData();
                 c.moveToFirst();
                 if (c.getCount() != 0) {
-                    Toast.makeText(MainActivityGame.this, "Cursor is not null", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivityGame.this, "Default name found", Toast.LENGTH_SHORT).show();
                     defaultName = c.getString(0);
                 }
-//                if (defaultName == null){
-//                    Toast.makeText(MainActivityGame.this, "null", Toast.LENGTH_SHORT).show();
-//                }
-
-                AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
-                builder.setTitle("Name");
-                if (defaultName == null) {
-                    builder.setMessage("You haven't set up your default name\nAfter submitting your name go to Settings/Default name.");
-                    builder.setCancelable(false);
-                    builder.setNeutralButton("Type name", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            userName.setVisibility(View.VISIBLE);
-                            submitName.setVisibility(View.VISIBLE);
-                            submitName.setEnabled(true);
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    builder.create();
-                    builder.show();
+                if (defaultName == null){
+                    Toast.makeText(MainActivityGame.this, "Default name not detected. Please report to the developer if you set one up.", Toast.LENGTH_SHORT).show();
+                    defaultNameNotDetected();
                 }
                 if (defaultName != null) {
+                    AlertDialog.Builder builder;
+                    builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
+                    builder.setTitle("Name");
                     builder.setMessage("Are you " + defaultName + "?");
                     builder.setCancelable(false);
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -325,19 +310,7 @@ public class MainActivityGame extends AppCompatActivity {
                             builder = new AlertDialog.Builder(MainActivityGame.this, R.style.AlertDialogCustom);
                             builder.setTitle("Name");
                             if (defaultName == null) {
-                                builder.setMessage("You haven't set up your default name. After submitting your name go to Settings/Default name.");
-                                builder.setCancelable(false);
-                                builder.setNeutralButton("Type in name", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        userName.setVisibility(View.VISIBLE);
-                                        submitName.setVisibility(View.VISIBLE);
-                                        submitName.setEnabled(true);
-                                        dialogInterface.dismiss();
-                                    }
-                                });
-                                builder.create();
-                                builder.show();
+                                defaultNameNotDetected();
                             }
                             if (defaultName != null) {
                                 builder.setMessage("Are you " + defaultName + "?");
@@ -350,7 +323,7 @@ public class MainActivityGame extends AppCompatActivity {
                                         if (isInserted) {
                                             Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted. Please report this to the developer", Toast.LENGTH_SHORT).show();
                                         }
                                         Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
                                         startActivity(intent);
@@ -421,6 +394,28 @@ public class MainActivityGame extends AppCompatActivity {
         } if (userName.getText().toString().length() > 10) {
             Toast.makeText(MainActivityGame.this, "Your name is too long. It has to be under 10 characters.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void defaultNameNotDetected() {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
+        builder.setTitle("Name");
+        if (defaultName == null) {
+            builder.setMessage("You haven't set up your default name\nAfter submitting your name go to Settings/Default name.");
+            builder.setCancelable(false);
+            builder.setNeutralButton("Type name", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    userName.setVisibility(View.VISIBLE);
+                    submitName.setVisibility(View.VISIBLE);
+                    submitName.setEnabled(true);
+                    dialogInterface.dismiss();
+                }
+            });
+            builder.create();
+            builder.show();
+        }
+
     }
 
 
