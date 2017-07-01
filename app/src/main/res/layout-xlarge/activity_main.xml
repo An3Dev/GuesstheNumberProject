@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:scaleX="1.5"
+    android:scaleY="1.5">
 
 
     <TextView
@@ -14,7 +16,7 @@
         android:layout_marginBottom="60dp"
         android:gravity="center_horizontal"
         android:text="Guess the Number+"
-        android:textSize="60dp" />
+        android:textSize="30sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -27,11 +29,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#f01c00"
-            android:padding="23dp"
+            android:padding="16dp"
             android:text="Play"
             android:onClick="game"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"/>
+            android:textColor="#FFFFFF" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -43,32 +44,27 @@
             <Button
                 android:id="@+id/all_games"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="1"
+                android:layout_weight="5"
                 android:background="#f01c00"
                 android:onClick="goToGameHistory"
                 android:text="Game\nHistory"
                 android:textColor="#FFF"
-                android:visibility="visible"
-                android:textSize="30sp"
-                android:padding="5dp"/>
+                android:visibility="visible" />
 
 
             <Button
                 android:id="@+id/settings_button"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                android:padding="5dp"
-                android:layout_weight="1"
+                android:layout_weight="5"
                 android:background="#f01c00"
                 android:onClick="goToSettings"
                 android:text="Settings"
-                android:textColor="#FFF"
-                android:textSize="30sp"
-                />
+                android:textColor="#FFF" />
 
 
         </LinearLayout>

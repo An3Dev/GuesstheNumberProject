@@ -59,8 +59,14 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="EEStyle" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="EasterEggStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#8c8b8a</item>
+        <item name="colorPrimaryDark">#757371</item>
+        <item name="colorAccent">#f01c00</item>
         <item name="android:gravity">center_horizontal</item>
+        <item name="android:textViewStyle">@style/Theme.AppCompat.Light.NoActionBar</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ListViewModeXL" parent="Theme.AppCompat.Light">

@@ -10,17 +10,8 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Congratulations! \n You found the Easter Egg!"
         android:textSize="30sp"
+        android:text="Coming soon!"
         android:layout_alignParentTop="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="25dp"
-        android:text="Something is going to be here\n It'll probably be fun"
-        android:textSize="20sp"
-        android:layout_below="@+id/title"/>
 
 </RelativeLayout>

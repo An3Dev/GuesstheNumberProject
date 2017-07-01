@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity {
     Button play;
     Button allGames;
     Button settingsBtn;
-    long isFinished;
-    static CountDownTimer withinSeconds;
     static List<String> name = new ArrayList<String>();
     static boolean isMoveToFirstTriggered;
 
@@ -51,18 +49,6 @@ public class MainActivity extends AppCompatActivity {
         allGames = (Button) findViewById(R.id.all_games);
         settingsBtn = (Button) findViewById(R.id.settings_button);
         play = (Button) findViewById(R.id.play_button);
-
-        withinSeconds = new CountDownTimer(5000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                isFinished = millisUntilFinished;
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        };
 
         //Always include myDb = new SQLDatabaseHelper(this);. It gave me problems for hours for not having it.
         myDb = new SQLDatabaseHelper(this);
@@ -94,31 +80,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        play.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                switch(motionEvent.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        withinSeconds.start();
-//
-//                        return true;
-//                    case MotionEvent.ACTION_UP:
-//                        withinSeconds.cancel();
-//                        if(isFinished < 750){
-//                            Toast.makeText(MainActivity.this, "Easter Egg unlocked!", Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(MainActivity.this, EEActivity.class);
-//                            startActivity(intent);
-//                        }
-//
-//                        if(isFinished > 750){
-//
-//                            return true;
-//                        }
-//
-//                }
-//                return false;
-//            }
-//        });
     }
 
     public void goToGameHistory(View view) {
@@ -132,13 +93,10 @@ public class MainActivity extends AppCompatActivity {
         //isMoveToFirstTriggered = false;
         if (easterEggCursor.moveToFirst()) {
             isMoveToFirstTriggered = true;
-            Toast.makeText(MainActivity.this, "easter egg cursor moved", Toast.LENGTH_SHORT).show();
             if (easterEggCursor.getString(0) == null) {
-                Toast.makeText(MainActivity.this, "Easter egg wasn't found", Toast.LENGTH_SHORT).show();
                 name.clear();
 
             } else if (easterEggCursor.getString(0).matches("true")) {
-                Toast.makeText(MainActivity.this, "Easter egg was found", Toast.LENGTH_SHORT).show();
                 name.clear();
                 name.add("\nDefault name\n");
                 name.add("\nDonate\n");

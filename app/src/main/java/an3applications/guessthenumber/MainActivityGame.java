@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import java.util.Random;
 
 import static an3applications.guessthenumber.PopupActivity.difficultyText;
+
 public class MainActivityGame extends AppCompatActivity {
 
     static int maxNum;
@@ -113,10 +115,21 @@ public class MainActivityGame extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!userInputNumber.getText().toString().matches("0") & !userInputNumber.getText().toString().matches("")) {
                     guessButton.setEnabled(true);
-                    guessButton.setAllCaps(false);
+
+                    userInputNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                        @Override
+                        public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                            if (userInputNumber.getText().toString().isEmpty() || userInputNumber.getText().toString().matches(" ")){
+                                return false;
+                            }
+                            getGuess(guessButton);
+                            return false;
+                        }
+                    });
+
                 }
                 if (userInputNumber.getText().toString().matches("")) {
-                    guessButton.setEnabled(true);
+                    guessButton.setEnabled(false);
 
                 }
                 if (userInputNumber.getText().toString().matches("0")) {
@@ -305,11 +318,13 @@ public class MainActivityGame extends AppCompatActivity {
                             c.moveToFirst();
                             if (c.getCount() != 0) {
                                 defaultName = c.getString(0);
+                                Toast.makeText(MainActivityGame.this, "Default name found", Toast.LENGTH_SHORT).show();
                             }
                             AlertDialog.Builder builder;
                             builder = new AlertDialog.Builder(MainActivityGame.this, R.style.AlertDialogCustom);
                             builder.setTitle("Name");
                             if (defaultName == null) {
+                                Toast.makeText(MainActivityGame.this, "Default name not found.", Toast.LENGTH_SHORT).show();
                                 defaultNameNotDetected();
                             }
                             if (defaultName != null) {
@@ -401,7 +416,7 @@ public class MainActivityGame extends AppCompatActivity {
         builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
         builder.setTitle("Name");
         if (defaultName == null) {
-            builder.setMessage("You haven't set up your default name\nAfter submitting your name go to Settings/Default name.");
+            builder.setMessage("You may have forgotten to set up your default name\nAfter submitting your name go to Settings/Default name.");
             builder.setCancelable(false);
             builder.setNeutralButton("Type name", new DialogInterface.OnClickListener() {
                 @Override

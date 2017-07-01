@@ -39,8 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
             name.clear();
             name.add("\nDefault name\n");
             name.add("\nDonate\n");
-            Toast.makeText(SettingsActivity.this, "Ok", Toast.LENGTH_SHORT).show();
-            ok();
+            longPressDonate();
         }
 
         final ArrayAdapter<String> settingsAdapter;
@@ -61,7 +60,6 @@ public class SettingsActivity extends AppCompatActivity {
                     //Do something
                 }
                 if (settings.get(i).matches("\nDonate\n")) {
-                    Toast.makeText(SettingsActivity.this, "Thanks for donating $100 to me Natalia.", Toast.LENGTH_SHORT).show();
                     //Do something
                 }
             }
@@ -138,7 +136,7 @@ public class SettingsActivity extends AppCompatActivity {
 //        builder.create().show();
 //    }
 
-    public void ok() {
+    public void longPressDonate() {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
