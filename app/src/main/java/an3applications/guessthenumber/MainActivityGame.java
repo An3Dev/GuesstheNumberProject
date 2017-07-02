@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -70,6 +71,20 @@ public class MainActivityGame extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!userInputNumber.getText().toString().matches("0") & !userInputNumber.getText().toString().matches("")) {
                     guessButton.setEnabled(true);
+
+                    userInputNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                        @Override
+                        public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                            if (userInputNumber.getText().toString().isEmpty() || userInputNumber.getText().toString().matches(" ")){
+                                return false;
+                            }
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+                            getGuess(guessButton);
+                            return false;
+                        }
+                    });
+
                 }
                 if (userInputNumber.getText().toString().matches("")) {
                     guessButton.setEnabled(false);
@@ -79,6 +94,7 @@ public class MainActivityGame extends AppCompatActivity {
                     guessButton.setEnabled(false);
                 }
             }
+
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -92,6 +108,7 @@ public class MainActivityGame extends AppCompatActivity {
         myDb = new SQLDatabaseHelper(this);
         success = 0;
     }
+
 
     @Override
     protected void onResume() {
@@ -122,6 +139,8 @@ public class MainActivityGame extends AppCompatActivity {
                             if (userInputNumber.getText().toString().isEmpty() || userInputNumber.getText().toString().matches(" ")){
                                 return false;
                             }
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
                             getGuess(guessButton);
                             return false;
                         }
@@ -146,6 +165,8 @@ public class MainActivityGame extends AppCompatActivity {
 
 
     public void makeNumberAnimation() {
+        SharedPreferences defaultNameSharedPrefs = getSharedPreferences("defaultName", Context.MODE_PRIVATE);
+        final String defaultNameSP = defaultNameSharedPrefs.getString("DEFAULT_NAME", "");
         //Button homeBtn = (Button) findViewById(R.id.home_btn);
         TextView finalNumber = (TextView) findViewById(R.id.final_number);
         AlphaAnimation fadeInNum = new AlphaAnimation(0.0f, 2.0f);
@@ -160,27 +181,27 @@ public class MainActivityGame extends AppCompatActivity {
         Handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Cursor c = myDb.getDefaultNameData();
-                c.moveToFirst();
-                if (c.getCount() != 0) {
-                    Toast.makeText(MainActivityGame.this, "Default name found", Toast.LENGTH_SHORT).show();
-                    defaultName = c.getString(0);
-                }
-                if (defaultName == null){
+//                Cursor c = myDb.getDefaultNameData();
+//                c.moveToFirst();
+//                if (c.getCount() != 0) {
+//                    Toast.makeText(MainActivityGame.this, "Default name found", Toast.LENGTH_SHORT).show();
+//                    defaultName = c.getString(0);
+//                }
+                if (defaultNameSP == ""){
                     Toast.makeText(MainActivityGame.this, "Default name not detected. Please report to the developer if you set one up.", Toast.LENGTH_SHORT).show();
                     defaultNameNotDetected();
                 }
-                if (defaultName != null) {
+                if (defaultNameSP != "") {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
                     builder.setTitle("Name");
-                    builder.setMessage("Are you " + defaultName + "?");
+                    builder.setMessage("Are you " + defaultNameSP + "?");
                     builder.setCancelable(false);
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             //Submit default name, go home
-                            boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText, success);
+                            boolean isInserted = myDb.insertData(defaultNameSP, triesTaken, difficultyText, success);
                             if (isInserted) {
                                 Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
                             } else {
@@ -209,6 +230,7 @@ public class MainActivityGame extends AppCompatActivity {
     }
 
     public void getGuess(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         //get edit text number guess, convert to string.
         userName = (EditText) findViewById(R.id.user_name);
         submitName = (Button) findViewById(R.id.submitName);
@@ -289,13 +311,14 @@ public class MainActivityGame extends AppCompatActivity {
 
                 //User guesses the number
                 if (userInputInt == randNum) {
+                    SharedPreferences defaultNameSharedPrefs = getSharedPreferences("defaultName", Context.MODE_PRIVATE);
+                    final String defaultNameSP = defaultNameSharedPrefs.getString("DEFAULT_NAME", "");
                     success = 1;
                     triesTaken += 1;
                     remainingTries -= 1;
                     // Check if no view has focus:
                     View keyboard = this.getCurrentFocus();
                     if (view != null) {
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
                     remainingTriesText.setVisibility(View.GONE);
@@ -314,31 +337,25 @@ public class MainActivityGame extends AppCompatActivity {
                     Handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Cursor c = myDb.getDefaultNameData();
-                            c.moveToFirst();
-                            if (c.getCount() != 0) {
-                                defaultName = c.getString(0);
-                                Toast.makeText(MainActivityGame.this, "Default name found", Toast.LENGTH_SHORT).show();
-                            }
-                            AlertDialog.Builder builder;
-                            builder = new AlertDialog.Builder(MainActivityGame.this, R.style.AlertDialogCustom);
-                            builder.setTitle("Name");
-                            if (defaultName == null) {
-                                Toast.makeText(MainActivityGame.this, "Default name not found.", Toast.LENGTH_SHORT).show();
+                            if (defaultNameSP == ""){
+                                Toast.makeText(MainActivityGame.this, "Default name not detected. Please report to the developer if you set one up.", Toast.LENGTH_SHORT).show();
                                 defaultNameNotDetected();
                             }
-                            if (defaultName != null) {
-                                builder.setMessage("Are you " + defaultName + "?");
+                            if (defaultNameSP != "") {
+                                AlertDialog.Builder builder;
+                                builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
+                                builder.setTitle("Name");
+                                builder.setMessage("Are you " + defaultNameSP + "?");
                                 builder.setCancelable(false);
                                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         //Submit default name, go home
-                                        boolean isInserted = myDb.insertData(defaultName, triesTaken, difficultyText, success);
+                                        boolean isInserted = myDb.insertData(defaultNameSP, triesTaken, difficultyText, success);
                                         if (isInserted) {
                                             Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted. Please report this to the developer", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted", Toast.LENGTH_SHORT).show();
                                         }
                                         Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
                                         startActivity(intent);
@@ -367,7 +384,6 @@ public class MainActivityGame extends AppCompatActivity {
 
         if (triesTaken == maxTries & success == 0) {
             if (view != null) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
             guessButton.setAllCaps(false);
@@ -416,7 +432,7 @@ public class MainActivityGame extends AppCompatActivity {
         builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
         builder.setTitle("Name");
         if (defaultName == null) {
-            builder.setMessage("You may have forgotten to set up your default name\nAfter submitting your name go to Settings/Default name.");
+            builder.setMessage("You may have forgotten to set up your default name. After submitting your name go to Settings/Default name.");
             builder.setCancelable(false);
             builder.setNeutralButton("Type name", new DialogInterface.OnClickListener() {
                 @Override
@@ -430,7 +446,6 @@ public class MainActivityGame extends AppCompatActivity {
             builder.create();
             builder.show();
         }
-
     }
 
 

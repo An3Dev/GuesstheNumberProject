@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 name.clear();
                 name.add("\nDefault name\n");
                 name.add("\nDonate\n");
+                name.add("\nTheme\n");
                 name.add("\nEaster Egg\n");
             }
 

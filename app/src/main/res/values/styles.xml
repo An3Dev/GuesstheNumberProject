@@ -57,6 +57,13 @@
     </style>
     <style name="GridViewStyle" parent="AppTheme">
         <item name="android:textSize">14sp</item>
+        <item name="colorPrimary">#8c8b8a</item>
+        <item name="colorPrimaryDark">#757371</item>
+        <item name="colorAccent">#f01c00</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="EasterEggStyle" parent="Theme.AppCompat.Light.NoActionBar">

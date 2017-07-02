@@ -1,10 +1,13 @@
 package an3applications.guessthenumber;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,6 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
             name.clear();
             name.add("\nDefault name\n");
             name.add("\nDonate\n");
+            name.add("\nTheme\n");
             longPressDonate();
         }
 
@@ -61,20 +65,32 @@ public class SettingsActivity extends AppCompatActivity {
                 }
                 if (settings.get(i).matches("\nDonate\n")) {
                     //Do something
+                    Toast.makeText(SettingsActivity.this, "Sorry, this is not available yet.", Toast.LENGTH_SHORT).show();
+                }
+                if (settings.get(i).matches("\nTheme\n")) {
+                    //Do something
+                    Toast.makeText(SettingsActivity.this, "Sorry, this is not available yet.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 
     public void showMessage() {
         final AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(SettingsActivity.this);
         builder.setTitle("New Default Name");
-        builder.setMessage("Type a new name.");
+        builder.setMessage("Type in your first name or nickname.");
         builder.setCancelable(false);
         final EditText input = new EditText(SettingsActivity.this);
+        input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         ListView.LayoutParams lp = new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT);
         input.setLayoutParams(lp);
         builder.setView(input);
@@ -102,15 +118,12 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(SettingsActivity.this, "There's never been a name \"\", lets keep it that way. If your name is \"\" then email me.", Toast.LENGTH_LONG).show();
                 }
                 if (input.getText().toString().length() <= 10 & input.getText().toString().length() > 0) {
-                    boolean isUpdate = myDb.updateDefaultNameData(input.getText().toString());
-                    if(isUpdate == true) {
-                        Toast.makeText(SettingsActivity.this, "Your default name was changed to " + input.getText().toString(), Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(SettingsActivity.this, "Sorry, something went wrong. Try again.", Toast.LENGTH_LONG).show();
-                    }
-
-
+                    //insert shared preferences
+                    SharedPreferences defaultNameSharedPrefs = getSharedPreferences("defaultName", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor defaultNameEditor = defaultNameSharedPrefs.edit();
+                    defaultNameEditor.putString("DEFAULT_NAME", input.getText().toString());
+                    defaultNameEditor.commit();
+                    Toast.makeText(SettingsActivity.this, "Your default name was changed to " + input.getText().toString(), Toast.LENGTH_SHORT).show();
                     wantToCloseDialog = true;
                 } if (input.getText().toString().length() > 10) {
 
@@ -142,10 +155,9 @@ public class SettingsActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (settings.get(i).matches("\nDonate\n")){
                     myDb.insertEasterEggFoundData("true");
-                    Toast.makeText(SettingsActivity.this, "Easter Egg unlocked!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivity.this, "You just found an \"Easter Egg\" and its not even available yet! Nice!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SettingsActivity.this, EasterEggActivity.class);
                     startActivity(intent);
-
                 }
                 return false;
             }
