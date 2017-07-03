@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
@@ -28,6 +29,10 @@ public class GameHistory extends AppCompatActivity {
     boolean timerStarted;
     CountDownTimer easterEggTimer;
     boolean isNamePressed;
+    TextView easterEggTimerText;
+    String randItemString;
+    long easterEggTime;
+
 
 
     ArrayList<String> players = new ArrayList<String>();
@@ -119,11 +124,9 @@ public class GameHistory extends AppCompatActivity {
 
             gv.setAdapter(adapter);
             cn.setAdapter(columnNamesAdapter);
-            cn.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+            cn.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                     if (columnNamesList.get(i).matches("Name")) {
                         if (!isNamePressed) {
                             if (!timerStarted){
@@ -131,13 +134,22 @@ public class GameHistory extends AppCompatActivity {
                                 builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
                                 builder.setCancelable(false);
                                 builder.setTitle("Mini game");
-                                builder.setMessage("You just found a mini game! Get ready");
-                                builder.setPositiveButton("Play", new DialogInterface.OnClickListener() {
+                                builder.setMessage("You just found a mini game! You have 15 seconds to find a secret item on the screen.");
+                                builder.setPositiveButton("Start!", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         startEasterEggTimer();
                                         dialogInterface.dismiss();
                                         timerStarted = true;
+                                        isNamePressed = true;
+                                    }
+                                });
+                                builder.setNegativeButton("No thanks", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                        timerStarted = false;
+                                        isNamePressed = false;
                                     }
                                 });
                                 builder.show();
@@ -146,29 +158,54 @@ public class GameHistory extends AppCompatActivity {
 //                    defaultNameEditor.putString("DEFAULT_NAME", "");
 //                    defaultNameEditor.commit();
                             }
-                            isNamePressed = true;
                         }else if(isNamePressed) {
-                            return;
+                            return false;
                         }
 
                     }
+                    return false;
                 }
             });
             final int amount = c.getCount() * 3 - 1;
             final int randNum = rand.nextInt(amount) + 1;
-            final String randItemString = players.get(randNum);
+            randItemString = players.get(randNum);
             gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                    Toast.makeText(GameHistory.this, "" + randItemString, Toast.LENGTH_SHORT).show();
+
                     if (timerStarted){
                         if (players.get(i).matches(randItemString)){
+                            easterEggTimer.cancel();
                             AlertDialog.Builder builder;
                             builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
-                            builder.setCancelable(true);
-                            builder.setTitle("Item Found");
-                            builder.setMessage("You found my item!");
+                            builder.setCancelable(false);
+                            builder.setTitle("You found the item!");
+                            builder.setMessage("Congratulations! You found the secret item with " + easterEggTime + " seconds to spare! The secret item WAS \"" + randItemString + "\"!");
+                            builder.setNegativeButton("Awesome!", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
+                                    easterEggTimerText.startAnimation(fadeOut);
+                                    fadeOut.setDuration(2000);
+                                    fadeOut.setFillAfter(true);
+                                    new CountDownTimer(2500, 1000) {
+
+                                        public void onTick(long millisUntilFinished) {
+                                        }
+
+                                        public void onFinish() {
+                                            timerStarted = false;
+                                            isNamePressed = false;
+                                            easterEggTimerText.setVisibility(View.GONE);
+
+                                        }
+
+                                    }.start();
+                                }
+                            });
+                            builder.show();
+
                         }
                     }
 
@@ -240,12 +277,42 @@ public class GameHistory extends AppCompatActivity {
         easterEggTimer = new CountDownTimer(15000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                TextView easterEggTimerText = (TextView) findViewById(R.id.easterEggTimer);
+                easterEggTime = millisUntilFinished / 1000;
+                easterEggTimerText = (TextView) findViewById(R.id.easterEggTimer);
                 easterEggTimerText.setVisibility(View.VISIBLE);
                 easterEggTimerText.setText("Time: " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
+                builder.setCancelable(false);
+                builder.setTitle("Sorry, I\'m afraid you didn't find the item on time. The item was " + randItemString);
+                builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
+                        easterEggTimerText.startAnimation(fadeOut);
+                        fadeOut.setDuration(2000);
+                        fadeOut.setFillAfter(true);
+                        new CountDownTimer(2500, 1000) {
+
+                            public void onTick(long millisUntilFinished) {
+                            }
+
+                            public void onFinish() {
+                                easterEggTimerText.setText("0");
+                                easterEggTimerText.setVisibility(View.GONE);
+                                isNamePressed =false;
+                                timerStarted = false;
+
+                            }
+
+                        }.start();
+                    }
+                });
+                builder.show();
 
             }
 

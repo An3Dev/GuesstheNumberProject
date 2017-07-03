@@ -3,13 +3,11 @@ package an3applications.guessthenumber;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Button settingsBtn;
     static List<String> name = new ArrayList<String>();
     static boolean isMoveToFirstTriggered;
+    //private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         //set content view AFTER ABOVE sequence (to avoid crash)
 
         setContentView(R.layout.activity_main);
+        //ads here
+//        mAdView = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
 
 
         allGames = (Button) findViewById(R.id.all_games);
@@ -75,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent pop = new Intent(MainActivity.this, PopupActivity.class);
                 play = (Button) findViewById(R.id.play_button);
-                play.setAllCaps(true);
                 startActivity(pop);
             }
         });
@@ -83,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToGameHistory(View view) {
-        allGames.setAllCaps(true);
         Intent intent = new Intent(MainActivity.this, GameHistory.class);
         startActivity(intent);
     }
@@ -105,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-        settingsBtn.setAllCaps(true);
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
     }
