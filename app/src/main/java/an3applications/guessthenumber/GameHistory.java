@@ -1,9 +1,7 @@
 package an3applications.guessthenumber;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -16,10 +14,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class GameHistory extends AppCompatActivity {
@@ -27,6 +25,9 @@ public class GameHistory extends AppCompatActivity {
     GridView gv;
     GridView cn;
     Random rand = new Random();
+    boolean timerStarted;
+    CountDownTimer easterEggTimer;
+    boolean isNamePressed;
 
 
     ArrayList<String> players = new ArrayList<String>();
@@ -118,45 +119,62 @@ public class GameHistory extends AppCompatActivity {
 
             gv.setAdapter(adapter);
             cn.setAdapter(columnNamesAdapter);
-
-            gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                Cursor c = myDb.getAllData();
-                final List<String> randItem = new ArrayList<String>();
-                int amount = c.getCount();
-                int randNum = rand.nextInt(amount) + 1;
+            cn.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (c.getCount() == 0) {
-                        return;
-                    }else{
-                        while(c.moveToNext()) {
-                            String name = c.getString(0);
-                            String tries = c.getString(1);
-                            String difficulty = c.getString(2);
-                            randItem.add(name);
-                            randItem.add(tries);
-                            randItem.add(difficulty);
-                        }
-                    }
-                    String randItemString = randItem.get(randNum);
-                    Toast.makeText(GameHistory.this, "You have 30 seconds to find a random item that I've chosen. To find it, long click on it.", Toast.LENGTH_LONG).show();
+                public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+
+                    if (columnNamesList.get(i).matches("Name")) {
+                        if (!isNamePressed) {
+                            if (!timerStarted){
+                                AlertDialog.Builder builder;
+                                builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
+                                builder.setCancelable(false);
+                                builder.setTitle("Mini game");
+                                builder.setMessage("You just found a mini game! Get ready");
+                                builder.setPositiveButton("Play", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        startEasterEggTimer();
+                                        dialogInterface.dismiss();
+                                        timerStarted = true;
+                                    }
+                                });
+                                builder.show();
 //                    SharedPreferences defaultNameSharedPrefs = getSharedPreferences("EASTER_EGG_2", Context.MODE_PRIVATE);
 //                    SharedPreferences.Editor defaultNameEditor = defaultNameSharedPrefs.edit();
 //                    defaultNameEditor.putString("DEFAULT_NAME", "");
 //                    defaultNameEditor.commit();
-                    new CountDownTimer(30000, 1000) {
-
-                        public void onTick(long millisUntilFinished) {
-
+                            }
+                            isNamePressed = true;
+                        }else if(isNamePressed) {
+                            return;
                         }
 
-                        public void onFinish() {
-                        }
-
-                    }.start();
+                    }
                 }
             });
+            final int amount = c.getCount() * 3 - 1;
+            final int randNum = rand.nextInt(amount) + 1;
+            final String randItemString = players.get(randNum);
+            gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                    Toast.makeText(GameHistory.this, "" + randItemString, Toast.LENGTH_SHORT).show();
+                    if (timerStarted){
+                        if (players.get(i).matches(randItemString)){
+                            AlertDialog.Builder builder;
+                            builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
+                            builder.setCancelable(true);
+                            builder.setTitle("Item Found");
+                            builder.setMessage("You found my item!");
+                        }
+                    }
+
+                }
+            });
+
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -216,6 +234,22 @@ public class GameHistory extends AppCompatActivity {
         });
 
         builder.create().show();
+    }
+
+    public void startEasterEggTimer() {
+        easterEggTimer = new CountDownTimer(15000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                TextView easterEggTimerText = (TextView) findViewById(R.id.easterEggTimer);
+                easterEggTimerText.setVisibility(View.VISIBLE);
+                easterEggTimerText.setText("Time: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+
+            }
+
+        }.start();
     }
 
 }
