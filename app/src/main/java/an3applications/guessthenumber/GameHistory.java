@@ -79,7 +79,7 @@ public class GameHistory extends AppCompatActivity {
         columnNamesList.add("Difficulty");
 
 
-        Cursor c = myDb.getAllData();
+        final Cursor c = myDb.getAllData();
         if (c.getCount() == 0) {
             cn.setAdapter(columnNamesAdapter);
             AlertDialog.Builder builder;
@@ -166,6 +166,9 @@ public class GameHistory extends AppCompatActivity {
                                         easterEggTimerText.startAnimation(fadeIn);
                                         timerStarted = true;
                                         startEasterEggTimer();
+                                        final int amount = c.getCount() * 3 - 1;
+                                        final int randNum = rand.nextInt(amount) + 1;
+                                        randItemString = players.get(randNum);
 
                                     }
                                 });
@@ -192,9 +195,6 @@ public class GameHistory extends AppCompatActivity {
                     return false;
                 }
             });
-            final int amount = c.getCount() * 3 - 1;
-            final int randNum = rand.nextInt(amount) + 1;
-            randItemString = players.get(randNum);
             gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
