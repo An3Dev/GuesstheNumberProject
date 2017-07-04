@@ -8,11 +8,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -69,7 +72,36 @@ public class SettingsActivity extends AppCompatActivity {
                 }
                 if (settings.get(i).matches("\nTheme\n")) {
                     //Do something
-                    Toast.makeText(SettingsActivity.this, "Sorry, this is not available yet.", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder;
+                    builder = new AlertDialog.Builder(new ContextThemeWrapper(SettingsActivity.this, R.style.AlertDialogCustom));
+                    builder.setCancelable(false);
+                    builder.setTitle("Select your theme");
+                    RadioGroup themeRG = new RadioGroup(SettingsActivity.this);
+                    ListView.LayoutParams lp = new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT);
+                    themeRG.setLayoutParams(lp);
+                    RadioButton lightThemeRadio = new RadioButton(SettingsActivity.this);
+                    ListView.LayoutParams lPLight= new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT);
+                    lightThemeRadio.setLayoutParams(lPLight);
+                    lightThemeRadio.setText("Light");
+                    builder.setMessage("Many to choose from!");
+                    builder.setView(lightThemeRadio);
+                    RadioButton darkThemeRadio = new RadioButton(SettingsActivity.this);
+                    ListView.LayoutParams lPDark= new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT);
+                    darkThemeRadio.setLayoutParams(lPDark);
+                    lightThemeRadio.setText("Dark");
+                    lightThemeRadio.setTextColor(getResources().getColor(R.color.black));
+                    builder.setMessage("Many to choose from!");
+                    builder.setView(themeRG);
+                    builder.setView(lightThemeRadio);
+                    builder.setView(darkThemeRadio);
+                    builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //needs to save chosen theme in SQLite
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.show();
                 }
             }
         });

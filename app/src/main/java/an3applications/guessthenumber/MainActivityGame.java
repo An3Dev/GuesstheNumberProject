@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -209,6 +208,7 @@ public class MainActivityGame extends AppCompatActivity {
                             }
                             Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     });
                     builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -359,6 +359,7 @@ public class MainActivityGame extends AppCompatActivity {
                                         }
                                         Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
                                         startActivity(intent);
+                                        finish();
                                     }
                                 });
                                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -419,9 +420,9 @@ public class MainActivityGame extends AppCompatActivity {
             } else {
                 Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted", Toast.LENGTH_SHORT).show();
             }
-            submitName.setAllCaps(true);
             Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
             startActivity(intent);
+            finish();
         } if (userName.getText().toString().length() > 10) {
             Toast.makeText(MainActivityGame.this, "Your name is too long. It has to be under 10 characters.", Toast.LENGTH_LONG).show();
         }

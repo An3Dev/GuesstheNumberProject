@@ -36,7 +36,6 @@ public class PopupActivity extends AppCompatActivity {
     }
 
     public void launchMainActivityGame(View view) {
-
         easy = (RadioButton) findViewById(R.id.easy);
         medium = (RadioButton) findViewById(R.id.medium);
         hard = (RadioButton) findViewById(R.id.hard);
@@ -50,6 +49,7 @@ public class PopupActivity extends AppCompatActivity {
             Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
             difficulty.setAllCaps(true);
             startActivity(intent);
+            finish();
         }
         if(medium.isChecked()) {
             MainActivityGame.maxNum = 200;
@@ -58,6 +58,7 @@ public class PopupActivity extends AppCompatActivity {
             Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
             difficulty.setAllCaps(true);
             startActivity(intent);
+            finish();
         }
         if(hard.isChecked()) {
             MainActivityGame.maxNum = 500;
@@ -66,6 +67,7 @@ public class PopupActivity extends AppCompatActivity {
             Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
             difficulty.setAllCaps(true);
             startActivity(intent);
+            finish();
         }
         if(veryHard.isChecked()) {
             MainActivityGame.maxNum = 1000;
@@ -74,6 +76,7 @@ public class PopupActivity extends AppCompatActivity {
             Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
             difficulty.setAllCaps(true);
             startActivity(intent);
+            finish();
         }
         if(impossible.isChecked()) {
             MainActivityGame.maxNum = 1000000;
@@ -82,6 +85,7 @@ public class PopupActivity extends AppCompatActivity {
             Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
             difficulty.setAllCaps(true);
             startActivity(intent);
+            finish();
         }
         if (!easy.isChecked() & !medium.isChecked() & !hard.isChecked() & !veryHard.isChecked() & !impossible.isChecked()) {
             Toast.makeText(PopupActivity.this, "You have to choose a difficulty", Toast.LENGTH_SHORT).show();

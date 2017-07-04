@@ -50,6 +50,7 @@ public class GameHistory extends AppCompatActivity {
 //        Cursor res = myDb.getAllData();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, players);
         columnNamesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, columnNamesList);
+        easterEggTimerText = (TextView) findViewById(R.id.easterEggTimer);
         //adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, players2);
 //        if (res.getCount() == 0) {
 //            //show message
@@ -72,7 +73,6 @@ public class GameHistory extends AppCompatActivity {
         cn = (GridView) findViewById(R.id.column_names);
         columnNamesList.clear();
         players.clear();
-
         columnNamesList.add("Name");
         columnNamesList.add("Tries");
         columnNamesList.add("Difficulty");
@@ -138,10 +138,16 @@ public class GameHistory extends AppCompatActivity {
                                 builder.setPositiveButton("Start!", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        startEasterEggTimer();
                                         dialogInterface.dismiss();
-                                        timerStarted = true;
                                         isNamePressed = true;
+                                        AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
+                                        fadeIn.setDuration(500);
+                                        fadeIn.setFillAfter(true);
+                                        easterEggTimerText.setVisibility(View.VISIBLE);
+                                        easterEggTimerText.startAnimation(fadeIn);
+                                        timerStarted = true;
+                                        startEasterEggTimer();
+
                                     }
                                 });
                                 builder.setNegativeButton("No thanks", new DialogInterface.OnClickListener() {
@@ -152,6 +158,7 @@ public class GameHistory extends AppCompatActivity {
                                         isNamePressed = false;
                                     }
                                 });
+                                builder.create();
                                 builder.show();
 //                    SharedPreferences defaultNameSharedPrefs = getSharedPreferences("EASTER_EGG_2", Context.MODE_PRIVATE);
 //                    SharedPreferences.Editor defaultNameEditor = defaultNameSharedPrefs.edit();
@@ -204,6 +211,7 @@ public class GameHistory extends AppCompatActivity {
                                     }.start();
                                 }
                             });
+                            builder.create();
                             builder.show();
 
                         }
@@ -274,12 +282,12 @@ public class GameHistory extends AppCompatActivity {
     }
 
     public void startEasterEggTimer() {
+        easterEggTimerText.setVisibility(View.VISIBLE);
+        easterEggTimerText.setTextColor(getResources().getColor(R.color.black));
         easterEggTimer = new CountDownTimer(15000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 easterEggTime = millisUntilFinished / 1000;
-                easterEggTimerText = (TextView) findViewById(R.id.easterEggTimer);
-                easterEggTimerText.setVisibility(View.VISIBLE);
                 easterEggTimerText.setText("Time: " + millisUntilFinished / 1000);
             }
 
@@ -287,15 +295,16 @@ public class GameHistory extends AppCompatActivity {
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
                 builder.setCancelable(false);
-                builder.setTitle("Sorry, I\'m afraid you didn't find the item on time. The item was " + randItemString);
+                builder.setTitle("Game Over");
+                builder.setMessage("Sorry, I\'m afraid you didn't find the item on time. The item was \"" + randItemString + "\".");
                 builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                         AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
-                        easterEggTimerText.startAnimation(fadeOut);
                         fadeOut.setDuration(2000);
                         fadeOut.setFillAfter(true);
+                        easterEggTimerText.startAnimation(fadeOut);
                         new CountDownTimer(2500, 1000) {
 
                             public void onTick(long millisUntilFinished) {
@@ -306,12 +315,12 @@ public class GameHistory extends AppCompatActivity {
                                 easterEggTimerText.setVisibility(View.GONE);
                                 isNamePressed =false;
                                 timerStarted = false;
-
                             }
 
                         }.start();
                     }
                 });
+                builder.create();
                 builder.show();
 
             }
