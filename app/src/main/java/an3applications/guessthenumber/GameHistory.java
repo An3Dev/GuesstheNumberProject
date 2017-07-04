@@ -2,6 +2,7 @@ package an3applications.guessthenumber;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -80,9 +81,27 @@ public class GameHistory extends AppCompatActivity {
 
         Cursor c = myDb.getAllData();
         if (c.getCount() == 0) {
-            players.add("Oops, no games");
-            players.add("were found.");
-            players.add("So play a game!");
+            cn.setAdapter(columnNamesAdapter);
+            AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
+            builder.setCancelable(true);
+            builder.setTitle("No game history");
+            builder.setMessage("No games were found... so play a game!");
+            builder.setPositiveButton("Play", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent = new Intent(GameHistory.this, PopupActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            builder.setNeutralButton("Not right now", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            builder.show();
         } else {
             while (c.moveToNext()) {
                 String name = c.getString(0);
@@ -269,9 +288,6 @@ public class GameHistory extends AppCompatActivity {
                 myDb.removeAll();
                 Toast.makeText(getApplicationContext(), "History deleted", Toast.LENGTH_SHORT).show();
                 players.clear();
-                players.add("No");
-                players.add("History");
-                players.add("Here");
                 gv.setAdapter(adapter);
                 dialogInterface.dismiss();
 

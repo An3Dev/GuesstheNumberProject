@@ -8,16 +8,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AndresGameMode">
+        android:theme="@style/Theme.AppCompat">
         <activity android:name=".LoadingScreenActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AndresGameMode">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AndresGameMode"/>
         <activity
             android:name=".MainActivityGame"
             android:theme="@style/AndresGameMode"

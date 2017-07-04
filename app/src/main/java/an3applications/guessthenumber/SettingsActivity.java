@@ -8,14 +8,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -28,11 +25,20 @@ public class SettingsActivity extends AppCompatActivity {
     SQLDatabaseHelper myDb;
     ListView lv;
     ArrayList<String> settings;
+    String themeString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        SharedPreferences themePrefs = getSharedPreferences("Theme", Context.MODE_PRIVATE);
+        final String themeSP = themePrefs.getString("ThemeSP", "No theme");
+//        if (themeSP.matches("light")) {
+//            getApplication().setTheme(R.style.AppTheme);
+//        }
+//        if (themeSP.matches("dark")){
+//            getApplication().setTheme(R.style.AppThemeDark);
+//        }
 
         lv = (ListView) findViewById(R.id.settings_list_view);
 
@@ -45,7 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
             name.clear();
             name.add("\nDefault name\n");
             name.add("\nDonate\n");
-            name.add("\nTheme\n");
+//            name.add("\nTheme\n");
             longPressDonate();
         }
 
@@ -70,39 +76,11 @@ public class SettingsActivity extends AppCompatActivity {
                     //Do something
                     Toast.makeText(SettingsActivity.this, "Sorry, this is not available yet.", Toast.LENGTH_SHORT).show();
                 }
-                if (settings.get(i).matches("\nTheme\n")) {
-                    //Do something
-                    AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(new ContextThemeWrapper(SettingsActivity.this, R.style.AlertDialogCustom));
-                    builder.setCancelable(false);
-                    builder.setTitle("Select your theme");
-                    RadioGroup themeRG = new RadioGroup(SettingsActivity.this);
-                    ListView.LayoutParams lp = new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT);
-                    themeRG.setLayoutParams(lp);
-                    RadioButton lightThemeRadio = new RadioButton(SettingsActivity.this);
-                    ListView.LayoutParams lPLight= new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT);
-                    lightThemeRadio.setLayoutParams(lPLight);
-                    lightThemeRadio.setText("Light");
-                    builder.setMessage("Many to choose from!");
-                    builder.setView(lightThemeRadio);
-                    RadioButton darkThemeRadio = new RadioButton(SettingsActivity.this);
-                    ListView.LayoutParams lPDark= new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT);
-                    darkThemeRadio.setLayoutParams(lPDark);
-                    lightThemeRadio.setText("Dark");
-                    lightThemeRadio.setTextColor(getResources().getColor(R.color.black));
-                    builder.setMessage("Many to choose from!");
-                    builder.setView(themeRG);
-                    builder.setView(lightThemeRadio);
-                    builder.setView(darkThemeRadio);
-                    builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //needs to save chosen theme in SQLite
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    builder.show();
-                }
+//                if (settings.get(i).matches("\nTheme\n")) {
+//                    //Do something
+//
+//                    createAlertDialogWithRadioButtonGroup();
+//                }
             }
         });
 
@@ -195,5 +173,52 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
+
+//    public void createAlertDialogWithRadioButtonGroup(){
+//
+//        final AlertDialog alertDialog1;
+//        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(SettingsActivity.this, R.style.AlertDialogCustom));
+//        builder.setTitle("Select your theme");
+//        final CharSequence [] values = {" Light", " Dark "};
+//        builder.setSingleChoiceItems(values, -1, new DialogInterface.OnClickListener() {
+//
+//            public void onClick(DialogInterface dialog, int item) {
+//
+//                if (item == 0) {
+//                    themeString = "light";
+//                }
+//                else {
+//                    themeString = "dark";
+//                }
+//
+//
+//            }
+//        });
+//
+//        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                //needs to save chosen theme in SQLite
+//                if (themeString .matches("dark")) {
+//                    Toast.makeText(SettingsActivity.this, "Theme was changed to Dark", Toast.LENGTH_SHORT).show();
+//                    SharedPreferences theme = getSharedPreferences("Theme", Context.MODE_PRIVATE);
+//                    SharedPreferences.Editor themeEditor = theme.edit();
+//                    themeEditor.putString("ThemeSP", "dark");
+//                    themeEditor.commit();
+//                    dialogInterface.dismiss();
+//                }
+//                else {
+//                    Toast.makeText(SettingsActivity.this, "The theme was changed to Light", Toast.LENGTH_SHORT).show();
+//                    SharedPreferences theme = getSharedPreferences("Theme", Context.MODE_PRIVATE);
+//                    SharedPreferences.Editor themeEditor = theme.edit();
+//                    themeEditor.putString("ThemeSP", "light");
+//                    themeEditor.commit();
+//                }
+//            }
+//        });
+//        alertDialog1 = builder.create();
+//        alertDialog1.show();
+//
+//    }
 
 }
