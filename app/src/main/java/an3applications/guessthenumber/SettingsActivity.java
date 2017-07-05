@@ -52,7 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
             name.add("\nDefault name\n");
             name.add("\nDonate\n");
 //            name.add("\nTheme\n");
-            longPressDonate();
+            //longPressDonate();
         }
 
         final ArrayAdapter<String> settingsAdapter;
