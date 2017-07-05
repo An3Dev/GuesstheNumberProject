@@ -15,7 +15,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="60dp"
         android:gravity="center_horizontal"
-        android:text="Guess the Number+"
+        android:text="@string/app_name"
         android:textSize="30sp" />
 
     <LinearLayout
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:background="#f01c00"
             android:padding="16dp"
-            android:text="Play"
+            android:text="@string/play"
             android:onClick="game"
             android:textColor="#FFFFFF" />
 
@@ -49,7 +49,7 @@
                 android:layout_weight="5"
                 android:background="#f01c00"
                 android:onClick="goToGameHistory"
-                android:text="Game\nHistory"
+                android:text="@string/game_history"
                 android:textColor="#FFF"
                 android:visibility="visible" />
 
@@ -63,7 +63,7 @@
                 android:layout_weight="5"
                 android:background="#f01c00"
                 android:onClick="goToSettings"
-                android:text="Settings"
+                android:text="@string/settings"
                 android:textColor="#FFF" />
 
 

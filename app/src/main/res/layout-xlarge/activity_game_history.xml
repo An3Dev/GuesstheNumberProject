@@ -10,7 +10,7 @@
         android:id="@+id/easterEggTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Time: 15"
+        android:text="@string/time_15"
         android:layout_margin="5dp"
         android:textSize="18sp"
         android:visibility="gone"/>
@@ -23,6 +23,8 @@
         android:stretchMode="columnWidth"
         android:gravity="center_horizontal"
         android:paddingEnd="15dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="60dp"
         android:paddingStart="60dp"
         android:background="#2358">
     </GridView>
@@ -35,7 +37,9 @@
         android:numColumns="3"
         android:stretchMode="columnWidth"
         tools:context="com.example.android.guessthenumber.GameHistory"
+        android:paddingRight="15dp"
         android:paddingEnd="15dp"
+        android:paddingLeft="60dp"
         android:paddingStart="60dp">
     </GridView>
 </LinearLayout>
