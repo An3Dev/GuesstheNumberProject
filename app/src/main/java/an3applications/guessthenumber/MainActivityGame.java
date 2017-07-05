@@ -74,7 +74,7 @@ public class MainActivityGame extends AppCompatActivity {
                     userInputNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                         @Override
                         public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                            if (userInputNumber.getText().toString().isEmpty() || userInputNumber.getText().toString().matches(" ")){
+                            if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000) {
                                 return false;
                             }
                             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -85,11 +85,7 @@ public class MainActivityGame extends AppCompatActivity {
                     });
 
                 }
-                if (userInputNumber.getText().toString().matches("")) {
-                    guessButton.setEnabled(false);
-
-                }
-                if (userInputNumber.getText().toString().matches("0")) {
+                if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000) {
                     guessButton.setEnabled(false);
                 }
             }
@@ -135,23 +131,20 @@ public class MainActivityGame extends AppCompatActivity {
                     userInputNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                         @Override
                         public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                            if (userInputNumber.getText().toString().isEmpty() || userInputNumber.getText().toString().matches(" ")){
+                            if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000) {
                                 return false;
                             }
-                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
                             getGuess(guessButton);
                             return false;
                         }
                     });
 
                 }
-                if (userInputNumber.getText().toString().matches("")) {
+                if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000) {
                     guessButton.setEnabled(false);
-
-                }
-                if (userInputNumber.getText().toString().matches("0")) {
-                    guessButton.setEnabled(false);
+                    guessButton.setBackgroundColor(getResources().getColor(R.color.lightGray));
+                }else{
+                    guessButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 }
             }
 
@@ -241,6 +234,7 @@ public class MainActivityGame extends AppCompatActivity {
         TextView remainingTriesText = (TextView) findViewById(R.id.remaining_tries);
         //Button nextButton = (Button) findViewById(R.id.next_button);
         View decorView = getWindow().getDecorView();
+        // Clear text
         userInputNumber.setText("");
         String userInputNumberString = userInputNumber.getText().toString();
         //cheat = (TextView) findViewById(R.id.cheat);

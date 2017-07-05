@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,8 +45,6 @@ public class PopupActivity extends AppCompatActivity {
             MainActivityGame.maxNum = 100;
             difficultyText = "Easy";
             Intent intent = new Intent(this, MainActivityGame.class);
-            Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
-            difficulty.setAllCaps(true);
             startActivity(intent);
             finish();
         }
@@ -55,8 +52,6 @@ public class PopupActivity extends AppCompatActivity {
             MainActivityGame.maxNum = 200;
             difficultyText = "Medium";
             Intent intent = new Intent(this, MainActivityGame.class);
-            Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
-            difficulty.setAllCaps(true);
             startActivity(intent);
             finish();
         }
@@ -64,8 +59,6 @@ public class PopupActivity extends AppCompatActivity {
             MainActivityGame.maxNum = 500;
             difficultyText = "Hard";
             Intent intent = new Intent(this, MainActivityGame.class);
-            Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
-            difficulty.setAllCaps(true);
             startActivity(intent);
             finish();
         }
@@ -73,8 +66,6 @@ public class PopupActivity extends AppCompatActivity {
             MainActivityGame.maxNum = 1000;
             difficultyText = "Very Hard";
             Intent intent = new Intent(this, MainActivityGame.class);
-            Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
-            difficulty.setAllCaps(true);
             startActivity(intent);
             finish();
         }
@@ -82,8 +73,6 @@ public class PopupActivity extends AppCompatActivity {
             MainActivityGame.maxNum = 1000000;
             difficultyText = "Impossible";
             Intent intent = new Intent(this, MainActivityGame.class);
-            Button difficulty = (Button) findViewById(R.id.ok_button_difficulty);
-            difficulty.setAllCaps(true);
             startActivity(intent);
             finish();
         }
