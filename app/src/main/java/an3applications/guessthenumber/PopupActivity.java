@@ -43,41 +43,41 @@ public class PopupActivity extends AppCompatActivity {
         guessResponder = (TextView) findViewById(R.id.guess_responder);
         if(easy.isChecked()) {
             MainActivityGame.maxNum = 100;
-            difficultyText = "Easy";
+            difficultyText = getResources().getString(R.string.easy_difficulty);
             Intent intent = new Intent(this, MainActivityGame.class);
             startActivity(intent);
             finish();
         }
         if(medium.isChecked()) {
             MainActivityGame.maxNum = 200;
-            difficultyText = "Medium";
+            difficultyText = getResources().getString(R.string.medium_difficulty);;
             Intent intent = new Intent(this, MainActivityGame.class);
             startActivity(intent);
             finish();
         }
         if(hard.isChecked()) {
             MainActivityGame.maxNum = 500;
-            difficultyText = "Hard";
+            difficultyText = getResources().getString(R.string.hard_difficulty);;
             Intent intent = new Intent(this, MainActivityGame.class);
             startActivity(intent);
             finish();
         }
         if(veryHard.isChecked()) {
             MainActivityGame.maxNum = 1000;
-            difficultyText = "Very Hard";
+            difficultyText = getResources().getString(R.string.very_hard_difficulty);;
             Intent intent = new Intent(this, MainActivityGame.class);
             startActivity(intent);
             finish();
         }
         if(impossible.isChecked()) {
             MainActivityGame.maxNum = 1000000;
-            difficultyText = "Impossible";
+            difficultyText = getResources().getString(R.string.impossible_difficulty);;
             Intent intent = new Intent(this, MainActivityGame.class);
             startActivity(intent);
             finish();
         }
         if (!easy.isChecked() & !medium.isChecked() & !hard.isChecked() & !veryHard.isChecked() & !impossible.isChecked()) {
-            Toast.makeText(PopupActivity.this, "You have to choose a difficulty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PopupActivity.this, getResources().getString(R.string.have_to_choose_difficulty), Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose a difficulty."
+        android:text="@string/choose_difficulty_text"
         android:textColor="#000"/>
 
     <RadioGroup
@@ -25,35 +25,35 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Easy"
+            android:text="@string/easy_difficulty"
             android:id="@+id/easy"
             android:textColor="#000"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medium"
+            android:text="@string/medium_difficulty"
             android:id="@+id/medium"
             android:textColor="#000"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hard"
+            android:text="@string/hard_difficulty"
             android:id="@+id/hard"
             android:textColor="#000"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Very Hard"
+            android:text="@string/very_hard_difficulty"
             android:id="@+id/veryHard"
             android:textColor="#000"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Impossible"
+            android:text="@string/impossible_difficulty"
             android:id="@+id/impossible"
             android:textColor="#000"/>
 
@@ -62,7 +62,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ok"
+        android:text="@string/OK"
         android:background="#f01"
         android:textColor="#FFF"
         android:layout_marginTop="16dp"

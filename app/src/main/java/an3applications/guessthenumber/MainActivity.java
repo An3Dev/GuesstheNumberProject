@@ -1,13 +1,15 @@
 package an3applications.guessthenumber;
 
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +58,17 @@ public class MainActivity extends AppCompatActivity {
         //Always include myDb = new SQLDatabaseHelper(this);. It gave me problems for hours for not having it.
         myDb = new SQLDatabaseHelper(this);
         gameActivity();
+
+        SharedPreferences timesOn;
+        timesOn = getSharedPreferences("timesUserHasBeenOn", Context.MODE_PRIVATE);
+        int pastTimesOn = timesOn.getInt("thisNum", 0);
+        SharedPreferences.Editor timesOnEditor = timesOn.edit();
+        timesOnEditor.putInt("thisNum",pastTimesOn + 1);
+        timesOnEditor.commit();
+        int presentTimesOn = timesOn.getInt("thisNum", 1);
+        if (presentTimesOn == 5 || presentTimesOn % 5 == 0) {
+            Toast.makeText(MainActivity.this, getResources().getString(R.string.please_donate), Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -90,22 +103,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToSettings(View view) {
-        Cursor easterEggCursor = myDb.getEasterEggFoundData();
-        //isMoveToFirstTriggered = false;
-        if (easterEggCursor.moveToFirst()) {
-            isMoveToFirstTriggered = true;
-            if (easterEggCursor.getString(0) == null) {
-                name.clear();
-
-            } else if (easterEggCursor.getString(0).matches("true")) {
-                name.clear();
-                name.add("\nDefault name\n");
-                name.add("\nDonate\n");
-//                name.add("\nTheme\n");
-                name.add("\nEaster Egg\n");
-            }
-
-        }
+//        Cursor easterEggCursor = myDb.getEasterEggFoundData();
+//        //isMoveToFirstTriggered = false;
+//        if (easterEggCursor.moveToFirst()) {
+//            isMoveToFirstTriggered = true;
+//            if (easterEggCursor.getString(0) == null) {
+//                name.clear();
+//
+//            } else if (easterEggCursor.getString(0).matches("true")) {
+//                name.clear();
+//                name.add(getResources().getString(R.string.default_name));
+//                name.add(getResources().getString(R.string.donate));
+////                name.add("\nTheme\n");
+//                name.add("\nEaster Egg\n");
+//            }
+//
+//        }
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
     }

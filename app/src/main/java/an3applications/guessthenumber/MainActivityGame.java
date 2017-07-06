@@ -180,31 +180,31 @@ public class MainActivityGame extends AppCompatActivity {
 //                    defaultName = c.getString(0);
 //                }
                 if (defaultNameSP == ""){
-                    Toast.makeText(MainActivityGame.this, "Default name not detected. Please report to the developer if you set one up.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivityGame.this, getResources().getString(R.string.default_name_not_detected), Toast.LENGTH_SHORT).show();
                     defaultNameNotDetected();
                 }
                 if (defaultNameSP != "") {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
-                    builder.setTitle("Name");
-                    builder.setMessage("Are you " + defaultNameSP + "?");
+                    builder.setTitle(getResources().getString(R.string.name_game_history));
+                    builder.setMessage(getResources().getString(R.string.are_you)  + " "+ defaultNameSP + "?");
                     builder.setCancelable(false);
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             //Submit default name, go home
                             boolean isInserted = myDb.insertData(defaultNameSP, triesTaken, difficultyText, success);
                             if (isInserted) {
-                                Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivityGame.this, getResources().getString(R.string.your_name_was_submitted), Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivityGame.this, getResources().getString(R.string.error_name_not_submitted), Toast.LENGTH_SHORT).show();
                             }
                             Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
                             startActivity(intent);
                             finish();
                         }
                     });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             userName.setVisibility(View.VISIBLE);
@@ -317,7 +317,7 @@ public class MainActivityGame extends AppCompatActivity {
                     }
                     remainingTriesText.setVisibility(View.GONE);
                     guessResponder.setText("");
-                    guessResponder.setText("Congratulations! You guessed the number in " + triesTaken + " tries.\n\nThe number WAS " + randNum + "!");
+                    guessResponder.setText(getResources().getString(R.string.congrats_secret_item_p1) + triesTaken + getResources().getString(R.string.congrats_secret_item_p2) + randNum + "!");
                     AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
                     fadeIn.setDuration(2000);
                     guessResponder.startAnimation(fadeIn);
@@ -332,31 +332,31 @@ public class MainActivityGame extends AppCompatActivity {
                         @Override
                         public void run() {
                             if (defaultNameSP == ""){
-                                Toast.makeText(MainActivityGame.this, "Default name not detected. Please report to the developer if you set one up.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivityGame.this, getResources().getString(R.string.default_name_not_detected), Toast.LENGTH_SHORT).show();
                                 defaultNameNotDetected();
                             }
                             if (defaultNameSP != "") {
                                 AlertDialog.Builder builder;
                                 builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
-                                builder.setTitle("Name");
-                                builder.setMessage("Are you " + defaultNameSP + "?");
+                                builder.setTitle(getResources().getString(R.string.name_game_history));
+                                builder.setMessage(getResources().getString(R.string.are_you) + " " + defaultNameSP + "?");
                                 builder.setCancelable(false);
-                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         //Submit default name, go home
                                         boolean isInserted = myDb.insertData(defaultNameSP, triesTaken, difficultyText, success);
                                         if (isInserted) {
-                                            Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(MainActivityGame.this, getResources().getString(R.string.your_name_was_submitted), Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(MainActivityGame.this, getResources().getString(R.string.error_name_not_submitted), Toast.LENGTH_SHORT).show();
                                         }
                                         Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
                                 });
-                                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                builder.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         userName.setVisibility(View.VISIBLE);
@@ -400,7 +400,7 @@ public class MainActivityGame extends AppCompatActivity {
             makeNumberAnimation();
         }
     }
-
+    // Make code below able to be translated.
     public void next(View view){
         submitName = (Button) findViewById(R.id.submitName);
         userName = (EditText) findViewById(R.id.user_name);

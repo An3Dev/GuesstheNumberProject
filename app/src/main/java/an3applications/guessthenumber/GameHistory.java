@@ -74,9 +74,9 @@ public class GameHistory extends AppCompatActivity {
         cn = (GridView) findViewById(R.id.column_names);
         columnNamesList.clear();
         players.clear();
-        columnNamesList.add("Name");
-        columnNamesList.add("Tries");
-        columnNamesList.add("Difficulty");
+        columnNamesList.add(getResources().getString(R.string.name_game_history));
+        columnNamesList.add(getResources().getString(R.string.tries_game_history));
+        columnNamesList.add(getResources().getString(R.string.difficulty_game_history));
 
 
         final Cursor c = myDb.getAllData();
@@ -85,9 +85,9 @@ public class GameHistory extends AppCompatActivity {
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
             builder.setCancelable(true);
-            builder.setTitle("No game history");
-            builder.setMessage("No games were found... so play a game!");
-            builder.setPositiveButton("Play", new DialogInterface.OnClickListener() {
+            builder.setTitle(getResources().getString(R.string.no_game_history));
+            builder.setMessage(getResources().getString(R.string.no_games_found));
+            builder.setPositiveButton(getResources().getString(R.string.play), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     Intent intent = new Intent(GameHistory.this, PopupActivity.class);
@@ -95,7 +95,7 @@ public class GameHistory extends AppCompatActivity {
                     finish();
                 }
             });
-            builder.setNeutralButton("Not right now", new DialogInterface.OnClickListener() {
+            builder.setNeutralButton(getResources().getString(R.string.not_right_now), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
@@ -112,13 +112,13 @@ public class GameHistory extends AppCompatActivity {
                 if (name.toString().isEmpty()) {
                     if (success == 0) {
                         //if (Integer.parseInt(tries.toString()) == 10) {
-                        players.add("No name");
+                        players.add(getResources().getString(R.string.play));
                         //adds frown emoji if success is false
                         players.add(tries + "\uD83D\uDE1E");
                         players.add(difficulty);
                     }
                     if (success == 1) {
-                        players.add("No name");
+                        players.add(getResources().getString(R.string.no_name));
                         //adds happy smile emoji if success is true
                         players.add(tries + "\uD83D\uDE03");
                         players.add(difficulty);
@@ -152,9 +152,9 @@ public class GameHistory extends AppCompatActivity {
                                 AlertDialog.Builder builder;
                                 builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
                                 builder.setCancelable(false);
-                                builder.setTitle("Mini game");
-                                builder.setMessage("You just found a mini game! You have 15 seconds to find a secret item on the screen.");
-                                builder.setPositiveButton("Start!", new DialogInterface.OnClickListener() {
+                                builder.setTitle(getResources().getString(R.string.mini_game));
+                                builder.setMessage(getResources().getString(R.string.found_mini_game));
+                                builder.setPositiveButton(getResources().getString(R.string.start), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         dialogInterface.dismiss();
@@ -172,7 +172,7 @@ public class GameHistory extends AppCompatActivity {
 
                                     }
                                 });
-                                builder.setNegativeButton("No thanks", new DialogInterface.OnClickListener() {
+                                builder.setNegativeButton(getResources().getString(R.string.no_thanks), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         dialogInterface.dismiss();
@@ -205,9 +205,9 @@ public class GameHistory extends AppCompatActivity {
                             AlertDialog.Builder builder;
                             builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
                             builder.setCancelable(false);
-                            builder.setTitle("You found the item!");
-                            builder.setMessage("Congratulations! You found the secret item with " + easterEggTime + " seconds to spare! The secret item WAS \"" + randItemString + "\"!");
-                            builder.setNegativeButton("Awesome!", new DialogInterface.OnClickListener() {
+                            builder.setTitle(getResources().getString(R.string.you_found_item));
+                            builder.setMessage(getResources().getString(R.string.congrats_secret_item_p1) + easterEggTime + getResources().getString(R.string.congrats_secret_item_p2) + randItemString + "\"!");
+                            builder.setNegativeButton(getResources().getString(R.string.awesome), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
@@ -272,21 +272,21 @@ public class GameHistory extends AppCompatActivity {
         final AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
         builder.setCancelable(false);
-        builder.setTitle("Delete All History");
+        builder.setTitle(getResources().getString(R.string.delete_all_history));
         //builder.setIcon();
-        builder.setMessage("Are you sure you want to delete ALL your game history?");
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setMessage(getResources().getString(R.string.user_sure_delete_history));
+        builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                Toast.makeText(getApplicationContext(), "Deletion canceled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.deletion_canceled), Toast.LENGTH_SHORT).show();
             }
         });
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 myDb.removeAll();
-                Toast.makeText(getApplicationContext(), "History deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.history_deleted), Toast.LENGTH_SHORT).show();
                 players.clear();
                 gv.setAdapter(adapter);
                 dialogInterface.dismiss();
@@ -304,16 +304,15 @@ public class GameHistory extends AppCompatActivity {
 
             public void onTick(long millisUntilFinished) {
                 easterEggTime = millisUntilFinished / 1000;
-                easterEggTimerText.setText("Time: " + millisUntilFinished / 1000);
+                easterEggTimerText.setText(getResources().getString(R.string.time) + millisUntilFinished / 1000);
             }
-
             public void onFinish() {
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
                 builder.setCancelable(false);
-                builder.setTitle("Game Over");
-                builder.setMessage("Sorry, I\'m afraid you didn't find the item on time. The item was \"" + randItemString + "\".");
-                builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                builder.setTitle(getResources().getString(R.string.game_over));
+                builder.setMessage(getResources().getString(R.string.sorry_mini_game) + randItemString + "\".");
+                builder.setNeutralButton(getResources().getString(R.string.OK), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();

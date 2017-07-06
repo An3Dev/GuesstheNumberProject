@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="7"
-            android:hint="Enter your first name here"
+            android:hint="@string/enter_first_name"
             android:textColor="#000"
             android:inputType="textCapWords"
             android:visibility="gone"/>
@@ -73,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:hint="Take a guess here!"
+            android:hint="@string/take_a_guess_hint"
             android:inputType="number"
             android:maxLines="1"
             android:textColor="#000"
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/guess_button"
-            android:text="Guess"
+            android:text="@string/guess_btn"
             android:background="#f01c00"
             android:textColor="#FFF"
             android:layout_gravity="bottom"
@@ -108,8 +108,5 @@
             android:onClick="next"/>
 
     </LinearLayout>
-
-
-
 
 </RelativeLayout>

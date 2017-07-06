@@ -3,7 +3,6 @@ package an3applications.guessthenumber;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -49,8 +48,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(!isMoveToFirstTriggered) {
             name.clear();
-            name.add("\nDefault name\n");
-            name.add("\nDonate\n");
+            name.add(getResources().getString(R.string.default_name));
+            name.add(getResources().getString(R.string.donate));
 //            name.add("\nTheme\n");
             //longPressDonate();
         }
@@ -64,15 +63,15 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // If Default name item in list view is clicked
-                if (settings.get(i).matches("\nDefault name\n")) {
+                if (settings.get(i).matches(getResources().getString(R.string.default_name))) {
                     showMessage();
                 }
-                if (settings.get(i).matches("\nEaster Egg\n")) {
-                    Intent intent = new Intent(SettingsActivity.this, EasterEggActivity.class);
-                    startActivity(intent);
-                    //Do something
-                }
-                if (settings.get(i).matches("\nDonate\n")) {
+//                if (settings.get(i).matches("\nEaster Egg\n")) {
+//                    Intent intent = new Intent(SettingsActivity.this, EasterEggActivity.class);
+//                    startActivity(intent);
+//                    //Do something
+//                }
+                if (settings.get(i).matches(getResources().getString(R.string.donate))) {
                     //Do something
                     Toast.makeText(SettingsActivity.this, "Sorry, this is not available yet.", Toast.LENGTH_SHORT).show();
                 }
@@ -159,20 +158,20 @@ public class SettingsActivity extends AppCompatActivity {
 //        builder.create().show();
 //    }
 
-    public void longPressDonate() {
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (settings.get(i).matches("\nDonate\n")){
-                    myDb.insertEasterEggFoundData("true");
-                    Toast.makeText(SettingsActivity.this, "You just found an \"Easter Egg\" and its not even available yet! Nice!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SettingsActivity.this, EasterEggActivity.class);
-                    startActivity(intent);
-                }
-                return false;
-            }
-        });
-    }
+//    public void longPressDonate() {
+//        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                if (settings.get(i).matches("\nDonate\n")){
+//                    myDb.insertEasterEggFoundData("true");
+//                    Toast.makeText(SettingsActivity.this, "You just found an \"Easter Egg\" and its not even available yet! Nice!", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(SettingsActivity.this, EasterEggActivity.class);
+//                    startActivity(intent);
+//                }
+//                return false;
+//            }
+//        });
+//    }
 
 //    public void createAlertDialogWithRadioButtonGroup(){
 //
