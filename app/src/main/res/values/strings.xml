@@ -62,5 +62,5 @@
     <string name="forgot_default_name">You may have forgotten to set up your default name. After submitting your name go to Settings/Default name.</string>
     <string name="type_name">Type name</string>
     <string name="sure_donate">I\'ll donate</string>
-    <string name="donation">Donation</string>
+    <string name="donation">Donation </string>
 </resources>
