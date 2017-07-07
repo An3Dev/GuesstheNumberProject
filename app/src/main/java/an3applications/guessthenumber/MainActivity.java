@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
@@ -12,23 +15,52 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
     SQLDatabaseHelper myDb;
     Button play;
     Button allGames;
     Button settingsBtn;
+    //static boolean mainActivityActive;
     static List<String> name = new ArrayList<String>();
     static boolean isMoveToFirstTriggered;
     //private AdView mAdView;
+    ColorDrawable[] redToBlackBackground = {
+            new ColorDrawable(Color.parseColor("#f01c00")),
+            new ColorDrawable(Color.parseColor("#000000"))
+    };
+    ColorDrawable[] blackToRedBackground = {
+            new ColorDrawable(Color.parseColor("#000000")),
+            new ColorDrawable(Color.parseColor("#f01c00"))
+    };
+
+    TransitionDrawable redToBlack;
+    TransitionDrawable blackToRed;
+
+//    @Override
+//    public void onStart(){
+//        super.onStart();
+//        mainActivityActive = true;
+//        startColorAnimation();
+//
+//    }
+//
+//    @Override
+//    public void onStop(){
+//        super.onStop();
+//        Toast.makeText(MainActivity.this, "onStop", Toast.LENGTH_SHORT).show();
+//        mainActivityActive = false;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        redToBlack = new TransitionDrawable(redToBlackBackground);
+        blackToRed = new TransitionDrawable(blackToRedBackground);
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -52,11 +84,24 @@ public class MainActivity extends AppCompatActivity {
 //        AdRequest adRequest = new AdRequest.Builder().build();
 //        mAdView.loadAd(adRequest);
 
-
         allGames = (Button) findViewById(R.id.all_games);
         settingsBtn = (Button) findViewById(R.id.settings_button);
         play = (Button) findViewById(R.id.play_button);
-
+        Toast.makeText(MainActivity.this, "", Toast.LENGTH_SHORT).show();
+//        final AnimationDrawable drawable = new AnimationDrawable();
+//        final Handler handler = new Handler();
+//
+//        drawable.addFrame(new ColorDrawable(Color.RED), 800);
+//        drawable.addFrame(new ColorDrawable(Color.BLACK), 800);
+//        drawable.setOneShot(false);
+//
+//        play.setBackgroundDrawable(drawable);
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                drawable.start();
+//            }
+//        }, 100);
         //Always include myDb = new SQLDatabaseHelper(this);. It gave me problems for hours for not having it.
         myDb = new SQLDatabaseHelper(this);
         gameActivity();
@@ -143,4 +188,24 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
     }
+
+//    public void startColorAnimation(){
+//        while (mainActivityActive){
+//            Toast.makeText(MainActivity.this, "onStart", Toast.LENGTH_SHORT).show();
+//        }
+//        play.setBackground(redToBlack);
+//        redToBlack.startTransition(1000);
+//        final CountDownTimer cdn = new CountDownTimer(1000, 250) {
+//            @Override
+//            public void onTick(long l) {
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//                play.setBackground(blackToRed);
+//                blackToRed.startTransition(1000);
+//            }
+//        };
+//        cdn.start();
+//    }
 }

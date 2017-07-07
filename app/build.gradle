@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "an3applications.guessthenumber"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"

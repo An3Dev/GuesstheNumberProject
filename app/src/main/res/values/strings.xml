@@ -17,7 +17,6 @@
     <string name="hard_difficulty">Hard</string>
     <string name="very_hard_difficulty">Very Hard</string>
     <string name="impossible_difficulty">Impossible</string>
-    <string name="easter_egg_coming_soon">Coming soon...maybe</string>
     <string name="name_game_history">Name</string>
     <string name="tries_game_history">Tries</string>
     <string name="difficulty_game_history">Difficulty</string>

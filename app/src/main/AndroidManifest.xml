@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="an3applications.guessthenumber">
 
+    <uses-sdk android:minSdkVersion="16" />
 
     <application
         android:allowBackup="true"
