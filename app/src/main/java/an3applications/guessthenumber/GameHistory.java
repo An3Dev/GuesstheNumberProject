@@ -206,7 +206,7 @@ public class GameHistory extends AppCompatActivity {
                             builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
                             builder.setCancelable(false);
                             builder.setTitle(getResources().getString(R.string.you_found_item));
-                            builder.setMessage(getResources().getString(R.string.congrats_secret_item_p1) + easterEggTime + getResources().getString(R.string.congrats_secret_item_p2) + randItemString + "\"!");
+                            builder.setMessage(getResources().getString(R.string.congrats_secret_item_p1) + " "+ easterEggTime + " " + getResources().getString(R.string.congrats_secret_item_p2) + randItemString + "\"!");
                             builder.setNegativeButton(getResources().getString(R.string.awesome), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -311,7 +311,7 @@ public class GameHistory extends AppCompatActivity {
                 builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
                 builder.setCancelable(false);
                 builder.setTitle(getResources().getString(R.string.game_over));
-                builder.setMessage(getResources().getString(R.string.sorry_mini_game) + randItemString + "\".");
+                builder.setMessage(getResources().getString(R.string.sorry_mini_game)  + randItemString + "\".");
                 builder.setNeutralButton(getResources().getString(R.string.OK), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

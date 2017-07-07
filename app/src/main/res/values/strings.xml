@@ -56,11 +56,13 @@
     <string name="remaining_tries_java">Remaining tries: </string>
     <string name="is_too_high"> is too high</string>
     <string name="guess_a_num">Guess a number between \n1 and </string>
-    <string name="sorry_i_am_afraid">Sorry, I\'m afraid you didn\'t\nGuess the Number\nThe number was...</string>
+    <string name="sorry_i_am_afraid">Sorry I\'m afraid you didn\'t \nGuess the Number \nThe number was ...</string>
     <string name="never_been_a_name">There\'s never been a name \" \", lets keep it that way. Try again. </string>
     <string name="name_too_long">Your name is too long. It has to be under 10 characters.</string>
     <string name="forgot_default_name">You may have forgotten to set up your default name. After submitting your name go to Settings/Default name.</string>
     <string name="type_name">Type name</string>
     <string name="sure_donate">I\'ll donate</string>
-    <string name="donation">Donation </string>
+    <string name="donation">Donation</string>
+    <string name="congrats_main_game_p1">Congratulations! You guessed the number in </string>
+    <string name="congrats_main_game_p2"> tries.\n\nThe number WAS </string>
 </resources>

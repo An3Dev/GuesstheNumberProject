@@ -14,11 +14,11 @@
     <string name="submit_name_btn">「提交」名稱</string>
     <string name="choose_difficulty_text">選擇的困難度。</string>
     <string name="easy_difficulty">簡單易用</string>
-    <string name="medium_difficulty">中小型企業</string>
-    <string name="hard_difficulty">硬體</string>
+    <string name="medium_difficulty">中等難度</string>
+    <string name="hard_difficulty">困難難度</string>
     <string name="very_hard_difficulty">非常硬體</string>
-    <string name="impossible_difficulty">不太可能</string>
-    <string name="easter_egg_coming_soon">即將推出 ... 也許</string>
+    <string name="impossible_difficulty">不可能</string>
+    <string name="easter_egg_coming_soon">即即將推出</string>
     <string name="name_game_history">名稱</string>
     <string name="tries_game_history">嘗試</string>
     <string name="difficulty_game_history">困難</string>
@@ -29,11 +29,11 @@
     <string name="mini_game">迷你遊戲規則</string>
     <string name="found_mini_game">您只要找到某個迷你遊戲 ! 您有 15 秒的時間來尋找秘密項目從您的遊戲歷程記錄。</string>
     <string name="start">開始 !</string>
-    <string name="no_thanks">無謝謝您</string>
-    <string name="you_found_item">您找到的項目 !</string>
+    <string name="no_thanks">不用了，謝謝</string>
+    <string name="you_found_item">您找你找到了這個項目！</string>
     <string name="congrats_secret_item_p1">恭喜 ! 您找到了秘密項目與</string>
     <string name="congrats_secret_item_p2">數秒至備用 ! 秘密項目的「」</string>
-    <string name="delete_all_history">刪除所有記錄</string>
+    <string name="delete_all_history">刪除所有歷史記錄</string>
     <string name="user_sure_delete_history">您確定要刪除所有的遊戲歷程嗎 ?</string>
     <string name="deletion_canceled">已取消刪除</string>
     <string name="cancel">取消</string>
@@ -49,7 +49,7 @@
     <string name="error_name_not_submitted">錯誤、您的姓名並未提交</string>
     <string name="no">沒有</string>
     <string name="have_to_choose_difficulty">您已選擇的困難度。</string>
-    <string name="please_donate">您好 , 如果您想要此應用程式 , 請考慮捐贈給我、和評等應用程式。 此應用程式將會永遠是兩個免費且無廣告的。</string>
+    <string name="please_donate">您您好，如果您喜歡這個程序，請考慮捐贈給我並評估應用程序。這個程序永遠是免費的，沒有廣告。</string>
     <string name="is_too_low">太低</string>
     <string name="remaining_tries_java">剩餘嘗試 : </string>
     <string name="is_too_high">太高</string>
@@ -62,4 +62,6 @@
     <string name="sure_donate">我會捐出</string>
     <string name="donation">政治獻金</string>
     <string name="are_you">您</string>
+    <string name="congrats_main_p1">恭喜！你猜到了這個數字</string>
+    <string name="congrats_main_p2">試試吧！數字是</string>
 </resources>

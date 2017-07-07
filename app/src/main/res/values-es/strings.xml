@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    é á í ó ú ¡
     <string name="app_name">Guess the Number+</string>
     <string name="OK" translatable="false">OK</string>
     <string name="are_you">Eres</string>
@@ -64,4 +63,6 @@
     <string name="you_found_item">¡Usted encontro al articulo!</string>
     <string name="your_name_was_submitted">Su nombre fue enviado.</string>
     <string name="donation">Donacion</string>
+    <string name="congrats_main_game_p1">Felicidades! Usted adivinó el número en </string>
+    <string name="congrats_main_game_p2"> intentos. El número si fue </string>
 </resources>

@@ -317,7 +317,7 @@ public class MainActivityGame extends AppCompatActivity {
                     }
                     remainingTriesText.setVisibility(View.GONE);
                     guessResponder.setText("");
-                    guessResponder.setText(getResources().getString(R.string.congrats_secret_item_p1) + " " + triesTaken + " " + getResources().getString(R.string.congrats_secret_item_p2) + " "+ randNum + "!");
+                    guessResponder.setText(getResources().getString(R.string.congrats_main_game_p1) + " " + triesTaken + " " + getResources().getString(R.string.congrats_main_game_p2) + " " + randNum + "!");
                     AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
                     fadeIn.setDuration(2000);
                     guessResponder.startAnimation(fadeIn);
