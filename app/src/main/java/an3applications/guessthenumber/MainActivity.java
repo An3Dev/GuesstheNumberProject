@@ -1,15 +1,17 @@
 package an3applications.guessthenumber;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +69,26 @@ public class MainActivity extends AppCompatActivity {
         timesOnEditor.commit();
         int presentTimesOn = timesOn.getInt("thisNum", 1);
         if (presentTimesOn == 5 || presentTimesOn % 5 == 0) {
-            Toast.makeText(MainActivity.this, getResources().getString(R.string.please_donate), Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivity.this, R.style.AlertDialogCustom));
+            builder.setTitle(R.string.donation);
+            builder.setMessage(R.string.please_donate);
+            builder.setCancelable(false);
+            builder.setNegativeButton(R.string.no_thanks, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            builder.setPositiveButton(R.string.sure_donate, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent makeSomeMoney = new Intent(MainActivity.this, SettingsActivity.class);
+                    makeSomeMoney.putExtra("Donation", "true");
+                    startActivity(makeSomeMoney);
+                }
+            });
+            builder.show();
         }
     }
 

@@ -98,7 +98,7 @@ public class MainActivityGame extends AppCompatActivity {
         });
 
         TextView guessResponder = (TextView) findViewById(R.id.guess_responder);
-        guessResponder.setText("Choose a number between\n1 and " + maxNum);
+        guessResponder.setText(getResources().getString(R.string.guess_a_num) + " " + maxNum);
 
         myDb = new SQLDatabaseHelper(this);
         success = 0;
@@ -280,26 +280,26 @@ public class MainActivityGame extends AppCompatActivity {
             if (!userInputNumberString.matches("") || !userInputNumberString.matches("0")) {
                 if (userInputInt < randNum) {
                     guessResponder.setText("");
-                    guessResponder.setText(userInputInt + " is too low");
+                    guessResponder.setText(userInputInt +  " " + getResources().getString(R.string.is_too_low));
                     AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
                     guessResponder.startAnimation(fadeIn);
                     fadeIn.setFillAfter(true);
                     fadeIn.setDuration(2000);
                     triesTaken += 1;
                     remainingTries -= 1;
-                    remainingTriesText.setText("Remaining tries: " + remainingTries);
+                    remainingTriesText.setText(getResources().getString(R.string.remaining_tries_java) +  " " + remainingTries);
                     guessButton.setAllCaps(false);
                 }
                 if (userInputInt > randNum) {
                     guessResponder.setText("");
-                    guessResponder.setText(userInputInt + " is too high");
+                    guessResponder.setText(userInputInt + " " + getResources().getString(R.string.is_too_high));
                     AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
                     guessResponder.startAnimation(fadeIn);
                     fadeIn.setFillAfter(true);
                     fadeIn.setDuration(2000);
                     triesTaken += 1;
                     remainingTries -= 1;
-                    remainingTriesText.setText("Remaining tries: " + remainingTries);
+                    remainingTriesText.setText(getResources().getString(R.string.remaining_tries_java) + " " + remainingTries);
                     guessButton.setAllCaps(false);
                 }
 
@@ -317,7 +317,7 @@ public class MainActivityGame extends AppCompatActivity {
                     }
                     remainingTriesText.setVisibility(View.GONE);
                     guessResponder.setText("");
-                    guessResponder.setText(getResources().getString(R.string.congrats_secret_item_p1) + triesTaken + getResources().getString(R.string.congrats_secret_item_p2) + randNum + "!");
+                    guessResponder.setText(getResources().getString(R.string.congrats_secret_item_p1) + " " + triesTaken + " " + getResources().getString(R.string.congrats_secret_item_p2) + " "+ randNum + "!");
                     AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
                     fadeIn.setDuration(2000);
                     guessResponder.startAnimation(fadeIn);
@@ -388,7 +388,7 @@ public class MainActivityGame extends AppCompatActivity {
             userInputNumber.setVisibility(View.GONE);
             guessButton.setVisibility(View.GONE);
             guessResponder.setText("");
-            guessResponder.setText("Sorry, I'm afraid you didn't\nGuess the Number\nThe number was...");
+            guessResponder.setText(getResources().getString(R.string.sorry_i_am_afraid));
             AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
             AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
             guessResponder.startAnimation(fadeIn);
@@ -405,31 +405,31 @@ public class MainActivityGame extends AppCompatActivity {
         submitName = (Button) findViewById(R.id.submitName);
         userName = (EditText) findViewById(R.id.user_name);
         if (userName.getText().toString().isEmpty()) {
-            Toast.makeText(MainActivityGame.this, "There's never been a name \" \", lets keep it that way. Try again. ", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivityGame.this, getResources().getString(R.string.never_been_a_name), Toast.LENGTH_LONG).show();
         }
         if (userName.getText().toString().length() <= 10 & userName.getText().toString().length() > 0) {
             boolean isInserted = myDb.insertData(userName.getText().toString(), triesTaken, difficultyText, success);
             if (isInserted) {
-                Toast.makeText(MainActivityGame.this, "Your name was submitted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivityGame.this, getResources().getString(R.string.your_name_was_submitted), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(MainActivityGame.this, "Error, your name wasn't submitted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivityGame.this, getResources().getString(R.string.error_name_not_submitted), Toast.LENGTH_SHORT).show();
             }
             Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
             startActivity(intent);
             finish();
         } if (userName.getText().toString().length() > 10) {
-            Toast.makeText(MainActivityGame.this, "Your name is too long. It has to be under 10 characters.", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivityGame.this, getResources().getString(R.string.name_too_long), Toast.LENGTH_LONG).show();
         }
     }
 
     public void defaultNameNotDetected() {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivityGame.this, R.style.AlertDialogCustom));
-        builder.setTitle("Name");
+        builder.setTitle(getResources().getString(R.string.name_game_history));
         if (defaultName == null) {
-            builder.setMessage("You may have forgotten to set up your default name. After submitting your name go to Settings/Default name.");
+            builder.setMessage(getResources().getString(R.string.forgot_default_name));
             builder.setCancelable(false);
-            builder.setNeutralButton("Type name", new DialogInterface.OnClickListener() {
+            builder.setNeutralButton(R.string.type_name, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     userName.setVisibility(View.VISIBLE);

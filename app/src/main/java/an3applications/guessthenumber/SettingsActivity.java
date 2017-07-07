@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
@@ -43,6 +44,20 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         myDb = new SQLDatabaseHelper(this);
+
+        final String newString;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                newString = null;
+            } else {
+                newString = extras.getString("donation");
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(new ContextThemeWrapper(SettingsActivity.this, R.style.AlertDialogCustom));
+                builder.show();
+            }
+        }
+
 
 
 
