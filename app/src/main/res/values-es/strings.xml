@@ -11,7 +11,7 @@
     <string name="congrats_secret_item_p2">segundos! El articulo secreto si fue </string>
     <string name="default_name">\nNombre predeterminado\n</string>
     <string name="default_name_not_detected">Su nombre predeterminado no fue detectado.</string>
-    <string name="delete_all_history">Borracion de sus juegos</string>
+    <string name="delete_all_history">Borrar Historiales de Juegos</string>
     <string name="deletion_canceled">Los juegos no se borraron</string>
     <string name="difficulty_game_history">Dificultad</string>
     <string name="donate">\nDonacion\n</string>
