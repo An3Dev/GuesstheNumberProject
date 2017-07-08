@@ -63,4 +63,9 @@
     <string name="are_you">您</string>
     <string name="congrats_main_p1">恭喜！你猜到了這個數字</string>
     <string name="congrats_main_p2">試試吧！數字是</string>
+    <string name="new_default_name">新的默認名稱</string>
+    <string name="type_default_name">輸入您的名字或暱稱。</string>
+    <string name="done">完成</string>
+    <string name="default_name_changed">它的默認名稱變更為</string>
+    <string name="share">分享</string>
 </resources>

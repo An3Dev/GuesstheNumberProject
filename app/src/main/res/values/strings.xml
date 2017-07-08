@@ -64,4 +64,9 @@
     <string name="donation">Donation</string>
     <string name="congrats_main_game_p1">Congratulations! You guessed the number in </string>
     <string name="congrats_main_game_p2"> tries.\n\nThe number WAS </string>
+    <string name="new_default_name">New Default Name</string>
+    <string name="type_default_name">Type in your first name or nickname.</string>
+    <string name="done">Done</string>
+    <string name="default_name_changed">You default name was changed to</string>
+    <string name="share">Share</string>
 </resources>

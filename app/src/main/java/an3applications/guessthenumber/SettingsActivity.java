@@ -61,6 +61,7 @@ public class SettingsActivity extends AppCompatActivity {
             name.clear();
             name.add(getResources().getString(R.string.default_name));
             name.add(getResources().getString(R.string.donate));
+            name.add(getResources().getString(R.string.share));
 //            name.add("\nTheme\n");
             //longPressDonate();
         }
@@ -85,7 +86,11 @@ public class SettingsActivity extends AppCompatActivity {
                 if (settings.get(i).matches(getResources().getString(R.string.donate))) {
                     //Donation should open the in-app purchases
                     donation();
-                    Toast.makeText(SettingsActivity.this, "Sorry, this is not available yet.", Toast.LENGTH_SHORT).show();
+
+                }
+                if (settings.get(i).matches("Share")) {
+                    //Donation should open the in-app purchases
+                    share();
                 }
 //                if (settings.get(i).matches("\nTheme\n")) {
 //                    //Do something
@@ -108,20 +113,20 @@ public class SettingsActivity extends AppCompatActivity {
     public void showMessage() {
         final AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(SettingsActivity.this);
-        builder.setTitle("New Default Name");
-        builder.setMessage("Type in your first name or nickname.");
+        builder.setTitle(R.string.new_default_name);
+        builder.setMessage(R.string.type_default_name);
         builder.setCancelable(false);
         final EditText input = new EditText(SettingsActivity.this);
         input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         ListView.LayoutParams lp = new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT);
         input.setLayoutParams(lp);
         builder.setView(input);
-        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.done, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
             }
         });
-        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -137,7 +142,7 @@ public class SettingsActivity extends AppCompatActivity {
             {
                 Boolean wantToCloseDialog = false;
                 if (input.getText().toString().isEmpty()) {
-                    Toast.makeText(SettingsActivity.this, "There's never been a name \"\", lets keep it that way. If your name is \"\" then email me.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SettingsActivity.this, R.string.never_been_a_name, Toast.LENGTH_LONG).show();
                 }
                 if (input.getText().toString().length() <= 10 & input.getText().toString().length() > 0) {
                     //insert shared preferences
@@ -145,11 +150,11 @@ public class SettingsActivity extends AppCompatActivity {
                     SharedPreferences.Editor defaultNameEditor = defaultNameSharedPrefs.edit();
                     defaultNameEditor.putString("DEFAULT_NAME", input.getText().toString());
                     defaultNameEditor.commit();
-                    Toast.makeText(SettingsActivity.this, "Your default name was changed to " + input.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivity.this, R.string.default_name_changed + " " + input.getText().toString(), Toast.LENGTH_SHORT).show();
                     wantToCloseDialog = true;
                 } if (input.getText().toString().length() > 10) {
 
-                Toast.makeText(SettingsActivity.this, "Your name is too long. It has to be under 10 characters.", Toast.LENGTH_LONG).show();
+                Toast.makeText(SettingsActivity.this, R.string.name_too_long, Toast.LENGTH_LONG).show();
 
             }
                 if(wantToCloseDialog)
@@ -235,6 +240,10 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void donation() {
         // This should open the in-app purchases.
+    }
+
+    public void share() {
+        //This should open the different ways to share the app.
     }
 
 }
