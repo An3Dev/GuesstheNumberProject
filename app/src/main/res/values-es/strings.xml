@@ -67,5 +67,6 @@
     <string name="type_default_name">Escriba su primer nombre</string>
     <string name="done">OK</string>
     <string name="default_name_changed">Su nombre predeterminado fue cambiado a </string>
-    <string name="share">Compartir</string>
+    <string name="share">\nCompartir\n</string>
+    <string name="invitation_message">Hola! Debes instalar un juego llamado Guess the Number+. Es muy divertido!</string>
 </resources>

@@ -1,4 +1,4 @@
-package an3applications.guessthenumber;
+package an3enterprises.guessthenumber;
 
 import android.content.Intent;
 import android.os.Bundle;

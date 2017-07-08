@@ -1,4 +1,4 @@
-package an3applications.guessthenumber;
+package an3enterprises.guessthenumber;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package an3applications.guessthenumber;
+package an3enterprises.guessthenumber;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-import static an3applications.guessthenumber.PopupActivity.difficultyText;
+import static an3enterprises.guessthenumber.PopupActivity.difficultyText;
 
 public class MainActivityGame extends AppCompatActivity {
 

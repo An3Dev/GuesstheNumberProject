@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:285356975873:android:c2c317736bae63e6",
+        "mobilesdk_app_id": "1:285356975873:android:81aed04b92cdaa60",
         "android_client_info": {
-          "package_name": "an3applications.guessthenumber"
+          "package_name": "an3enterprises.guessthenumber"
         }
       },
       "oauth_client": [
         {
-          "client_id": "285356975873-qtfs179meq10t6plsm08gs1tqnar1k5r.apps.googleusercontent.com",
+          "client_id": "285356975873-k0pdpqnml3gk5m0s3pbi12tk0doo7cuj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "an3applications.guessthenumber",
+            "package_name": "an3enterprises.guessthenumber",
             "certificate_hash": "a26ca99acf663999ee33a5f265ec959589275958"
           }
         },

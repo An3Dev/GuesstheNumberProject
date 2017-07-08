@@ -2,7 +2,7 @@
     <string name="app_name">Guess the Number+</string>
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="time_15">Time: 15</string>
-    <string name="dev_name" translatable="false">An3 Applications</string>
+    <string name="dev_name" translatable="false">An3Enterprises</string>
     <string name="play">Play</string>
     <string name="game_history">Game\nHistory</string>
     <string name="settings">Settings</string>
@@ -68,5 +68,11 @@
     <string name="type_default_name">Type in your first name or nickname.</string>
     <string name="done">Done</string>
     <string name="default_name_changed">You default name was changed to</string>
-    <string name="share">Share</string>
+    <string name="share">\nShare\n</string>
+    <string name="invitation_message">Hey! You should install the app Guess the Number+! Its fun!</string>
+    <string name="invitation_message_subject" translatable="false">Guess the Number+</string>
+    <string name="invitation_deep_link">https://youtube.com</string>
+    <string name="invitation_cta" translatable="false">Guess the Number+</string>
+    <string name="invitation_title" translatable="false">Guess the Number+</string>
+
 </resources>

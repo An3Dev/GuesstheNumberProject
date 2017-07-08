@@ -1,4 +1,4 @@
-package an3applications.guessthenumber;
+package an3enterprises.guessthenumber;
 
 import org.junit.Test;
 

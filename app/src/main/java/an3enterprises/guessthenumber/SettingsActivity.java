@@ -1,12 +1,14 @@
-package an3applications.guessthenumber;
+package an3enterprises.guessthenumber;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,10 +16,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.appinvite.AppInviteInvitation;
+
 import java.util.ArrayList;
 
-import static an3applications.guessthenumber.MainActivity.isMoveToFirstTriggered;
-import static an3applications.guessthenumber.MainActivity.name;
+import static an3enterprises.guessthenumber.MainActivity.isMoveToFirstTriggered;
+import static an3enterprises.guessthenumber.MainActivity.name;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -25,6 +29,27 @@ public class SettingsActivity extends AppCompatActivity {
     ListView lv;
     ArrayList<String> settings;
     String themeString;
+    private static final int REQUEST_INVITE = 0;
+    private static final String TAG = "MainActivity";
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: requestCode=" + requestCode + ", resultCode=" + resultCode);
+
+        if (requestCode == REQUEST_INVITE) {
+            if (resultCode == RESULT_OK) {
+                // Get the invitation IDs of all sent messages
+                String[] ids = AppInviteInvitation.getInvitationIds(resultCode, data);
+                for (String id : ids) {
+                    Log.d(TAG, "onActivityResult: sent invitation " + id);
+                }
+            } else {
+                // Sending failed or it was canceled, show failure message to the user
+                // ...
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +113,9 @@ public class SettingsActivity extends AppCompatActivity {
                     donation();
 
                 }
-                if (settings.get(i).matches("Share")) {
+                if (settings.get(i).matches(getResources().getString(R.string.share))) {
                     //Donation should open the in-app purchases
-                    share();
+                    onInviteClicked();
                 }
 //                if (settings.get(i).matches("\nTheme\n")) {
 //                    //Do something
@@ -142,7 +167,7 @@ public class SettingsActivity extends AppCompatActivity {
             {
                 Boolean wantToCloseDialog = false;
                 if (input.getText().toString().isEmpty()) {
-                    Toast.makeText(SettingsActivity.this, R.string.never_been_a_name, Toast.LENGTH_LONG).show();
+                    Toast.makeText(SettingsActivity.this, getResources().getString(R.string.never_been_a_name), Toast.LENGTH_LONG).show();
                 }
                 if (input.getText().toString().length() <= 10 & input.getText().toString().length() > 0) {
                     //insert shared preferences
@@ -150,7 +175,7 @@ public class SettingsActivity extends AppCompatActivity {
                     SharedPreferences.Editor defaultNameEditor = defaultNameSharedPrefs.edit();
                     defaultNameEditor.putString("DEFAULT_NAME", input.getText().toString());
                     defaultNameEditor.commit();
-                    Toast.makeText(SettingsActivity.this, R.string.default_name_changed + " " + input.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivity.this, getResources().getString(R.string.default_name_changed) + "  " + input.getText().toString(), Toast.LENGTH_SHORT).show();
                     wantToCloseDialog = true;
                 } if (input.getText().toString().length() > 10) {
 
@@ -242,8 +267,13 @@ public class SettingsActivity extends AppCompatActivity {
         // This should open the in-app purchases.
     }
 
-    public void share() {
-        //This should open the different ways to share the app.
+    private void onInviteClicked() {
+        Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
+                .setMessage(getString(R.string.invitation_message))
+//                .setDeepLink(Uri.parse(getString(R.string.invitation_deep_link)))
+                .setCallToActionText(getString(R.string.invitation_cta))
+                .build();
+        startActivityForResult(intent, REQUEST_INVITE);
     }
 
 }
