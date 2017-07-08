@@ -13,8 +13,6 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_2 = "TRIES";
     public static final String COL_3 = "DIFFICULTY";
     public static final String COL_4 = "SUCCESS";
-    public static final String EASTER_EGG_TABLE = "easter_egg_table";
-    public static final String COL_1_EASTER = "EASTER_EGG_FOUND";
     SQLiteDatabase guessTheNumber = this.getWritableDatabase();
 
 
@@ -26,13 +24,11 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase guessTheNumber) {
 //        guessTheNumber.execSQL("create table " + TABLE_NAME + " (NAME TEXT, TRIES INTEGER, DIFFICULTY TEXT, DEFAULT_NAME TEXT, SUCCESS INTEGER, EASTER_EGG INTEGER)");
         guessTheNumber.execSQL("create table " + TABLE_NAME + " (NAME TEXT, TRIES INTEGER, DIFFICULTY TEXT, SUCCESS INTEGER)");
-        guessTheNumber.execSQL("create table " + EASTER_EGG_TABLE + " (EASTER_EGG_FOUND TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase guessTheNumber, int i, int i1) {
         guessTheNumber.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        guessTheNumber.execSQL("DROP TABLE IF EXISTS " + EASTER_EGG_TABLE);
         onCreate(guessTheNumber);
     }
 
@@ -63,7 +59,6 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
 //        String[] namesColumn = {COL_1};
 //        return guessTheNumber.query(TABLE_NAME, namesColumn, null, null, null, null, null);
 //    }
-     // TODO: 6/27/17 Make this remove name, tries, and difficulty of all games. It deletes everything right now.
     public void removeAll() {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.execSQL("delete from " + TABLE_NAME);
@@ -98,20 +93,20 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
 //        return guessTheNumber.query(TABLE_NAME, easterColumns, null, null, null, null, null);
 //    }
 
-    public boolean insertEasterEggFoundData(String isEasterEggFound) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1_EASTER, isEasterEggFound);
-        long result = guessTheNumber.insert(EASTER_EGG_TABLE, null, contentValues);
-        return result != -1;
+//    public boolean insertEasterEggFoundData(String isEasterEggFound) {
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(COL_1_EASTER, isEasterEggFound);
+//        long result = guessTheNumber.insert(EASTER_EGG_TABLE, null, contentValues);
+//        return result != -1;
+//
+//    }
 
-    }
-
-    public Cursor getEasterEggFoundData() {
-//        SQLiteDatabase guessTheNumber = this.getWritableDatabase();
-//        Cursor res = guessTheNumber.rawQuery("Select * from " + TABLE_NAME, null);
-//        return res;
-        String[] columns = {COL_1_EASTER};
-        return guessTheNumber.query(EASTER_EGG_TABLE, columns, null, null, null, null, null);
-    }
+//    public Cursor getEasterEggFoundData() {
+////        SQLiteDatabase guessTheNumber = this.getWritableDatabase();
+////        Cursor res = guessTheNumber.rawQuery("Select * from " + TABLE_NAME, null);
+////        return res;
+//        String[] columns = {COL_1_EASTER};
+//        return guessTheNumber.query(EASTER_EGG_TABLE, columns, null, null, null, null, null);
+//    }
 
 }
