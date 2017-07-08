@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="an3applications.guessthenumber">
 
-    <uses-sdk android:minSdkVersion="16" />
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="N" />
 
     <application
         android:allowBackup="true"
@@ -23,22 +25,22 @@
             android:theme="@style/AndresGameMode"/>
         <activity
             android:name=".MainActivityGame"
-            android:theme="@style/AndresGameMode"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AndresGameMode" />
         <activity
             android:name=".PopupActivity"
-            android:theme="@style/PopupTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/PopupTheme" />
         <activity
             android:name=".SettingsActivity"
             android:label="Settings"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".GameHistory"
             android:label="Game History"
-            android:theme="@style/GridViewStyle"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/GridViewStyle" />
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"

@@ -140,7 +140,7 @@ public class MainActivityGame extends AppCompatActivity {
                     });
 
                 }
-                if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000) {
+                if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000 || Integer.parseInt(userInputNumber.getText().toString()) + 1 == 1) {
                     guessButton.setEnabled(false);
                     guessButton.setBackgroundColor(getResources().getColor(R.color.lightGray));
                 }else{

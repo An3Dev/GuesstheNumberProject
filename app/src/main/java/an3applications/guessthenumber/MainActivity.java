@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
@@ -15,31 +12,30 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    //static boolean mainActivityActive;
+    static List<String> name = new ArrayList<String>();
+    static boolean isMoveToFirstTriggered;
     SQLDatabaseHelper myDb;
     Button play;
     Button allGames;
     Button settingsBtn;
-    //static boolean mainActivityActive;
-    static List<String> name = new ArrayList<String>();
-    static boolean isMoveToFirstTriggered;
     //private AdView mAdView;
-    ColorDrawable[] redToBlackBackground = {
-            new ColorDrawable(Color.parseColor("#f01c00")),
-            new ColorDrawable(Color.parseColor("#000000"))
-    };
-    ColorDrawable[] blackToRedBackground = {
-            new ColorDrawable(Color.parseColor("#000000")),
-            new ColorDrawable(Color.parseColor("#f01c00"))
-    };
-
-    TransitionDrawable redToBlack;
-    TransitionDrawable blackToRed;
+//    ColorDrawable[] redToBlackBackground = {
+//            new ColorDrawable(Color.parseColor("#f01c00")),
+//            new ColorDrawable(Color.parseColor("#000000"))
+//    };
+//    ColorDrawable[] blackToRedBackground = {
+//            new ColorDrawable(Color.parseColor("#000000")),
+//            new ColorDrawable(Color.parseColor("#f01c00"))
+//    };
+//
+//    TransitionDrawable redToBlack;
+//    TransitionDrawable blackToRed;
 
 //    @Override
 //    public void onStart(){
@@ -59,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        redToBlack = new TransitionDrawable(redToBlackBackground);
-        blackToRed = new TransitionDrawable(blackToRedBackground);
+//        redToBlack = new TransitionDrawable(redToBlackBackground);
+//        blackToRed = new TransitionDrawable(blackToRedBackground);
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -87,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         allGames = (Button) findViewById(R.id.all_games);
         settingsBtn = (Button) findViewById(R.id.settings_button);
         play = (Button) findViewById(R.id.play_button);
-        Toast.makeText(MainActivity.this, "", Toast.LENGTH_SHORT).show();
 //        final AnimationDrawable drawable = new AnimationDrawable();
 //        final Handler handler = new Handler();
 //

@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ContextThemeWrapper;
 import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,10 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
             if(extras == null) {
                 newString = null;
             } else {
-                newString = extras.getString("donation");
-                AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(new ContextThemeWrapper(SettingsActivity.this, R.style.AlertDialogCustom));
-                builder.show();
+                donation();
             }
         }
 
@@ -87,7 +83,8 @@ public class SettingsActivity extends AppCompatActivity {
 //                    //Do something
 //                }
                 if (settings.get(i).matches(getResources().getString(R.string.donate))) {
-                    //Do something
+                    //Donation should open the in-app purchases
+                    donation();
                     Toast.makeText(SettingsActivity.this, "Sorry, this is not available yet.", Toast.LENGTH_SHORT).show();
                 }
 //                if (settings.get(i).matches("\nTheme\n")) {
@@ -234,5 +231,9 @@ public class SettingsActivity extends AppCompatActivity {
 //        alertDialog1.show();
 //
 //    }
+
+    public void donation() {
+        // This should open the in-app purchases.
+    }
 
 }
