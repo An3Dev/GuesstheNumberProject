@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.appinvite.AppInviteInvitation;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.ArrayList;
 
@@ -25,12 +26,12 @@ import static an3enterprises.guessthenumber.MainActivity.name;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private static final int REQUEST_INVITE = 0;
+    private static final String TAG = "MainActivity";
     SQLDatabaseHelper myDb;
     ListView lv;
     ArrayList<String> settings;
     String themeString;
-    private static final int REQUEST_INVITE = 0;
-    private static final String TAG = "MainActivity";
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -57,6 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         SharedPreferences themePrefs = getSharedPreferences("Theme", Context.MODE_PRIVATE);
         final String themeSP = themePrefs.getString("ThemeSP", "No theme");
+        FirebaseCrash.log("SettingsActivity created");
 //        if (themeSP.matches("light")) {
 //            getApplication().setTheme(R.style.AppTheme);
 //        }
@@ -142,7 +144,7 @@ public class SettingsActivity extends AppCompatActivity {
         builder.setMessage(R.string.type_default_name);
         builder.setCancelable(false);
         final EditText input = new EditText(SettingsActivity.this);
-        input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        input.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         ListView.LayoutParams lp = new ListView.LayoutParams(ListView.LayoutParams.WRAP_CONTENT, ListView.LayoutParams.WRAP_CONTENT);
         input.setLayoutParams(lp);
         builder.setView(input);

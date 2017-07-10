@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.util.Random;
 
 import static an3enterprises.guessthenumber.PopupActivity.difficultyText;
@@ -41,6 +43,7 @@ public class MainActivityGame extends AppCompatActivity {
     Button guessButton;
     EditText userName;
     Button submitName;
+    private GoogleApiClient mGoogleApiClient;
 
 
 
@@ -307,6 +310,22 @@ public class MainActivityGame extends AppCompatActivity {
                 if (userInputInt == randNum) {
                     SharedPreferences defaultNameSharedPrefs = getSharedPreferences("defaultName", Context.MODE_PRIVATE);
                     final String defaultNameSP = defaultNameSharedPrefs.getString("DEFAULT_NAME", "");
+                    SharedPreferences gamesWon = getSharedPreferences("gamesWon", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor gamesWonEditor = gamesWon.edit();
+                    int gamesWonSP = gamesWon.getInt("gamesWon", Context.MODE_PRIVATE);
+                    gamesWonEditor.putInt("gamesWon", gamesWonSP + 1);
+//                    mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                            .addConnectionCallbacks((GoogleApiClient.ConnectionCallbacks) this)
+//                            .addOnConnectionFailedListener((GoogleApiClient.OnConnectionFailedListener) this)
+//                            .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+//                            .build();
+                    gamesWonEditor.commit();
+//                    Games.Achievements.increment(mGoogleApiClient, "CgkIgc7nhKcIEAIQAg", 1);
+//                    Games.Achievements.increment(mGoogleApiClient, "CgkIgc7nhKcIEAIQAw", 1);
+//                    Games.Achievements.increment(mGoogleApiClient, "CgkIgc7nhKcIEAIQBA", 1);
+//                    if (gamesWonSP + 1 == 10){
+//                        Games.Achievements.unlock(mGoogleApiClient, "CgkIgc7nhKcIEAIQAg");
+//                    }
                     success = 1;
                     triesTaken += 1;
                     remainingTries -= 1;

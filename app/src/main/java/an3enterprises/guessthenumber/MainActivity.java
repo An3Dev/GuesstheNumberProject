@@ -7,11 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     Button play;
     Button allGames;
     Button settingsBtn;
+    private FirebaseAnalytics mFirebaseAnalytics;
     //private AdView mAdView;
 //    ColorDrawable[] redToBlackBackground = {
 //            new ColorDrawable(Color.parseColor("#f01c00")),
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         //decorView.setSystemUiVisibility(uiOptions);
         //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         int presentTimesOn = timesOn.getInt("thisNum", 1);
         if (presentTimesOn == 5 || presentTimesOn % 5 == 0) {
             AlertDialog.Builder builder;
-            builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivity.this, R.style.AlertDialogCustom));
+            builder = new AlertDialog.Builder(new android.view.ContextThemeWrapper(MainActivity.this, R.style.AlertDialogCustom));
             builder.setTitle(R.string.donation);
             builder.setMessage(R.string.please_donate);
             builder.setCancelable(false);

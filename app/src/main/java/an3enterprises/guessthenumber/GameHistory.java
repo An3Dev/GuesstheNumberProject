@@ -19,6 +19,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -47,6 +49,7 @@ public class GameHistory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_history);
+        FirebaseCrash.log("GameHistory created");
         myDb = new SQLDatabaseHelper(this);
 //        Cursor res = myDb.getAllData();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, players);
@@ -146,51 +149,53 @@ public class GameHistory extends AppCompatActivity {
             cn.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (columnNamesList.get(i).matches("Name")) {
-                        if (!isNamePressed) {
-                            if (!timerStarted){
-                                AlertDialog.Builder builder;
-                                builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
-                                builder.setCancelable(false);
-                                builder.setTitle(getResources().getString(R.string.mini_game));
-                                builder.setMessage(getResources().getString(R.string.found_mini_game));
-                                builder.setPositiveButton(getResources().getString(R.string.start), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                        isNamePressed = true;
-                                        AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
-                                        fadeIn.setDuration(500);
-                                        fadeIn.setFillAfter(true);
-                                        easterEggTimerText.setVisibility(View.VISIBLE);
-                                        easterEggTimerText.startAnimation(fadeIn);
-                                        timerStarted = true;
-                                        startEasterEggTimer();
-                                        final int amount = c.getCount() * 3 - 1;
-                                        final int randNum = rand.nextInt(amount) + 1;
-                                        randItemString = players.get(randNum);
+                    if (!players.isEmpty()) {
+                        if (columnNamesList.get(i).matches("Name")) {
+                            if (!isNamePressed) {
+                                if (!timerStarted) {
+                                    AlertDialog.Builder builder;
+                                    builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
+                                    builder.setCancelable(false);
+                                    builder.setTitle(getResources().getString(R.string.mini_game));
+                                    builder.setMessage(getResources().getString(R.string.found_mini_game));
+                                    builder.setPositiveButton(getResources().getString(R.string.start), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            dialogInterface.dismiss();
+                                            isNamePressed = true;
+                                            AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
+                                            fadeIn.setDuration(500);
+                                            fadeIn.setFillAfter(true);
+                                            easterEggTimerText.setVisibility(View.VISIBLE);
+                                            easterEggTimerText.startAnimation(fadeIn);
+                                            timerStarted = true;
+                                            startEasterEggTimer();
+                                            final int amount = c.getCount() * 3 - 1;
+                                            final int randNum = rand.nextInt(amount) + 1;
+                                            randItemString = players.get(randNum);
 
-                                    }
-                                });
-                                builder.setNegativeButton(getResources().getString(R.string.no_thanks), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                        timerStarted = false;
-                                        isNamePressed = false;
-                                    }
-                                });
-                                builder.create();
-                                builder.show();
+                                        }
+                                    });
+                                    builder.setNegativeButton(getResources().getString(R.string.no_thanks), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            dialogInterface.dismiss();
+                                            timerStarted = false;
+                                            isNamePressed = false;
+                                        }
+                                    });
+                                    builder.create();
+                                    builder.show();
 //                    SharedPreferences defaultNameSharedPrefs = getSharedPreferences("EASTER_EGG_2", Context.MODE_PRIVATE);
 //                    SharedPreferences.Editor defaultNameEditor = defaultNameSharedPrefs.edit();
 //                    defaultNameEditor.putString("DEFAULT_NAME", "");
 //                    defaultNameEditor.commit();
+                                }
+                            } else if (isNamePressed) {
+                                return false;
                             }
-                        }else if(isNamePressed) {
-                            return false;
-                        }
 
+                        }
                     }
                     return false;
                 }
