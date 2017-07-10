@@ -22,8 +22,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import java.util.Random;
 
 import static an3enterprises.guessthenumber.PopupActivity.difficultyText;
@@ -43,8 +41,7 @@ public class MainActivityGame extends AppCompatActivity {
     Button guessButton;
     EditText userName;
     Button submitName;
-    private GoogleApiClient mGoogleApiClient;
-
+    //private GoogleApiClient mGoogleApiClient;
 
 
     @Override
@@ -60,6 +57,28 @@ public class MainActivityGame extends AppCompatActivity {
         setContentView(R.layout.activity_main_game);
 
         userInputNumber = (EditText) findViewById(R.id.user_input_number);
+        if (userInputNumber != null) {
+            userInputNumber.setOnTouchListener(new OnSwipeTouchListener(MainActivityGame.this) {
+                public void onSwipeTop() {
+
+                }
+
+                public void onSwipeRight() {
+                }
+
+                public void onSwipeLeft() {
+                }
+
+                public void onSwipeBottom() {
+                    View view = MainActivityGame.this.getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+                }
+
+            });
+        }
         guessButton = (Button) findViewById(R.id.guess_button);
 
         randNum = rand.nextInt(maxNum) + 1;
@@ -111,13 +130,44 @@ public class MainActivityGame extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        View decorView = getWindow().getDecorView();
+        final View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
         // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
         // a general rule, you should design your app to hide the status bar whenever you
         // hide the navigation bar.
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+        if (userInputNumber != null) {
+            userInputNumber.setOnTouchListener(new OnSwipeTouchListener(MainActivityGame.this) {
+                public void onSwipeTop() {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(userInputNumber, InputMethodManager.SHOW_IMPLICIT);
+                    int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+                    decorView.setSystemUiVisibility(uiOptions);
+                }
+
+                public void onSwipeRight() {
+                }
+
+                public void onSwipeLeft() {
+                }
+
+                public void onSwipeBottom() {
+                    View view = MainActivityGame.this.getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+                        decorView.setSystemUiVisibility(uiOptions);
+                    }
+                }
+
+            });
+        }
+
         decorView.setSystemUiVisibility(uiOptions);
 
         userInputNumber.addTextChangedListener(new TextWatcher() {
@@ -315,8 +365,8 @@ public class MainActivityGame extends AppCompatActivity {
                     int gamesWonSP = gamesWon.getInt("gamesWon", Context.MODE_PRIVATE);
                     gamesWonEditor.putInt("gamesWon", gamesWonSP + 1);
 //                    mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                            .addConnectionCallbacks((GoogleApiClient.ConnectionCallbacks) this)
-//                            .addOnConnectionFailedListener((GoogleApiClient.OnConnectionFailedListener) this)
+//                            .addConnectionCallbacks(this)
+//                            .addOnConnectionFailedListener(this)
 //                            .addApi(Games.API).addScope(Games.SCOPE_GAMES)
 //                            .build();
                     gamesWonEditor.commit();
@@ -462,5 +512,24 @@ public class MainActivityGame extends AppCompatActivity {
         }
     }
 
-
+//    @Override
+//    public void onConnected(@Nullable Bundle bundle) {
+//
+//    }
+//
+//    @Override
+//    public void onConnectionSuspended(int i) {
+//
+//    }
+//
+//    @Override
+//    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+//        if (connectionResult.hasResolution()){
+//            try{
+//                connectionResult.startResolutionForResult(this, 0);
+//            }catch (IntentSender.SendIntentException e){
+//                mGoogleApiClient.connect();
+//            }
+//        }
+//    }
 }

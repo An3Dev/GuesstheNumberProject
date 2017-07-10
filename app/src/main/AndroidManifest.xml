@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AndresGameMode"/>
+            android:theme="@style/AndresGameMode" />
         <activity
             android:name=".MainActivityGame"
             android:screenOrientation="portrait"
