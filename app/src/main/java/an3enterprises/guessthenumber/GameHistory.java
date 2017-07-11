@@ -8,16 +8,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextThemeWrapper;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 
@@ -248,23 +244,23 @@ public class GameHistory extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_game_history, menu);
-        MenuItem item = menu.findItem(R.id.delete);
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                showMessage();
-
-                return false;
-            }
-        });
-
-
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_game_history, menu);
+//        MenuItem item = menu.findItem(R.id.delete);
+//        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem menuItem) {
+//                showMessage();
+//
+//                return false;
+//            }
+//        });
+//
+//
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     @Override
     public boolean onSupportNavigateUp(){
@@ -273,34 +269,34 @@ public class GameHistory extends AppCompatActivity {
     }
 
 
-    public void showMessage() {
-        final AlertDialog.Builder builder;
-        builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
-        builder.setCancelable(false);
-        builder.setTitle(getResources().getString(R.string.delete_all_history));
-        //builder.setIcon();
-        builder.setMessage(getResources().getString(R.string.user_sure_delete_history));
-        builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.deletion_canceled), Toast.LENGTH_SHORT).show();
-            }
-        });
-        builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                myDb.removeAll();
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.history_deleted), Toast.LENGTH_SHORT).show();
-                players.clear();
-                gv.setAdapter(adapter);
-                dialogInterface.dismiss();
-
-            }
-        });
-
-        builder.create().show();
-    }
+//    public void showMessage() {
+//        final AlertDialog.Builder builder;
+//        builder = new AlertDialog.Builder(new ContextThemeWrapper(GameHistory.this, R.style.AlertDialogCustom));
+//        builder.setCancelable(false);
+//        builder.setTitle(getResources().getString(R.string.delete_all_history));
+//        //builder.setIcon();
+//        builder.setMessage(getResources().getString(R.string.user_sure_delete_history));
+//        builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//                Toast.makeText(getApplicationContext(), getResources().getString(R.string.deletion_canceled), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                myDb.removeAll();
+//                Toast.makeText(getApplicationContext(), getResources().getString(R.string.history_deleted), Toast.LENGTH_SHORT).show();
+//                players.clear();
+//                gv.setAdapter(adapter);
+//                dialogInterface.dismiss();
+//
+//            }
+//        });
+//
+//        builder.create().show();
+//    }
 
     public void startEasterEggTimer() {
         easterEggTimerText.setVisibility(View.VISIBLE);

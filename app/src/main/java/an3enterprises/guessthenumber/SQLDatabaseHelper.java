@@ -59,10 +59,10 @@ public class SQLDatabaseHelper extends SQLiteOpenHelper {
 //        String[] namesColumn = {COL_1};
 //        return guessTheNumber.query(TABLE_NAME, namesColumn, null, null, null, null, null);
 //    }
-    public void removeAll() {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.execSQL("delete from " + TABLE_NAME);
-    }
+//    public void removeAll() {
+//        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+//        sqLiteDatabase.execSQL("delete from " + TABLE_NAME);
+//    }
 
 
 //    public boolean updateDefaultNameData(String defaultName) {

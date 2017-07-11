@@ -20,8 +20,6 @@ import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.ArrayList;
-
-import static an3enterprises.guessthenumber.MainActivity.isMoveToFirstTriggered;
 import static an3enterprises.guessthenumber.MainActivity.name;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -84,14 +82,15 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
-        if(!isMoveToFirstTriggered) {
-            name.clear();
-            name.add(getResources().getString(R.string.default_name));
-            name.add(getResources().getString(R.string.donate));
-            name.add(getResources().getString(R.string.share));
+
+        name.clear();
+        name.add(getResources().getString(R.string.default_name));
+        name.add(getResources().getString(R.string.donate));
+        name.add(getResources().getString(R.string.share));
+        name.add("\nGoogle Play Games\n");
 //            name.add("\nTheme\n");
             //longPressDonate();
-        }
+
 
         final ArrayAdapter<String> settingsAdapter;
         settings = new ArrayList<String>(MainActivity.name);
@@ -118,6 +117,9 @@ public class SettingsActivity extends AppCompatActivity {
                 if (settings.get(i).matches(getResources().getString(R.string.share))) {
                     //Donation should open the in-app purchases
                     onInviteClicked();
+                }
+                if (settings.get(i).matches("\nGoogle Play Games")){
+
                 }
 //                if (settings.get(i).matches("\nTheme\n")) {
 //                    //Do something

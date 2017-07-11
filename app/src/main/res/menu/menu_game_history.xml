@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.android.guessthenumber.GameHistory">
 
-    <item
-        android:id="@+id/delete"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:title="Delete Game History"
-        app:showAsAction="always" />
+    <!--<item-->
+        <!--android:id="@+id/delete"-->
+        <!--android:icon="@android:drawable/ic_menu_delete"-->
+        <!--android:title="Delete Game History"-->
+        <!--app:showAsAction="always" />-->
 </menu>

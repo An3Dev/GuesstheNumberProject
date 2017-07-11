@@ -20,7 +20,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     //static boolean mainActivityActive;
     static List<String> name = new ArrayList<String>();
-    static boolean isMoveToFirstTriggered;
     SQLDatabaseHelper myDb;
     Button play;
     Button allGames;
@@ -72,12 +71,15 @@ public class MainActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
+
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //set content view AFTER ABOVE sequence (to avoid crash)
 
         setContentView(R.layout.activity_main);
+
+
         //ads here
 //        mAdView = (AdView) findViewById(R.id.adView);
 //        AdRequest adRequest = new AdRequest.Builder().build();
@@ -186,6 +188,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
     }
+
+
 
 //    public void startColorAnimation(){
 //        while (mainActivityActive){

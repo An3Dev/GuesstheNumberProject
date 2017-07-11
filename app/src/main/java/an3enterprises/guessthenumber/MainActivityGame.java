@@ -22,8 +22,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.games.Games;
+
 import java.util.Random;
 
+import static an3enterprises.guessthenumber.LoadingScreenActivity.mGoogleApiClient;
 import static an3enterprises.guessthenumber.PopupActivity.difficultyText;
 
 public class MainActivityGame extends AppCompatActivity {
@@ -41,7 +44,6 @@ public class MainActivityGame extends AppCompatActivity {
     Button guessButton;
     EditText userName;
     Button submitName;
-    //private GoogleApiClient mGoogleApiClient;
 
 
     @Override
@@ -79,6 +81,7 @@ public class MainActivityGame extends AppCompatActivity {
 
             });
         }
+
         guessButton = (Button) findViewById(R.id.guess_button);
 
         randNum = rand.nextInt(maxNum) + 1;
@@ -88,6 +91,7 @@ public class MainActivityGame extends AppCompatActivity {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!userInputNumber.getText().toString().matches("0") & !userInputNumber.getText().toString().matches("")) {
@@ -99,19 +103,21 @@ public class MainActivityGame extends AppCompatActivity {
                             if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000) {
                                 return false;
                             }
-                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
                             getGuess(guessButton);
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.showSoftInput(userInputNumber, InputMethodManager.SHOW_IMPLICIT);
                             return false;
                         }
                     });
 
                 }
-                if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000) {
+                if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000 || Integer.parseInt(userInputNumber.getText().toString()) + 1 == 1) {
                     guessButton.setEnabled(false);
+                    guessButton.setBackgroundColor(getResources().getColor(R.color.lightGray));
+                }else{
+                    guessButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 }
             }
-
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -143,9 +149,6 @@ public class MainActivityGame extends AppCompatActivity {
                 public void onSwipeTop() {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(userInputNumber, InputMethodManager.SHOW_IMPLICIT);
-                    int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-                    decorView.setSystemUiVisibility(uiOptions);
                 }
 
                 public void onSwipeRight() {
@@ -188,6 +191,8 @@ public class MainActivityGame extends AppCompatActivity {
                                 return false;
                             }
                             getGuess(guessButton);
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.showSoftInput(userInputNumber, InputMethodManager.SHOW_IMPLICIT);
                             return false;
                         }
                     });
@@ -364,18 +369,13 @@ public class MainActivityGame extends AppCompatActivity {
                     SharedPreferences.Editor gamesWonEditor = gamesWon.edit();
                     int gamesWonSP = gamesWon.getInt("gamesWon", Context.MODE_PRIVATE);
                     gamesWonEditor.putInt("gamesWon", gamesWonSP + 1);
-//                    mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                            .addConnectionCallbacks(this)
-//                            .addOnConnectionFailedListener(this)
-//                            .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-//                            .build();
-                    gamesWonEditor.commit();
-//                    Games.Achievements.increment(mGoogleApiClient, "CgkIgc7nhKcIEAIQAg", 1);
-//                    Games.Achievements.increment(mGoogleApiClient, "CgkIgc7nhKcIEAIQAw", 1);
-//                    Games.Achievements.increment(mGoogleApiClient, "CgkIgc7nhKcIEAIQBA", 1);
-//                    if (gamesWonSP + 1 == 10){
-//                        Games.Achievements.unlock(mGoogleApiClient, "CgkIgc7nhKcIEAIQAg");
-//                    }
+                    gamesWonSP = gamesWon.getInt("gamesWon", Context.MODE_PRIVATE);
+                    Games.Achievements.increment(mGoogleApiClient, "CgkIgc7nhKcIEAIQAg", 1);
+                    Games.Achievements.increment(mGoogleApiClient, "CgkIgc7nhKcIEAIQAW", 1);
+                    Games.Achievements.increment(mGoogleApiClient, "CgkIgc7nhKcIEAIQBA", 1);
+                    if (gamesWonSP + 1 == 10){
+                        Games.Achievements.unlock(mGoogleApiClient, "CgkIgc7nhKcIEAIQA");
+                    }
                     success = 1;
                     triesTaken += 1;
                     remainingTries -= 1;
@@ -512,6 +512,32 @@ public class MainActivityGame extends AppCompatActivity {
         }
     }
 
+//    @Override
+//    public void onConnected(@Nullable Bundle bundle) {
+//
+//    }
+//
+//    @Override
+//    public void onConnectionSuspended(int i) {
+//
+//    }
+//
+//    @Override
+//    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+//        if (connectionResult.hasResolution()){
+//            try{
+//                connectionResult.startResolutionForResult(this, 0);
+//            }catch (IntentSender.SendIntentException e){
+//                mGoogleApiClient.connect();
+//            }
+//        }
+//    }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        mGoogleApiClient.connect();
+//    }
 //    @Override
 //    public void onConnected(@Nullable Bundle bundle) {
 //
