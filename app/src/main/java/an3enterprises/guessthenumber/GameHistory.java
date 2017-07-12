@@ -15,8 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.google.android.gms.games.Games;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -50,7 +48,7 @@ public class GameHistory extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, players);
         columnNamesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, columnNamesList);
         easterEggTimerText = (TextView) findViewById(R.id.easterEggTimer);
-        Games.setViewForPopups(LoadingScreenActivity.mGoogleApiClient, findViewById(R.id.game_history));
+//        Games.setViewForPopups(LoadingScreenActivity.mGoogleApiClient, findViewById(R.id.game_history));
         //adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, players2);
 //        if (res.getCount() == 0) {
 //            //show message
@@ -147,7 +145,7 @@ public class GameHistory extends AppCompatActivity {
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                     if (!players.isEmpty()) {
                         if (columnNamesList.get(i).matches("Name")) {
-                            Games.Achievements.unlock(LoadingScreenActivity.mGoogleApiClient, getResources().getString(R.string.achievement_seeker));
+//                            Games.Achievements.unlock(LoadingScreenActivity.mGoogleApiClient, getResources().getString(R.string.achievement_seeker));
                             if (!isNamePressed) {
                                 if (!timerStarted) {
                                     AlertDialog.Builder builder;

@@ -16,13 +16,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.vending.billing.IabHelper;
+import com.android.vending.billing.IabResult;
 import com.google.android.gms.appinvite.AppInviteInvitation;
-import com.google.android.gms.games.Games;
 
 import java.util.ArrayList;
 
-import static an3enterprises.guessthenumber.LoadingScreenActivity.isConnected;
-import static an3enterprises.guessthenumber.LoadingScreenActivity.mGoogleApiClient;
 import static an3enterprises.guessthenumber.MainActivity.name;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -34,6 +33,8 @@ public class SettingsActivity extends AppCompatActivity {
     ArrayList<String> settings;
     String themeString;
     ArrayAdapter<String> settingsAdapter;
+    IabHelper mHelper;
+    String base64EncodedPublicKey;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -48,13 +49,14 @@ public class SettingsActivity extends AppCompatActivity {
                     Log.d(TAG, "onActivityResult: sent invitation " + id);
                     this.runOnUiThread(new Runnable() {
                         public void run() {
-                            Games.Achievements.unlock(mGoogleApiClient, getResources().getString(R.string.achievement_distributor));
+//                            Games.Achievements.unlock(mGoogleApiClient, getResources().getString(R.string.achievement_distributor));
                         }
                     });
                 }
             } else {
                 // Sending failed or it was canceled, show failure message to the user
                 // ...
+                Toast.makeText(SettingsActivity.this, "Sharing canceled", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -63,8 +65,41 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        SharedPreferences themePrefs = getSharedPreferences("Theme", Context.MODE_PRIVATE);
-        final String themeSP = themePrefs.getString("ThemeSP", "No theme");
+        base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyGZDHmNf00wEDaSFUd+iIi5Z5hx6a/QSA59r+IMY5Hymc0ZkLmXcwf04bwkd+KzVW8I6wQ27OA6RaQP9pfmHMgYXGTdKHwsgqUT6BY9tWYehNstGAVdMacOc1v/cLJDrPqIIPyqmrliZwmu/3gOiBR7TwKg1cvP29/z1lpgmcmwZO0G8f5pD5fGPqhc2A0pwW0n2y1FH1FEH8v4fDzABf2kUuy3YJhgBrB8RYgyfG/zl2dRM3XhmtsuP3D4sYFzo+vJRDx5XxKbQfB5GTiLCTcrffMtPINI52pgWVAGfD4R2zmfviXYxXwls+08f8agZdZ6VNya4ZUb7yRgmZCDgKQIDAQAB";
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                if (!result.isSuccess()){
+                    Log.d("e", "Problem setting up In-app Billing"  + result);
+                }
+            }
+
+        });
+//        ServiceConnection mServiceConn = new ServiceConnection() {
+//            @Override
+//            public void onServiceDisconnected(ComponentName name) {
+//                mService = null;
+//            }
+//
+//            @Override
+//            public void onServiceConnected(ComponentName name,
+//                                           IBinder service) {
+//                mService = IInAppBillingService.Stub.asInterface(service);
+//            }
+//        };
+//        if (mServiceConn == null) {
+//            Toast.makeText(SettingsActivity.this, "Can't connect", Toast.LENGTH_SHORT).show();
+//        }
+//        if (mServiceConn != null) {
+//            Intent serviceIntent =
+//                    new Intent("com.android.vending.billing.InAppBillingService.BIND");
+//            serviceIntent.setPackage("com.android.vending");
+//            bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
+//            Toast.makeText(SettingsActivity.this, "Connected", Toast.LENGTH_SHORT).show();
+//        }
+
+//        SharedPreferences themePrefs = getSharedPreferences("Theme", Context.MODE_PRIVATE);
+//        final String themeSP = themePrefs.getString("ThemeSP", "No theme");
 //        if (themeSP.matches("light")) {
 //            getApplication().setTheme(R.style.AppTheme);
 //        }
@@ -95,12 +130,12 @@ public class SettingsActivity extends AppCompatActivity {
         name.add(getResources().getString(R.string.default_name));
         name.add(getResources().getString(R.string.donate));
         name.add(getResources().getString(R.string.share));
-        if (isConnected) {
-            name.add(getResources().getString(R.string.achievements));
-        }
-        if (!isConnected) {
-            name.add(getResources().getString(R.string.connect_to_google));
-        }
+//        if (isConnected) {
+//            name.add(getResources().getString(R.string.achievements));
+//        }
+//        if (!isConnected) {
+//            name.add(getResources().getString(R.string.connect_to_google));
+//        }
 //            name.add("\nTheme\n");
             //longPressDonate();
 
@@ -130,18 +165,18 @@ public class SettingsActivity extends AppCompatActivity {
                     //Donation should open the in-app purchases
                     onInviteClicked();
                 }
-                if (settings.get(i).matches("\nGoogle Play Games\n")) {
-                    if (isConnected) {
-                        startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), 1234);
-                    }
-                }
-                if (settings.get(i).matches("\nConnect to Google\n")) {
-                    if (!isConnected) {
-                        name.add("\nAchievements\n");
-                        lv.setAdapter(settingsAdapter);
-                        mGoogleApiClient.connect();
-                    }
-                }
+//                if (settings.get(i).matches("\nGoogle Play Games\n")) {
+//                    if (isConnected) {
+//                        startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), 1234);
+//                    }
+//                }
+//                if (settings.get(i).matches("\nConnect to Google\n")) {
+//                    if (!isConnected) {
+//                        name.add("\nAchievements\n");
+//                        lv.setAdapter(settingsAdapter);
+//                        mGoogleApiClient.connect();
+//                    }
+//                }
 //                if (settings.get(i).matches("\nTheme\n")) {
 //                    //Do something
 //
@@ -161,12 +196,12 @@ public class SettingsActivity extends AppCompatActivity {
         name.add(getResources().getString(R.string.default_name));
         name.add(getResources().getString(R.string.donate));
         name.add(getResources().getString(R.string.share));
-        if (isConnected) {
-            name.add("\nAchievements\n");
-        }
-        if (!isConnected) {
-            name.add("\nConnect to Google\n");
-        }
+//        if (isConnected) {
+//            name.add("\nAchievements\n");
+//        }
+//        if (!isConnected) {
+//            name.add("\nConnect to Google\n");
+//        }
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -188,18 +223,18 @@ public class SettingsActivity extends AppCompatActivity {
                     //Donation should open the in-app purchases
                     onInviteClicked();
                 }
-                if (settings.get(i).matches("\nAchievements\n")) {
-                    if (isConnected) {
-                        startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), 1234);
-                    }
-                }
-                if (settings.get(i).matches("\nConnect to Google\n")) {
-                    if (!isConnected) {
-                        name.add("\nAchievements\n");
-                        lv.setAdapter(settingsAdapter);
-                        mGoogleApiClient.connect();
-                    }
-                }
+//                if (settings.get(i).matches("\nAchievements\n")) {
+//                    if (isConnected) {
+//                        startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), 1234);
+//                    }
+//                }
+//                if (settings.get(i).matches("\nConnect to Google\n")) {
+//                    if (!isConnected) {
+//                        name.add("\nAchievements\n");
+//                        lv.setAdapter(settingsAdapter);
+//                        mGoogleApiClient.connect();
+//                    }
+//                }
 //                if (settings.get(i).matches("\nTheme\n")) {
 //                    //Do something
 //
@@ -345,6 +380,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void donation() {
         // This should open the in-app purchases.
+
     }
 
     private void onInviteClicked() {
@@ -356,5 +392,17 @@ public class SettingsActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_INVITE);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mHelper != null)
+            try {
+                mHelper.dispose();
+            } catch (IabHelper.IabAsyncInProgressException e) {
+                e.printStackTrace();
+            }
+        mHelper = null;
+
+    }
 
 }

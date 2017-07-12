@@ -22,13 +22,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.games.Games;
-
 import java.util.Random;
 
-import static an3enterprises.guessthenumber.LoadingScreenActivity.isConnected;
-import static an3enterprises.guessthenumber.LoadingScreenActivity.mGoogleApiClient;
 import static an3enterprises.guessthenumber.PopupActivity.difficultyText;
+
+//import static an3enterprises.guessthenumber.LoadingScreenActivity.isConnected;
+//import static an3enterprises.guessthenumber.LoadingScreenActivity.mGoogleApiClient;
 
 public class MainActivityGame extends AppCompatActivity {
 
@@ -58,9 +57,9 @@ public class MainActivityGame extends AppCompatActivity {
 
         //set content view AFTER ABOVE sequence (to avoid crash)
         setContentView(R.layout.activity_main_game);
-        if (isConnected) {
-            Games.setViewForPopups(LoadingScreenActivity.mGoogleApiClient, findViewById(R.id.main_game));
-        }
+//        if (isConnected) {
+//            Games.setViewForPopups(LoadingScreenActivity.mGoogleApiClient, findViewById(R.id.main_game));
+//        }
         userInputNumber = (EditText) findViewById(R.id.user_input_number);
         if (userInputNumber != null) {
             userInputNumber.setOnTouchListener(new OnSwipeTouchListener(MainActivityGame.this) {
@@ -189,9 +188,6 @@ public class MainActivityGame extends AppCompatActivity {
                     userInputNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                         @Override
                         public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                            if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000) {
-                                return false;
-                            }
                             getGuess(guessButton);
                             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.showSoftInput(userInputNumber, InputMethodManager.SHOW_IMPLICIT);
@@ -366,7 +362,7 @@ public class MainActivityGame extends AppCompatActivity {
                 //User guesses the number
                 if (userInputInt == randNum) {
                     if (difficultyText.matches("Impossible")) {
-                        Games.Achievements.unlock(mGoogleApiClient, getResources().getString(R.string.achievement_master));
+//                        Games.Achievements.unlock(mGoogleApiClient, getResources().getString(R.string.achievement_master));
                     }
 //                    InputMethodSession.EventCallback eventCallback = new InputMethodSession.EventCallback() {
 //                        @Override
@@ -374,17 +370,17 @@ public class MainActivityGame extends AppCompatActivity {
 //
 //                        }
 //                    };
-                    Games.Leaderboards.submitScore(mGoogleApiClient, getResources().getString(R.string.leaderboard_least_tries_), triesTaken);
+//                    Games.Leaderboards.submitScore(mGoogleApiClient, getResources().getString(R.string.leaderboard_least_tries_), triesTaken);
                     SharedPreferences defaultNameSharedPrefs = getSharedPreferences("defaultName", Context.MODE_PRIVATE);
                     final String defaultNameSP = defaultNameSharedPrefs.getString("DEFAULT_NAME", "");
-                    if (isConnected) {
-                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_newbie), 1);
-                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_beginner), 1);
-                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_skilled), 1);
-                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_experienced), 1);
-                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_expert), 1);
-                        submitEvent(getResources().getString(R.string.event_won_game));
-                    }
+//                    if (isConnected) {
+//                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_newbie), 1);
+//                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_beginner), 1);
+//                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_skilled), 1);
+//                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_experienced), 1);
+//                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_expert), 1);
+//                        submitEvent(getResources().getString(R.string.event_won_game));
+//                    }
 
                     success = 1;
                     triesTaken += 1;
@@ -457,15 +453,13 @@ public class MainActivityGame extends AppCompatActivity {
         // Tries run out, user doesn't guess the number
 
         if (triesTaken == maxTries & success == 0) {
-            submitEvent(getResources().getString(R.string.event_lost_game));
+//            submitEvent(getResources().getString(R.string.event_lost_game));
             if (view != null) {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
-
-
-            if (isConnected) {
-                Games.Leaderboards.submitScore(mGoogleApiClient, getResources().getString(R.string.leaderboard_least_tries_), triesTaken);
-            }
+//            if (isConnected) {
+//                Games.Leaderboards.submitScore(mGoogleApiClient, getResources().getString(R.string.leaderboard_least_tries_), triesTaken);
+//            }
             //Games.Leaderboards.submitScore(mGoogleApiClient, getResources().getString(R.string.leaderboard_most_games_played_), );
             guessButton.setAllCaps(false);
             submitName = (Button) findViewById(R.id.submitName);
@@ -529,13 +523,13 @@ public class MainActivityGame extends AppCompatActivity {
         }
     }
 
-    public void submitEvent(String eventId) {
-        // eventId is taken from the developer console
-        String myEventId = eventId;
-
-        // increment the event counter
-        Games.Events.increment(mGoogleApiClient, myEventId, 1);
-    }
+//    public void submitEvent(String eventId) {
+//        // eventId is taken from the developer console
+//        String myEventId = eventId;
+//
+//        // increment the event counter
+//        Games.Events.increment(mGoogleApiClient, myEventId, 1);
+//    }
 
 //    class EventCallback implements ResultCallback {
 //

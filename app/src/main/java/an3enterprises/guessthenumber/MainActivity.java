@@ -12,14 +12,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import com.google.android.gms.games.Games;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static an3enterprises.guessthenumber.LoadingScreenActivity.isConnected;
-import static an3enterprises.guessthenumber.LoadingScreenActivity.mGoogleApiClient;
+//import static an3enterprises.guessthenumber.LoadingScreenActivity.isConnected;
+//import static an3enterprises.guessthenumber.LoadingScreenActivity.mGoogleApiClient;
 
 public class MainActivity extends AppCompatActivity {
     //static boolean mainActivityActive;
@@ -216,15 +215,15 @@ public class MainActivity extends AppCompatActivity {
 //        cdn.start();
 //    }
 
-    public void openLeaderboard(View view) {
-        if (isConnected) {
-            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                    getResources().getString(R.string.leaderboard_least_tries_)), 12345);
-        } else {
-            Button btn = (Button) findViewById(R.id.leaderboard_button);
-            btn.setEnabled(false);
-            btn.setBackgroundColor(getResources().getColor(R.color.lightGray));
-            mGoogleApiClient.connect();
-        }
-    }
+//    public void openLeaderboard(View view) {
+//        if (isConnected) {
+//            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
+//                    getResources().getString(R.string.leaderboard_least_tries_)), 12345);
+//        } else {
+//            Button btn = (Button) findViewById(R.id.leaderboard_button);
+//            btn.setEnabled(false);
+//            btn.setBackgroundColor(getResources().getColor(R.color.lightGray));
+//            mGoogleApiClient.connect();
+//        }
+//    }
 }
