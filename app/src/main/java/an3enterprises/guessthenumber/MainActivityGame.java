@@ -26,6 +26,7 @@ import com.google.android.gms.games.Games;
 
 import java.util.Random;
 
+import static an3enterprises.guessthenumber.LoadingScreenActivity.isConnected;
 import static an3enterprises.guessthenumber.LoadingScreenActivity.mGoogleApiClient;
 import static an3enterprises.guessthenumber.PopupActivity.difficultyText;
 
@@ -57,7 +58,9 @@ public class MainActivityGame extends AppCompatActivity {
 
         //set content view AFTER ABOVE sequence (to avoid crash)
         setContentView(R.layout.activity_main_game);
-
+        if (isConnected) {
+            Games.setViewForPopups(LoadingScreenActivity.mGoogleApiClient, findViewById(R.id.main_game));
+        }
         userInputNumber = (EditText) findViewById(R.id.user_input_number);
         if (userInputNumber != null) {
             userInputNumber.setOnTouchListener(new OnSwipeTouchListener(MainActivityGame.this) {
@@ -78,7 +81,6 @@ public class MainActivityGame extends AppCompatActivity {
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
                 }
-
             });
         }
 
@@ -363,19 +365,27 @@ public class MainActivityGame extends AppCompatActivity {
 
                 //User guesses the number
                 if (userInputInt == randNum) {
+                    if (difficultyText.matches("Impossible")) {
+                        Games.Achievements.unlock(mGoogleApiClient, getResources().getString(R.string.achievement_master));
+                    }
+//                    InputMethodSession.EventCallback eventCallback = new InputMethodSession.EventCallback() {
+//                        @Override
+//                        public void finishedEvent(int i, boolean b) {
+//
+//                        }
+//                    };
+                    Games.Leaderboards.submitScore(mGoogleApiClient, getResources().getString(R.string.leaderboard_least_tries_), triesTaken);
                     SharedPreferences defaultNameSharedPrefs = getSharedPreferences("defaultName", Context.MODE_PRIVATE);
                     final String defaultNameSP = defaultNameSharedPrefs.getString("DEFAULT_NAME", "");
-                    SharedPreferences gamesWon = getSharedPreferences("gamesWon", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor gamesWonEditor = gamesWon.edit();
-                    int gamesWonSP = gamesWon.getInt("gamesWon", Context.MODE_PRIVATE);
-                    gamesWonEditor.putInt("gamesWon", gamesWonSP + 1);
-                    gamesWonSP = gamesWon.getInt("gamesWon", Context.MODE_PRIVATE);
-                    Games.Achievements.increment(mGoogleApiClient, "CgkIgc7nhKcIEAIQAg", 1);
-                    Games.Achievements.increment(mGoogleApiClient, "CgkIgc7nhKcIEAIQAW", 1);
-                    Games.Achievements.increment(mGoogleApiClient, "CgkIgc7nhKcIEAIQBA", 1);
-                    if (gamesWonSP + 1 == 10){
-                        Games.Achievements.unlock(mGoogleApiClient, "CgkIgc7nhKcIEAIQA");
+                    if (isConnected) {
+                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_newbie), 1);
+                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_beginner), 1);
+                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_skilled), 1);
+                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_experienced), 1);
+                        Games.Achievements.increment(mGoogleApiClient, getResources().getString(R.string.achievement_expert), 1);
+                        submitEvent(getResources().getString(R.string.event_won_game));
                     }
+
                     success = 1;
                     triesTaken += 1;
                     remainingTries -= 1;
@@ -447,9 +457,16 @@ public class MainActivityGame extends AppCompatActivity {
         // Tries run out, user doesn't guess the number
 
         if (triesTaken == maxTries & success == 0) {
+            submitEvent(getResources().getString(R.string.event_lost_game));
             if (view != null) {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
+
+
+            if (isConnected) {
+                Games.Leaderboards.submitScore(mGoogleApiClient, getResources().getString(R.string.leaderboard_least_tries_), triesTaken);
+            }
+            //Games.Leaderboards.submitScore(mGoogleApiClient, getResources().getString(R.string.leaderboard_most_games_played_), );
             guessButton.setAllCaps(false);
             submitName = (Button) findViewById(R.id.submitName);
             userName = (EditText) findViewById(R.id.user_name);
@@ -512,50 +529,25 @@ public class MainActivityGame extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onConnected(@Nullable Bundle bundle) {
+    public void submitEvent(String eventId) {
+        // eventId is taken from the developer console
+        String myEventId = eventId;
+
+        // increment the event counter
+        Games.Events.increment(mGoogleApiClient, myEventId, 1);
+    }
+
+//    class EventCallback implements ResultCallback {
 //
-//    }
+//        public void onResult(com.google.android.gms.common.api.Result result) {
+//            Events.LoadEventsResult r = (Events.LoadEventsResult)result;
+//            com.google.android.gms.games.event.EventBuffer eb = r.getEvents();
 //
-//    @Override
-//    public void onConnectionSuspended(int i) {
-//
-//    }
-//
-//    @Override
-//    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-//        if (connectionResult.hasResolution()){
-//            try{
-//                connectionResult.startResolutionForResult(this, 0);
-//            }catch (IntentSender.SendIntentException e){
-//                mGoogleApiClient.connect();
+//            for (int i=0; i < eb.getCount(); i++) {
+//                Toast.makeText(MainActivityGame.this, result.toString(), Toast.LENGTH_SHORT).show();
 //            }
+//            eb.close();
 //        }
 //    }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        mGoogleApiClient.connect();
-//    }
-//    @Override
-//    public void onConnected(@Nullable Bundle bundle) {
-//
-//    }
-//
-//    @Override
-//    public void onConnectionSuspended(int i) {
-//
-//    }
-//
-//    @Override
-//    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-//        if (connectionResult.hasResolution()){
-//            try{
-//                connectionResult.startResolutionForResult(this, 0);
-//            }catch (IntentSender.SendIntentException e){
-//                mGoogleApiClient.connect();
-//            }
-//        }
-//    }
 }

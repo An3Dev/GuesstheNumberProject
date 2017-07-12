@@ -73,5 +73,8 @@
     <string name="invitation_message_subject" translatable="false">Guess the Number+</string>
     <string name="invitation_cta" translatable="false">Guess the Number+</string>
     <string name="invitation_title" translatable="false">Guess the Number+</string>
+    <string name="achievement_btn">Leaderboard</string>
+    <string name="achievements">\nAchievements\n</string>
+    <string name="connect_to_google">\nConnect to Google\n</string>
 
 </resources>

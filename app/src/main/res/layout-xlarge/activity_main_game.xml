@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
@@ -8,68 +8,60 @@
     android:scaleY="1">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cheat"
-        android:text="CHEAT"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="100dp"
-        android:textSize="5sp"
-        android:visibility="gone"/>
-
-    <TextView
         android:id="@+id/guess_responder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/guess_a_num"
-        android:textSize="20sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:scaleX="1.5"
         android:scaleY="1.5"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:text="@string/guess_a_num"
+        android:textSize="20sp" />
     <TextView
         android:id="@+id/final_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="234dp"
         android:text=""
         android:textSize="50sp"
-        android:layout_marginTop="234dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:visibility="gone"/>
 
     <TextView
+        android:id="@+id/remaining_tries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/remaining_tries"
-        android:id="@+id/remaining_tries"
+        android:layout_alignParentLeft="true"
         android:layout_marginTop="16dp"
-        android:textSize="17sp"
         android:scaleX="1.5"
         android:scaleY="1.5"
-        android:layout_alignParentLeft="true"/>
+        android:text="@string/remaining_tries"
+        android:textSize="17sp" />
 
     <LinearLayout
+        android:id="@+id/linearLayoutGuessBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:id="@+id/linearLayoutGuessBox"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal"
         android:weightSum="10">
 
         <EditText
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="7"
+            android:gravity="bottom"
             android:hint="@string/enter_first_name"
-            android:textColor="#000"
             android:inputType="textPersonName"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:textSize="20sp"
             android:visibility="gone"/>
 
         <EditText
@@ -77,40 +69,41 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="bottom"
+            android:layout_weight="8"
             android:hint="@string/take_a_guess_hint"
             android:inputType="number"
             android:maxLines="1"
             android:textColor="#000"
-            android:layout_weight="8"
             android:textSize="20sp"/>
 
         <Button
+            android:id="@+id/guess_button"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:id="@+id/guess_button"
-            android:text="@string/guess_btn"
-            android:background="#f01c00"
-            android:textColor="#FFF"
             android:layout_gravity="bottom"
             android:layout_marginBottom="1dp"
-            android:enabled="false"
             android:layout_weight="2"
+            android:background="#f01c00"
+            android:enabled="false"
             android:onClick="getGuess"
+            android:text="@string/guess_btn"
+            android:textColor="#FFF"
             android:textSize="20sp"/>
 
         <Button
+            android:id="@+id/submitName"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:text="@string/submit_name_btn"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="5dp"
-            android:id="@+id/submitName"
-            android:background="#f01c00"
-            android:textColor="#FFF"
-            android:enabled="false"
+            android:layout_marginBottom="1dp"
             android:layout_weight="3"
-            android:visibility="gone"
-            android:onClick="next"/>
+            android:background="#f01c00"
+            android:enabled="false"
+            android:onClick="next"
+            android:text="@string/submit_name_btn"
+            android:textColor="#FFF"
+            android:textSize="20sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

@@ -17,9 +17,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.appinvite.AppInviteInvitation;
-import com.google.firebase.crash.FirebaseCrash;
+import com.google.android.gms.games.Games;
 
 import java.util.ArrayList;
+
+import static an3enterprises.guessthenumber.LoadingScreenActivity.isConnected;
+import static an3enterprises.guessthenumber.LoadingScreenActivity.mGoogleApiClient;
 import static an3enterprises.guessthenumber.MainActivity.name;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -30,6 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
     ListView lv;
     ArrayList<String> settings;
     String themeString;
+    ArrayAdapter<String> settingsAdapter;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -42,6 +46,11 @@ public class SettingsActivity extends AppCompatActivity {
                 String[] ids = AppInviteInvitation.getInvitationIds(resultCode, data);
                 for (String id : ids) {
                     Log.d(TAG, "onActivityResult: sent invitation " + id);
+                    this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Games.Achievements.unlock(mGoogleApiClient, getResources().getString(R.string.achievement_distributor));
+                        }
+                    });
                 }
             } else {
                 // Sending failed or it was canceled, show failure message to the user
@@ -56,7 +65,6 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         SharedPreferences themePrefs = getSharedPreferences("Theme", Context.MODE_PRIVATE);
         final String themeSP = themePrefs.getString("ThemeSP", "No theme");
-        FirebaseCrash.log("SettingsActivity created");
 //        if (themeSP.matches("light")) {
 //            getApplication().setTheme(R.style.AppTheme);
 //        }
@@ -87,12 +95,16 @@ public class SettingsActivity extends AppCompatActivity {
         name.add(getResources().getString(R.string.default_name));
         name.add(getResources().getString(R.string.donate));
         name.add(getResources().getString(R.string.share));
-        name.add("\nGoogle Play Games\n");
+        if (isConnected) {
+            name.add(getResources().getString(R.string.achievements));
+        }
+        if (!isConnected) {
+            name.add(getResources().getString(R.string.connect_to_google));
+        }
 //            name.add("\nTheme\n");
             //longPressDonate();
 
 
-        final ArrayAdapter<String> settingsAdapter;
         settings = new ArrayList<String>(MainActivity.name);
         settingsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settings);
         lv.setAdapter(settingsAdapter);
@@ -118,8 +130,17 @@ public class SettingsActivity extends AppCompatActivity {
                     //Donation should open the in-app purchases
                     onInviteClicked();
                 }
-                if (settings.get(i).matches("\nGoogle Play Games")){
-
+                if (settings.get(i).matches("\nGoogle Play Games\n")) {
+                    if (isConnected) {
+                        startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), 1234);
+                    }
+                }
+                if (settings.get(i).matches("\nConnect to Google\n")) {
+                    if (!isConnected) {
+                        name.add("\nAchievements\n");
+                        lv.setAdapter(settingsAdapter);
+                        mGoogleApiClient.connect();
+                    }
                 }
 //                if (settings.get(i).matches("\nTheme\n")) {
 //                    //Do something
@@ -131,6 +152,61 @@ public class SettingsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        name.clear();
+        name.add(getResources().getString(R.string.default_name));
+        name.add(getResources().getString(R.string.donate));
+        name.add(getResources().getString(R.string.share));
+        if (isConnected) {
+            name.add("\nAchievements\n");
+        }
+        if (!isConnected) {
+            name.add("\nConnect to Google\n");
+        }
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // If Default name item in list view is clicked
+                if (settings.get(i).matches(getResources().getString(R.string.default_name))) {
+                    showMessage();
+                }
+//                if (settings.get(i).matches("\nEaster Egg\n")) {
+//                    Intent intent = new Intent(SettingsActivity.this, EasterEggActivity.class);
+//                    startActivity(intent);
+//                    //Do something
+//                }
+                if (settings.get(i).matches(getResources().getString(R.string.donate))) {
+                    //Donation should open the in-app purchases
+                    donation();
+
+                }
+                if (settings.get(i).matches(getResources().getString(R.string.share))) {
+                    //Donation should open the in-app purchases
+                    onInviteClicked();
+                }
+                if (settings.get(i).matches("\nAchievements\n")) {
+                    if (isConnected) {
+                        startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), 1234);
+                    }
+                }
+                if (settings.get(i).matches("\nConnect to Google\n")) {
+                    if (!isConnected) {
+                        name.add("\nAchievements\n");
+                        lv.setAdapter(settingsAdapter);
+                        mGoogleApiClient.connect();
+                    }
+                }
+//                if (settings.get(i).matches("\nTheme\n")) {
+//                    //Do something
+//
+//                    createAlertDialogWithRadioButtonGroup();
+//                }
+            }
+        });
     }
 
     @Override
@@ -279,5 +355,6 @@ public class SettingsActivity extends AppCompatActivity {
                 .build();
         startActivityForResult(intent, REQUEST_INVITE);
     }
+
 
 }

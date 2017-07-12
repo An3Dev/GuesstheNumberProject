@@ -12,10 +12,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.google.android.gms.games.Games;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static an3enterprises.guessthenumber.LoadingScreenActivity.isConnected;
+import static an3enterprises.guessthenumber.LoadingScreenActivity.mGoogleApiClient;
 
 public class MainActivity extends AppCompatActivity {
     //static boolean mainActivityActive;
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
         //ads here
 //        mAdView = (AdView) findViewById(R.id.adView);
 //        AdRequest adRequest = new AdRequest.Builder().build();
@@ -113,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         timesOnEditor.putInt("thisNum",pastTimesOn + 1);
         timesOnEditor.commit();
         int presentTimesOn = timesOn.getInt("thisNum", 1);
-        if (presentTimesOn == 5 || presentTimesOn % 5 == 0) {
+        if (presentTimesOn == 10 || presentTimesOn % 10 == 0) {
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(new android.view.ContextThemeWrapper(MainActivity.this, R.style.AlertDialogCustom));
             builder.setTitle(R.string.donation);
@@ -210,4 +215,16 @@ public class MainActivity extends AppCompatActivity {
 //        };
 //        cdn.start();
 //    }
+
+    public void openLeaderboard(View view) {
+        if (isConnected) {
+            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
+                    getResources().getString(R.string.leaderboard_least_tries_)), 12345);
+        } else {
+            Button btn = (Button) findViewById(R.id.leaderboard_button);
+            btn.setEnabled(false);
+            btn.setBackgroundColor(getResources().getColor(R.color.lightGray));
+            mGoogleApiClient.connect();
+        }
+    }
 }
