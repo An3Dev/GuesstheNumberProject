@@ -16,10 +16,12 @@
         android:text="Donation"
         android:layout_alignParentTop="true"/>
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text="Buy"
+        android:onClick="buyInApp99"
+        android:id="@+id/buy99"/>
 
 
 

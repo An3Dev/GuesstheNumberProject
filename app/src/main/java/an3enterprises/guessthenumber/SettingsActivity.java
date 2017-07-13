@@ -16,8 +16,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.vending.billing.IabHelper;
-import com.android.vending.billing.IabResult;
 import com.google.android.gms.appinvite.AppInviteInvitation;
 
 import java.util.ArrayList;
@@ -33,8 +31,6 @@ public class SettingsActivity extends AppCompatActivity {
     ArrayList<String> settings;
     String themeString;
     ArrayAdapter<String> settingsAdapter;
-    IabHelper mHelper;
-    String base64EncodedPublicKey;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -65,16 +61,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyGZDHmNf00wEDaSFUd+iIi5Z5hx6a/QSA59r+IMY5Hymc0ZkLmXcwf04bwkd+KzVW8I6wQ27OA6RaQP9pfmHMgYXGTdKHwsgqUT6BY9tWYehNstGAVdMacOc1v/cLJDrPqIIPyqmrliZwmu/3gOiBR7TwKg1cvP29/z1lpgmcmwZO0G8f5pD5fGPqhc2A0pwW0n2y1FH1FEH8v4fDzABf2kUuy3YJhgBrB8RYgyfG/zl2dRM3XhmtsuP3D4sYFzo+vJRDx5XxKbQfB5GTiLCTcrffMtPINI52pgWVAGfD4R2zmfviXYxXwls+08f8agZdZ6VNya4ZUb7yRgmZCDgKQIDAQAB";
-        mHelper = new IabHelper(this, base64EncodedPublicKey);
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                if (!result.isSuccess()){
-                    Log.d("e", "Problem setting up In-app Billing"  + result);
-                }
-            }
-
-        });
 //        ServiceConnection mServiceConn = new ServiceConnection() {
 //            @Override
 //            public void onServiceDisconnected(ComponentName name) {
@@ -380,6 +366,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void donation() {
         // This should open the in-app purchases.
+        Intent intent = new Intent(SettingsActivity.this, DonationActivity.class);
+        startActivity(intent);
 
     }
 
@@ -390,19 +378,6 @@ public class SettingsActivity extends AppCompatActivity {
                 .setCallToActionText(getString(R.string.invitation_cta))
                 .build();
         startActivityForResult(intent, REQUEST_INVITE);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mHelper != null)
-            try {
-                mHelper.dispose();
-            } catch (IabHelper.IabAsyncInProgressException e) {
-                e.printStackTrace();
-            }
-        mHelper = null;
-
     }
 
 }
