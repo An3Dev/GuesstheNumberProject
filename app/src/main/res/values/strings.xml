@@ -46,8 +46,8 @@
     <string name="donate">\nDonate\n</string>
     <string name="default_name_not_detected">Default name not detected. Please report to the developer if you set one up.</string>
     <string name="are_you">Are you </string>
-    <string name="your_name_was_submitted">Your name was submitted.</string>
-    <string name="error_name_not_submitted">Error, your name wasn\'t submitted</string>
+    <string name="your_name_was_submitted">Your name was saved.</string>
+    <string name="error_name_not_submitted">Error, your name wasn\'t saved.</string>
     <string name="no">No</string>
     <string name="have_to_choose_difficulty">You have to choose a difficulty.</string>
     <string name="please_donate">Hello, if you like this app, please consider donating to me, and rating the app. This app will always be both free and ad-free.</string>
@@ -58,7 +58,7 @@
     <string name="sorry_i_am_afraid">Sorry I\'m afraid you didn\'t \nGuess the Number \nThe number was ...</string>
     <string name="never_been_a_name">There\'s never been a name \" \", lets keep it that way. Try again. </string>
     <string name="name_too_long">Your name is too long. It has to be under 10 characters.</string>
-    <string name="forgot_default_name">You may have forgotten to set up your default name. After submitting your name go to Settings/Default name.</string>
+    <string name="forgot_default_name">You may have forgotten to set up your default name. After saving your name go to Settings/Default name.</string>
     <string name="type_name">Type name</string>
     <string name="sure_donate">I\'ll donate</string>
     <string name="donation">Donation</string>
@@ -72,5 +72,9 @@
     <string name="invitation_message">Hey! You should install the app Guess the Number+! Its fun!</string>
     <string name="invitation_message_subject" translatable="false">Guess the Number+</string>
     <string name="share_using">Share using...</string>
+    <string name="donation99">$0.99 Donation</string>
+    <string name="donation199">$1.99 Donation</string>
+    <string name="donation499">$4.99 Donation</string>
+    <string name="donation999">$9.99 Donation</string>
 
 </resources>

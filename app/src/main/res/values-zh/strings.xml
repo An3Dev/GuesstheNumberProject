@@ -70,4 +70,8 @@
     <string name="congrats_main_game_p1">恭喜！你猜到了這個數字</string>
     <string name="congrats_main_game_p2">數字是</string>
     <string name="share_using">分享使用...</string>
+    <string name="donation99">捐款的 $0.99</string>
+    <string name="donation199">捐款的 $1.99</string>
+    <string name="donation499">捐款的 $4.99</string>
+    <string name="donation999">捐款的 $9.99</string>
 </resources>

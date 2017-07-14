@@ -380,7 +380,7 @@ public class IabHelper {
          * @param result The result of the purchase.
          * @param info The purchase information (null if purchase failed)
          */
-        void onIabPurchaseFinished(IabResult result, Purchase info);
+        void onIabPurchaseFinished(IabResult result, Purchase info) throws IabAsyncInProgressException;
     }
 
     // The listener registered on launchPurchaseFlow, which we have to call back when
@@ -514,7 +514,7 @@ public class IabHelper {
      *     false if the result was not related to a purchase, in which case you should
      *     handle it normally.
      */
-    public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
+    public boolean handleActivityResult(int requestCode, int resultCode, Intent data) throws IabAsyncInProgressException {
         IabResult result;
         if (requestCode != mRequestCode) return false;
 
@@ -668,7 +668,7 @@ public class IabHelper {
          * @param result The result of the operation.
          * @param inv The inventory.
          */
-        void onQueryInventoryFinished(IabResult result, Inventory inv);
+        void onQueryInventoryFinished(IabResult result, Inventory inv) throws IabAsyncInProgressException;
     }
 
 
@@ -708,7 +708,11 @@ public class IabHelper {
                 if (!mDisposed && listener != null) {
                     handler.post(new Runnable() {
                         public void run() {
-                            listener.onQueryInventoryFinished(result_f, inv_f);
+                            try {
+                                listener.onQueryInventoryFinished(result_f, inv_f);
+                            } catch (IabAsyncInProgressException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                 }

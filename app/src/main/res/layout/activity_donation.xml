@@ -25,7 +25,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Donate"
+            android:text="@string/donate"
             android:onClick="buyInApp99"
             android:id="@+id/buy99"
             android:background="@color/colorAccent"
@@ -53,7 +53,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Donate"
+            android:text="@string/donate"
             android:onClick="buyInApp199"
             android:id="@+id/buy199"
             android:background="@color/colorAccent"
@@ -81,7 +81,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Donate"
+            android:text="@string/donate"
             android:onClick="buyInApp499"
             android:id="@+id/buy499"
             android:background="@color/colorAccent"
@@ -109,7 +109,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Donate"
+            android:text="@string/donate"
             android:onClick="buyInApp999"
             android:id="@+id/buy999"
             android:background="@color/colorAccent"

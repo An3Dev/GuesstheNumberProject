@@ -221,7 +221,7 @@ public class MainActivityGame extends AppCompatActivity {
         finalNumber.setVisibility(View.VISIBLE);
         finalNumber.setText("");
         finalNumber.setText("" + randNum);
-        fadeInNum.setStartOffset(5500);
+        fadeInNum.setStartOffset(4500);
         fadeInNum.setDuration(500);
         finalNumber.startAnimation(fadeInNum);
         fadeInNum.setFillAfter(true);
@@ -236,7 +236,6 @@ public class MainActivityGame extends AppCompatActivity {
 //                    defaultName = c.getString(0);
 //                }
                 if (defaultNameSP == ""){
-                    Toast.makeText(MainActivityGame.this, getResources().getString(R.string.default_name_not_detected), Toast.LENGTH_SHORT).show();
                     defaultNameNotDetected();
                 }
                 if (defaultNameSP != "") {
