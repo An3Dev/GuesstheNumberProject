@@ -71,7 +71,6 @@
     <string name="share">\nShare\n</string>
     <string name="invitation_message">Hey! You should install the app Guess the Number+! Its fun!</string>
     <string name="invitation_message_subject" translatable="false">Guess the Number+</string>
-    <string name="invitation_cta" translatable="false">Guess the Number+</string>
-    <string name="invitation_title" translatable="false">Guess the Number+</string>
+    <string name="share_using">Share using...</string>
 
 </resources>

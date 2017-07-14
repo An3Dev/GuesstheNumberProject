@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Guess the Number+</string>
+    <string name="app_name">Adivina el Número+</string>
     <string name="OK">OK</string>
     <string name="are_you">Eres</string>
     <string name="awesome">¡Que bien!</string>
@@ -21,7 +21,7 @@
     <string name="found_mini_game">¡Usted encontro un juego sorpresa! Tiene 15 segundos para encontrar un articulo en la pantalla.</string>
     <string name="game_history">Historial\nde Juegos</string>
     <string name="game_over">El Juego se Termino</string>
-    <string name="guess_a_num">Adivine un numero entre \n1 y</string>
+    <string name="guess_a_num">Adivine un número entre \n1 y</string>
     <string name="guess_btn">Adivina</string>
     <string name="hard_difficulty">Difícil</string>
     <string name="have_to_choose_difficulty">Usted tiene que escojer una dificultad.</string>
@@ -45,7 +45,7 @@
     <string name="remaining_tries">Intentos que quedan: 10</string>
     <string name="remaining_tries_java">Intentos que quedan:</string>
     <string name="settings">Ajustes</string>
-    <string name="sorry_i_am_afraid">Perdon, usted perdio. El numero era...</string>
+    <string name="sorry_i_am_afraid">Perdon, usted perdio. El número era...</string>
     <string name="sorry_mini_game">Perdon, usted no encontro el articulo a tiempo. El articulo era \"</string>
     <string name="start">Empieza</string>
     <string name="submit_name_btn">Enviar Nombre</string>
@@ -68,5 +68,6 @@
     <string name="done">OK</string>
     <string name="default_name_changed">Su nombre predeterminado fue cambiado a </string>
     <string name="share">\nCompartir\n</string>
-    <string name="invitation_message">Hola! Debes instalar un juego llamado Guess the Number+. Es muy divertido!</string>
+    <string name="invitation_message">Hola! Debes instalar un juego llamado Adivina el Número+. Es muy divertido!</string>
+    <string name="share_using">Comparte usando...</string>
 </resources>

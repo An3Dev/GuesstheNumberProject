@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Guess the Number+</string>
+    <string name="app_name">猜數字+</string>
     <string name="OK">確定</string>
     <string name="awesome">太棒了 !</string>
     <string name="time_15">時間 : 15</string>
@@ -69,4 +69,5 @@
     <string name="invitation_message">嘿!你應該安裝應用程序猜猜數字+！好有趣！</string>
     <string name="congrats_main_game_p1">恭喜！你猜到了這個數字</string>
     <string name="congrats_main_game_p2">數字是</string>
+    <string name="share_using">分享使用...</string>
 </resources>

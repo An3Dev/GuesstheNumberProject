@@ -107,4 +107,13 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">30sp</item>
     </style>
+
+    <style name="DonationTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#8c8b8a</item>
+        <item name="colorPrimaryDark">#757371</item>
+        <item name="colorAccent">#f01c00</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
 </resources>

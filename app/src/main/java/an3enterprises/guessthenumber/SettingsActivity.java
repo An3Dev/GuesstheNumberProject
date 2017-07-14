@@ -8,15 +8,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.google.android.gms.appinvite.AppInviteInvitation;
 
 import java.util.ArrayList;
 
@@ -32,30 +29,32 @@ public class SettingsActivity extends AppCompatActivity {
     String themeString;
     ArrayAdapter<String> settingsAdapter;
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult: requestCode=" + requestCode + ", resultCode=" + resultCode);
-
-        if (requestCode == REQUEST_INVITE) {
-            if (resultCode == RESULT_OK) {
-                // Get the invitation IDs of all sent messages
-                String[] ids = AppInviteInvitation.getInvitationIds(resultCode, data);
-                for (String id : ids) {
-                    Log.d(TAG, "onActivityResult: sent invitation " + id);
-                    this.runOnUiThread(new Runnable() {
-                        public void run() {
-//                            Games.Achievements.unlock(mGoogleApiClient, getResources().getString(R.string.achievement_distributor));
-                        }
-                    });
-                }
-            } else {
-                // Sending failed or it was canceled, show failure message to the user
-                // ...
-                Toast.makeText(SettingsActivity.this, "Sharing canceled", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        Log.d(TAG, "onActivityResult: requestCode=" + requestCode + ", resultCode=" + resultCode);
+//
+//        if (requestCode == REQUEST_INVITE) {
+//            if (resultCode == RESULT_OK) {
+//
+//                // Get the invitation IDs of all sent messages
+//                String[] ids = AppInviteInvitation.getInvitationIds(resultCode, data);
+//                for (String id : ids) {
+//                    Log.d(TAG, "onActivityResult: sent invitation " + id);
+//                    this.runOnUiThread(new Runnable() {
+//                        public void run() {
+//                            Toast.makeText(SettingsActivity.this, "Sharing...", Toast.LENGTH_SHORT).show();
+////                            Games.Achievements.unlock(mGoogleApiClient, getResources().getString(R.string.achievement_distributor));
+//                        }
+//                    });
+//                }
+//            } else {
+//                // Sending failed or it was canceled, show failure message to the user
+//                // ...
+//                Toast.makeText(SettingsActivity.this, "Sharing canceled", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -372,12 +371,19 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void onInviteClicked() {
-        Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
-                .setMessage(getString(R.string.invitation_message))
-//                .setDeepLink(Uri.parse(getString(R.string.invitation_deep_link)))
-                .setCallToActionText(getString(R.string.invitation_cta))
-                .build();
-        startActivityForResult(intent, REQUEST_INVITE);
+        String url = "https://play.google.com/store/apps/details?id=an3enterprises.guessthenumber";
+        String shareBody = getResources().getString(R.string.invitation_message);
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.app_name);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody + " " + url);
+        startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+//        Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
+//                .setMessage(getString(R.string.invitation_message))
+////                .setDeepLink(Uri.parse(getString(R.string.invitation_deep_link)))
+//                .setCallToActionText(getString(R.string.invitation_cta))
+//                .build();
+//        startActivityForResult(intent, REQUEST_INVITE);
     }
 
 }
