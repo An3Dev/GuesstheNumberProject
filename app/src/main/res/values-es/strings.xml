@@ -17,7 +17,7 @@
     <string name="easy_difficulty">Fácil</string>
     <string name="enter_first_name">Escriba su primer nombre aquí</string>
     <string name="error_name_not_submitted">Hubo un error, su nombre no se pudo enviar</string>
-    <string name="forgot_default_name">Vaya a la seccion de Ajustes y Nombre predeterminado</string>
+    <string name="forgot_default_name">Quizás se le olvidó guardar su nombre predeterminado</string>
     <string name="found_mini_game">¡Usted encontro un juego sorpresa! Tiene 15 segundos para encontrar un articulo en la pantalla.</string>
     <string name="game_history">Historial\nde Juegos</string>
     <string name="game_over">El Juego se Termino</string>
@@ -45,7 +45,7 @@
     <string name="remaining_tries">Intentos que quedan: 10</string>
     <string name="remaining_tries_java">Intentos que quedan:</string>
     <string name="settings">Ajustes</string>
-    <string name="sorry_i_am_afraid">Perdon, usted perdio. El número era...</string>
+    <string name="sorry_i_am_afraid">Perdon, usted perdió. El número era...</string>
     <string name="sorry_mini_game">Perdon, usted no encontro el articulo a tiempo. El articulo era \"</string>
     <string name="start">Empieza</string>
     <string name="submit_name_btn">Enviar Nombre</string>

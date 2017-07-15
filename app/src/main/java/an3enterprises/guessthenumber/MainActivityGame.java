@@ -19,6 +19,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class MainActivityGame extends AppCompatActivity {
     Button guessButton;
     EditText userName;
     Button submitName;
+    RelativeLayout mainGameLayout;
 
 
     @Override
@@ -60,11 +62,30 @@ public class MainActivityGame extends AppCompatActivity {
 //        if (isConnected) {
 //            Games.setViewForPopups(LoadingScreenActivity.mGoogleApiClient, findViewById(R.id.main_game));
 //        }
+        mainGameLayout = (RelativeLayout) findViewById(R.id.main_game);
+        if (mainGameLayout != null){
+            mainGameLayout.setOnTouchListener(new OnSwipeTouchListener(MainActivityGame.this){
+
+                public void onSwipeTop(){
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(userInputNumber, InputMethodManager.SHOW_IMPLICIT);
+                }
+
+                public void onSwipeBottom() {
+                    View view = MainActivityGame.this.getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+                }
+            });
+        }
         userInputNumber = (EditText) findViewById(R.id.user_input_number);
         if (userInputNumber != null) {
             userInputNumber.setOnTouchListener(new OnSwipeTouchListener(MainActivityGame.this) {
                 public void onSwipeTop() {
-
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(userInputNumber, InputMethodManager.SHOW_IMPLICIT);
                 }
 
                 public void onSwipeRight() {
@@ -101,7 +122,7 @@ public class MainActivityGame extends AppCompatActivity {
                     userInputNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                         @Override
                         public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                            if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000) {
+                            if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || userInputNumber.getText().toString().length() > 6) {
                                 return false;
                             }
                             getGuess(guessButton);
@@ -112,7 +133,7 @@ public class MainActivityGame extends AppCompatActivity {
                     });
 
                 }
-                if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000 || Integer.parseInt(userInputNumber.getText().toString()) + 1 == 1) {
+                if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") ||  userInputNumber.getText().toString().length() > 6 || Integer.parseInt(userInputNumber.getText().toString()) + 1 == 1) {
                     guessButton.setEnabled(false);
                     guessButton.setBackgroundColor(getResources().getColor(R.color.lightGray));
                 }else{
@@ -144,6 +165,23 @@ public class MainActivityGame extends AppCompatActivity {
         // hide the navigation bar.
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        if (mainGameLayout != null){
+            mainGameLayout.setOnTouchListener(new OnSwipeTouchListener(MainActivityGame.this){
+
+                public void onSwipeTop(){
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(userInputNumber, InputMethodManager.SHOW_IMPLICIT);
+                }
+
+                public void onSwipeBottom() {
+                    View view = MainActivityGame.this.getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+                }
+            });
+        }
 
         if (userInputNumber != null) {
             userInputNumber.setOnTouchListener(new OnSwipeTouchListener(MainActivityGame.this) {
@@ -196,7 +234,7 @@ public class MainActivityGame extends AppCompatActivity {
                     });
 
                 }
-                if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || Integer.parseInt(userInputNumber.getText().toString()) > 1000000 || Integer.parseInt(userInputNumber.getText().toString()) + 1 == 1) {
+                if (userInputNumber.getText().toString().matches("") || userInputNumber.getText().toString().matches("0") || userInputNumber.getText().toString().length() > 6 || Integer.parseInt(userInputNumber.getText().toString()) + 1 == 1) {
                     guessButton.setEnabled(false);
                     guessButton.setBackgroundColor(getResources().getColor(R.color.lightGray));
                 }else{
@@ -406,7 +444,6 @@ public class MainActivityGame extends AppCompatActivity {
                         @Override
                         public void run() {
                             if (defaultNameSP == ""){
-                                Toast.makeText(MainActivityGame.this, getResources().getString(R.string.default_name_not_detected), Toast.LENGTH_SHORT).show();
                                 defaultNameNotDetected();
                             }
                             if (defaultNameSP != "") {
@@ -479,14 +516,17 @@ public class MainActivityGame extends AppCompatActivity {
             makeNumberAnimation();
         }
     }
-    // Make code below able to be translated.
     public void next(View view){
         submitName = (Button) findViewById(R.id.submitName);
         userName = (EditText) findViewById(R.id.user_name);
         if (userName.getText().toString().isEmpty()) {
             Toast.makeText(MainActivityGame.this, getResources().getString(R.string.never_been_a_name), Toast.LENGTH_LONG).show();
         }
-        if (userName.getText().toString().length() <= 10 & userName.getText().toString().length() > 0) {
+        if (userName.getText().toString().length() > 0) {
+            SharedPreferences defaultNameSharedPrefs = getSharedPreferences("defaultName", Context.MODE_PRIVATE);
+            SharedPreferences.Editor defaultNameEditor = defaultNameSharedPrefs.edit();
+            defaultNameEditor.putString("DEFAULT_NAME", userName.getText().toString());
+            defaultNameEditor.commit();
             boolean isInserted = myDb.insertData(userName.getText().toString(), triesTaken, difficultyText, success);
             if (isInserted) {
                 Toast.makeText(MainActivityGame.this, getResources().getString(R.string.your_name_was_submitted), Toast.LENGTH_SHORT).show();
@@ -496,8 +536,6 @@ public class MainActivityGame extends AppCompatActivity {
             Intent intent = new Intent(MainActivityGame.this, MainActivity.class);
             startActivity(intent);
             finish();
-        } if (userName.getText().toString().length() > 10) {
-            Toast.makeText(MainActivityGame.this, getResources().getString(R.string.name_too_long), Toast.LENGTH_LONG).show();
         }
     }
 

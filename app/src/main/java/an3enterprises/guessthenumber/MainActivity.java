@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //getUserName();
 //        redToBlack = new TransitionDrawable(redToBlackBackground);
 //        blackToRed = new TransitionDrawable(blackToRedBackground);
 
@@ -224,6 +226,33 @@ public class MainActivity extends AppCompatActivity {
 //            btn.setEnabled(false);
 //            btn.setBackgroundColor(getResources().getColor(R.color.lightGray));
 //            mGoogleApiClient.connect();
+//        }
+//    }
+
+//    public void getUserName() {
+//        SharedPreferences defaultNameSharedPrefs = getSharedPreferences("defaultName", Context.MODE_PRIVATE);
+//        final String defaultNameSP = defaultNameSharedPrefs.getString("DEFAULT_NAME", "");
+//        if (!defaultNameSP.matches("")) {
+//            final String[] projection = new String[]
+//                    {ContactsContract.Profile.DISPLAY_NAME};
+//            String name = null;
+//            final Uri dataUri = Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI, ContactsContract.Contacts.Data.CONTENT_DIRECTORY);
+//            final ContentResolver contentResolver = getContentResolver();
+//            final Cursor c = contentResolver.query(dataUri, projection, null, null, null);
+//
+//            try {
+//                assert c != null;
+//                if (c.moveToFirst()) {
+//                    name = c.getString(c.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME));
+//                    SharedPreferences.Editor defaultNameEditor = defaultNameSharedPrefs.edit();
+//                    defaultNameEditor.putString("DEFAULT_NAME", name);
+//                    defaultNameEditor.commit();
+//                }
+//            } finally {
+//                assert c != null;
+//                c.close();
+//            }
+//
 //        }
 //    }
 }

@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 26
     buildToolsVersion "26.0.0"
 
     defaultConfig {
         applicationId "an3enterprises.guessthenumber"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 8
-        versionName "8.0"
+        versionCode 9
+        versionName "8.1"
     }
     buildTypes {
         release {

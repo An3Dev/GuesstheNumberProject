@@ -103,6 +103,7 @@ public class SettingsActivity extends AppCompatActivity {
             if(extras == null) {
                 newString = null;
             } else {
+                finish();
                 donation();
             }
         }
@@ -269,7 +270,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if (input.getText().toString().isEmpty()) {
                     Toast.makeText(SettingsActivity.this, getResources().getString(R.string.never_been_a_name), Toast.LENGTH_LONG).show();
                 }
-                if (input.getText().toString().length() <= 10 & input.getText().toString().length() > 0) {
+                if (input.getText().toString().length() > 0) {
                     //insert shared preferences
                     SharedPreferences defaultNameSharedPrefs = getSharedPreferences("defaultName", Context.MODE_PRIVATE);
                     SharedPreferences.Editor defaultNameEditor = defaultNameSharedPrefs.edit();
@@ -277,9 +278,7 @@ public class SettingsActivity extends AppCompatActivity {
                     defaultNameEditor.commit();
                     Toast.makeText(SettingsActivity.this, getResources().getString(R.string.default_name_changed) + "  " + input.getText().toString(), Toast.LENGTH_SHORT).show();
                     wantToCloseDialog = true;
-                } if (input.getText().toString().length() > 10) {
 
-                Toast.makeText(SettingsActivity.this, R.string.name_too_long, Toast.LENGTH_LONG).show();
 
             }
                 if(wantToCloseDialog)

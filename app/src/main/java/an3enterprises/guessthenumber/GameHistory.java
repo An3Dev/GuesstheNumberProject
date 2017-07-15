@@ -120,7 +120,7 @@ public class GameHistory extends AppCompatActivity {
                         players.add(tries + "\uD83D\uDE03");
                         players.add(difficulty);
                     }
-                } else {
+                } else if(!name.toString().isEmpty() && name.toString().length() <= 10) {
                     if (success == 0) {
                         //if (Integer.parseInt(tries.toString()) == 10) {
                         players.add(name);
@@ -130,6 +130,19 @@ public class GameHistory extends AppCompatActivity {
                     }
                     if (success == 1) {
                         players.add(name);
+                        players.add(tries + "\uD83D\uDE03");
+                        players.add(difficulty);
+                    }
+                }else {
+                    if (success == 0){
+                        String upToNCharacters = name.substring(0, Math.min(name.length(), 15));
+                        players.add(upToNCharacters + "...");
+                        players.add(tries + "\uD83D\uDE1E");
+                        players.add(difficulty);
+                    }
+                    if (success == 1){
+                        String upToNCharacters = name.substring(0, Math.min(name.length(), 15));
+                        players.add(upToNCharacters + "...");
                         players.add(tries + "\uD83D\uDE03");
                         players.add(difficulty);
                     }
