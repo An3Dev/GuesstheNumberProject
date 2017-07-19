@@ -70,8 +70,8 @@
     <string name="share">\nCompartir\n</string>
     <string name="invitation_message">Hola! Debes instalar un juego llamado Adivina el Número+. Es muy divertido!</string>
     <string name="share_using">Comparte usando...</string>
-    <string name="donation99">Donación de $0.99</string>
-    <string name="donation199">Donación de $1.99</string>
-    <string name="donation499">Donación de $4.99</string>
-    <string name="donation999">Donación de $9.99</string>
+    <string name="donation99">$0.99</string>
+    <string name="donation199">$1.99</string>
+    <string name="donation499">$4.99</string>
+    <string name="donation999">$9.99</string>
 </resources>

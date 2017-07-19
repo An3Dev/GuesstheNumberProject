@@ -97,16 +97,16 @@ public class SettingsActivity extends AppCompatActivity {
 
         myDb = new SQLDatabaseHelper(this);
 
-        final String newString;
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                newString = null;
-            } else {
-                finish();
-                donation();
-            }
-        }
+//        final String newString;
+//        if (savedInstanceState == null) {
+//            Bundle extras = getIntent().getExtras();
+//            if(extras == null) {
+//                newString = null;
+//            } else {
+//                finish();
+//                donation();
+//            }
+//        }
 
 
 
@@ -114,7 +114,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         name.clear();
         name.add(getResources().getString(R.string.default_name));
-        name.add(getResources().getString(R.string.donate));
+//        name.add(getResources().getString(R.string.donate));
         name.add(getResources().getString(R.string.share));
 //        if (isConnected) {
 //            name.add(getResources().getString(R.string.achievements));
@@ -142,11 +142,11 @@ public class SettingsActivity extends AppCompatActivity {
 //                    startActivity(intent);
 //                    //Do something
 //                }
-                if (settings.get(i).matches(getResources().getString(R.string.donate))) {
-                    //Donation should open the in-app purchases
-                    donation();
-
-                }
+//                if (settings.get(i).matches(getResources().getString(R.string.donate))) {
+//                    //Donation should open the in-app purchases
+//                    donation();
+//
+//                }
                 if (settings.get(i).matches(getResources().getString(R.string.share))) {
                     //Donation should open the in-app purchases
                     onInviteClicked();
@@ -180,7 +180,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onResume();
         name.clear();
         name.add(getResources().getString(R.string.default_name));
-        name.add(getResources().getString(R.string.donate));
+//        name.add(getResources().getString(R.string.donate));
         name.add(getResources().getString(R.string.share));
 //        if (isConnected) {
 //            name.add("\nAchievements\n");
@@ -200,11 +200,11 @@ public class SettingsActivity extends AppCompatActivity {
 //                    startActivity(intent);
 //                    //Do something
 //                }
-                if (settings.get(i).matches(getResources().getString(R.string.donate))) {
-                    //Donation should open the in-app purchases
-                    donation();
-
-                }
+//                if (settings.get(i).matches(getResources().getString(R.string.donate))) {
+//                    //Donation should open the in-app purchases
+//                    donation();
+//
+//                }
                 if (settings.get(i).matches(getResources().getString(R.string.share))) {
                     //Donation should open the in-app purchases
                     onInviteClicked();
@@ -362,12 +362,12 @@ public class SettingsActivity extends AppCompatActivity {
 //
 //    }
 
-    public void donation() {
-        // This should open the in-app purchases.
-        Intent intent = new Intent(SettingsActivity.this, DonationActivity.class);
-        startActivity(intent);
-
-    }
+//    public void donation() {
+//        // This should open the in-app purchases.
+//        Intent intent = new Intent(SettingsActivity.this, DonationActivity.class);
+//        startActivity(intent);
+//
+//    }
 
     private void onInviteClicked() {
         String url = "https://play.google.com/store/apps/details?id=an3enterprises.guessthenumber";

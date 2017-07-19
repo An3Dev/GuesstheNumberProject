@@ -9,8 +9,8 @@ android {
         applicationId "an3enterprises.guessthenumber"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 9
-        versionName "8.1"
+        versionCode 10
+        versionName "10.0"
     }
     buildTypes {
         release {

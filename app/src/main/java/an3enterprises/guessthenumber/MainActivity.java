@@ -134,9 +134,8 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton(R.string.sure_donate, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent makeSomeMoney = new Intent(MainActivity.this, SettingsActivity.class);
-                    makeSomeMoney.putExtra("Donation", "true");
-                    startActivity(makeSomeMoney);
+                    Button donationBtn = (Button) findViewById(R.id.donate_button);
+                    donation(donationBtn);
                 }
             });
             builder.show();
@@ -153,6 +152,13 @@ public class MainActivity extends AppCompatActivity {
         settingsBtn.setAllCaps(false);
         Button playedGames = (Button) findViewById(R.id.all_games);
         playedGames.setAllCaps(false);
+    }
+
+    public void donation(View view) {
+        // This should open the in-app purchases.
+        Intent intent = new Intent(MainActivity.this, DonationActivity.class);
+        startActivity(intent);
+
     }
 
 
